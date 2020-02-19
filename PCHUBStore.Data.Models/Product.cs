@@ -10,7 +10,6 @@ namespace PCHUBStore.Data.Models
         public Product()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.BasicCharacteristics = new List<BasicCharacteristic>();
             this.FullCharacteristics = new List<FullCharacteristic>();
         }
 
@@ -36,8 +35,8 @@ namespace PCHUBStore.Data.Models
         public decimal? PreviousPrice { get; set; }
         [Range(1, 20000)]
         public decimal? CurrentPrice { get; set; }
-
-        public virtual ICollection<BasicCharacteristic> BasicCharacteristics { get; set; }
+        public int BasicCharacteristicsId { get; set; }
+        public BasicCharacteristic BasicCharacteristics { get; set; }
 
         public virtual ICollection<FullCharacteristic> FullCharacteristics { get; set; }
 
