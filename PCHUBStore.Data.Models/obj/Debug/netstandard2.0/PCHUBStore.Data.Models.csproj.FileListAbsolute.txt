@@ -1,0 +1,8 @@
+C:\Users\velis\source\repos\PCHUBStore\PCHUBStore.Data.Models\bin\Debug\netstandard2.0\PCHUBStore.Data.Models.deps.json
+C:\Users\velis\source\repos\PCHUBStore\PCHUBStore.Data.Models\bin\Debug\netstandard2.0\PCHUBStore.Data.Models.dll
+C:\Users\velis\source\repos\PCHUBStore\PCHUBStore.Data.Models\obj\Debug\netstandard2.0\PCHUBStore.Data.Models.csprojAssemblyReference.cache
+C:\Users\velis\source\repos\PCHUBStore\PCHUBStore.Data.Models\obj\Debug\netstandard2.0\PCHUBStore.Data.Models.AssemblyInfoInputs.cache
+C:\Users\velis\source\repos\PCHUBStore\PCHUBStore.Data.Models\obj\Debug\netstandard2.0\PCHUBStore.Data.Models.AssemblyInfo.cs
+C:\Users\velis\source\repos\PCHUBStore\PCHUBStore.Data.Models\bin\Debug\netstandard2.0\PCHUBStore.Data.Models.pdb
+C:\Users\velis\source\repos\PCHUBStore\PCHUBStore.Data.Models\obj\Debug\netstandard2.0\PCHUBStore.Data.Models.dll
+C:\Users\velis\source\repos\PCHUBStore\PCHUBStore.Data.Models\obj\Debug\netstandard2.0\PCHUBStore.Data.Models.pdb
