@@ -28,8 +28,6 @@ function onMouseInMainSlider() {
 
     mainSlider.addEventListener('mouseenter', function (e) {
 
-        document.getElementById('mainSlidePic').style.border = 'solid';
-        document.getElementById('mainSlidePic').style.borderColor = 'mediumseagreen';
 
         document.getElementById('leftArrow').style.display = 'block';
         document.getElementById('leftArrow').style.background = '#F2F1F0';
@@ -51,7 +49,7 @@ function onMouseInMainSlider() {
 
 
         document.getElementById('leftArrow').style.display = 'none';
-        document.getElementById('mainSlidePic').style.border = 'none';
+     
         document.getElementById('rightArrow').style.display = 'none';
 
 

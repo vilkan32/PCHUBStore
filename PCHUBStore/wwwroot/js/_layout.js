@@ -67,7 +67,7 @@ function changePicture(x, obj) {
 function navFunction() {
 
     window.addEventListener("scroll", (e) => {
-        if (window.scrollY >= 100) {
+        if (window.scrollY >= 400) {
             document.getElementById("nav").classList.add("fixed-top");
         }
 
@@ -78,6 +78,17 @@ function navFunction() {
     });
 }
 
+function setPadding() {
+
+    if (window.innerWidth <= 700) {
+
+        document.getElementById("controlPanelAndSlider").style.marginLeft = "0px";
+        document.getElementById("controlPanelAndSlider").style.marginRight = "0px";
+    }
+
+}
+
+setPadding();
 navFunction();
 loadPicturesLeftSide();
 loadPicturesHeader();

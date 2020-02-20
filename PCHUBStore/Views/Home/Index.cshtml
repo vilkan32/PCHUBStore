@@ -4,16 +4,18 @@
 }
 
 <!--Control Panel and Slider-->
-<div style="padding-left: 40px; padding-right: 40px; margin-top: 40px">
+<div style="margin-top: 40px; margin-left:100px; margin-right:100px" id="controlPanelAndSlider">
+
     <div class="row justify-content-center">
-        <div class="col-lg-3 col-sm-12" id="controlPanel">
+
+        <div class="col-lg-3 col-sm-12 col-md-12" style="min-height: auto; background-color: rebeccapurple;" id="controlPanel">
             <!--tuka e admin panela -->
-            <ul class="navbar-nav sidebar-dark accordion" style="min-height: auto; background-color: rebeccapurple;" id="accordionSidebar">
+            <ul class="navbar-nav sidebar-dark accordion" id="accordionSidebar">
 
                 <!-- Sidebar - Brand -->
                 <a class="sidebar-brand d-flex align-items-center justify-content-center">
                     <div class="sidebar-brand-icon ">
-                        <img src="Model.ControlPanel" width="25px" height="25px" alt="Alternate Text" />
+                        <img src="~/img/controlPanelLogo.png" width="25px" height="25px" alt="Alternate Text" />
                     </div>
                     <div class="mx-3">Panel</div>
                 </a>
@@ -29,7 +31,7 @@
                     <div class="sidebar-brand-icon">
                         <img src="~/img/list.png" width="25px" height="25px" alt="Alternate Text" />
                     </div>
-                    <div class="mx-3">Категории</div>
+                    <div style="font-size: xx-large;" class="mx-3">Categories</div>
                 </a>
                 <!-- Divider -->
                 <hr class="sidebar-divider">
@@ -40,45 +42,40 @@
                 </div>
 
                 <!-- Nav Item - Pages Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" style="cursor: pointer">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Лаптопи</span>
-                    </a>
 
-                </li>
+                <hr class="sidebar-divider">
 
+                <a class="sidebar-brand d-flex align-items-center" style="cursor:pointer">
+                    <img src="~/img/laptop.png" width="50px" height="50px" alt="Alternate Text" />
+                    <span style="font-size: xx-large;">Laptops</span>
+                </a>
+
+                <hr class="sidebar-divider">
                 <!-- Nav Item - Utilities Collapse Menu -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" style="cursor: pointer">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Мишки</span>
-                    </a>
-
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link collapsed" style="cursor: pointer">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Клавиатури</span>
-                    </a>
-
-                </li>
+                <a class="sidebar-brand d-flex align-items-center" style="cursor:pointer">
+                    <img src="~/img/monitor.png" width="50px" height="50px" alt="Alternate Text" />
+                    <span style="font-size: xx-large;">Monitors</span>
+                </a>
+                <hr class="sidebar-divider">
+                <a class="sidebar-brand d-flex align-items-center" style="cursor:pointer">
+                    <img src="~/img/keyboard.png" width="50px" height="50px" alt="Alternate Text" />
+                    <span style="font-size: xx-large;">Keyboards</span>
+                </a>
 
             </ul>
         </div>
 
 
-        <div class="col-lg-9 col-sm-12" id="optionsOrSliderParent">
+        <div class="col-lg-9 col-sm-12 col-md-12" id="optionsOrSliderParent">
             <!--tuka e slidera ili opciite koito shte budat postaveni -->
             <div class="row align-items-center" id="optionsOrSlider">
                 <div class="col-12 text-center align-items-center" style="display: inherit">
-                    <img src="Model.LeftArrow" style="width: 60px; height: 60px; position: absolute; cursor:pointer; display:none" alt="Alternate Text" id="leftArrow" />
-                    <img src="" style="width: 100%; min-height: 500px" alt="Alternate Text" id="mainSlidePic" />
-                    <img src="Model.RightArrow" style="width: 60px; height: 60px; position: relative; right: 60px; cursor:pointer; display: none" alt="Alternate Text" id="rightArrow" />
+                    <img src="~/img/arrow-circle-left-solid.svg" style="width: 60px; height: 60px; position: absolute; cursor:pointer; display:none" alt="Alternate Text" id="leftArrow" />
+                    <img src="~/img/option2.jpg" style="width: 100%; max-height: 500px" alt="Alternate Text" id="mainSlidePic" />
+                    <img src="~/img/arrow-circle-right-solid.svg" style="width: 60px; height: 60px; position: relative; right: 60px; cursor:pointer; display: none" alt="Alternate Text" id="rightArrow" />
                 </div>
             </div>
         </div>
+
     </div>
 </div>
-
