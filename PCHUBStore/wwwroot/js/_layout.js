@@ -61,5 +61,23 @@ function changePicture(x, obj) {
 }
 
 
+
+
+
+function navFunction() {
+
+    window.addEventListener("scroll", (e) => {
+        if (window.scrollY >= 100) {
+            document.getElementById("nav").classList.add("fixed-top");
+        }
+
+        if (window.scrollY === 0) {
+            document.getElementById("nav").classList.remove("fixed-top");
+        }
+       
+    });
+}
+
+navFunction();
 loadPicturesLeftSide();
 loadPicturesHeader();

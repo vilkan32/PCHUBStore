@@ -26,108 +26,55 @@
 </head>
 <body style="background-color: #F2F1F0">
 
-    <header style="margin-left: 10%; margin-right: 10%; margin-top: 10px" class="justify-content-center">
-
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark m-1" id="mainNav">
-            <div class="container">
+    <!-- Navigation -->  
+        <nav style="width: 100%; height: auto; background-color: black" id="nav">
                 <!--lightning-->
-                <img src="" style="width: 50px; height: 50px; z-index: 1" alt="Alternate Text" id="lightning" />
-                <a class="navbar-brand js-scroll-trigger" href="#page-top">PC-HUB</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="#about">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="#services">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
-                        </li>
-                    </ul>
+
+            <div class="row text-center">
+                <!-- Home -->
+                <div style="height:80px;" class="col">
+                    <a style="display: inline-block" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/img/FinalLogo.png" style="width: 200px; height: 50px;" alt="Alternate Text" />
+                        <p>Electronics Hub</p>
+                    </a>
                 </div>
-            </div>
-        </nav>
-
-
-        <!-- style="background-image: url('https://cdn2.unrealengine.com/Fortnite%2Fblog%2Fchapter-2-season-2-update%2F11BR_Evergreens_Blue_NewsHeader-1920x1080-77ade2f5f2bc0312b4978dcd7639adfe00211fe6.jpg'); background-size: cover; background-repeat: no-repeat"-->
-        <div class="container" style="background-image: url('https://media.istockphoto.com/vectors/abstract-hexagon-background-technology-polygonal-concept-vector-id996971400'); background-size: cover; background-repeat: no-repeat">
-            <div class="row align-items-center">
-
-                <div class="col-lg-3 col-sm-10">
-                    <!--logo-->
-                    <img src="" style="width: 100%" alt="Alternate Text" id="logo" />
+                <!-- Search -->
+                <div class="col-6">
                     <form class="form-inline m-4 justify-content-center">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        <input class="form-control mr-sm-4" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
                     </form>
                 </div>
-
-                <div class="col-lg-6 col-sm-10">
-
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">
-                        <img src="~/img/option1.jpg" style="width: 100%" alt="Alternate Text" id="slideShowPicture" />
+                <!-- Shopping Cart -->
+                <div style="height:60px;" class="col">
+                    <a style="display: inline-block" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/img/shoppingCart.png" style="width: 50px; height: 50px; z-index: 1" alt="Alternate Text" />
+                        <span style="background-color:#152b53; color:#fff; padding:4px; font-weight:bold;">7</span>
                     </a>
-
-                    <div class="container text-center" id="slideShow">
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="optradio" value="option3">
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="optradio" value="option2">
-                            </label>
-                        </div>
-                        <div class="form-check-inline disabled">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="optradio" value="option1">
-                            </label>
-                        </div>
-                    </div>
+                </div>
+                <!-- Chat -->
+                <div style="height:60px;" class="col">
+                    <a style="display: inline-block" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/img/chat.png" style="width: 50px; height: 50px; " alt="Alternate Text" />
+                    </a>
+                </div>
+                <!-- Profile -->
+                <div style="height:60px;" class="col">
+                    <a style="display: inline-block" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/img/profile.png" style="width: 50px; height: 50px; " alt="Alternate Text" />
+                    </a>
                 </div>
 
-                <div class="col-lg-3">
-                    <div class="row text-center">
-                        <div class="col">
-                            <img src="~/shopping-cart-solid.svg" width="50" height="50" alt="Alternate Text" id="shoppingCart" />
-                            <p class="alert-link">Shopping Cart</p>
-                        </div>
-                    </div>
-                    <div class="row text-center">
-                        <div class="col">
-                            @{await Html.RenderPartialAsync("_LoginPartial.cshtml"); }
-                        </div>
-                    </div>
-
-                </div>
             </div>
-        </div>
 
-    </header>
+  
+        </nav>
+    <!-- Navigation -->
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-
-        <div style="position: fixed; top: 90px; left:0; display:inline-grid; z-index: -1" id="leftCommercial">
-            <img src="" style="width:350px; height:auto" alt="Alternate Text" class="leftSider" />
-            <img src="" style="width:350px; height:auto" alt="Alternate Text" class="leftSider" />
-            <img src="" style="width:350px; height:auto" alt="Alternate Text" class="leftSider" />
-            <img src="" style="width:350px; height:auto; display: none;" alt="Alternate Text" class="leftSider" />
-        </div>
-        <div style="position: fixed; top: 90px; right:0; display:inline-grid; z-index: -1" id="rightCommercial">
-
-            <img src="" style="width:350px; height:auto" alt="Alternate Text" class="rightSider" />
-            <img src="" style="width:350px; height:auto" alt="Alternate Text" class="rightSider" />
-            <img src="" style="width:350px; height:auto" alt="Alternate Text" class="rightSider" />
-            <img src="" style="width:350px" height:auto" alt="Alternate Text" class="rightSider" />
-        </div>
-       
 
     </div>
 
