@@ -15,6 +15,7 @@ using PCHUBStore.Data;
 using PCHUBStore.Data.Models;
 using Microsoft.AspNetCore.Identity;
 
+
 namespace PCHUBStore
 {
     public class Startup
@@ -29,7 +30,6 @@ namespace PCHUBStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -44,7 +44,8 @@ namespace PCHUBStore
              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), 
              b => b.MigrationsAssembly("PCHUBStore")));
 
-
+            var mvcBuilder = services.AddControllersWithViews();
+            mvcBuilder.AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
             services.AddIdentity<User, IdentityRole>()
