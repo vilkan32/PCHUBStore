@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Http;
 using PCHUBStore.Data;
 using PCHUBStore.Data.Models;
 using Microsoft.AspNetCore.Identity;
-
+using AutoMapper;
 
 namespace PCHUBStore
 {
@@ -38,6 +38,7 @@ namespace PCHUBStore
                 options.MinimumSameSitePolicy = SameSiteMode.Strict;
             });
 
+            services.AddAutoMapper(typeof(Startup));
 
 
             services.AddDbContext<PCHUBDbContext>(options =>
@@ -52,7 +53,7 @@ namespace PCHUBStore
                 .AddEntityFrameworkStores<PCHUBDbContext>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<PCHUBDbContext>();
-
+     
 
             Account cloudinaryCredentials = new Account(
               this.Configuration["Cloudinary:CloudName"],

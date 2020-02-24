@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using PCHUBStore.Models;
 
 namespace PCHUBStore.Controllers
@@ -18,7 +21,7 @@ namespace PCHUBStore.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string[] some)
         {
             return View();
         }
@@ -33,5 +36,10 @@ namespace PCHUBStore.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+    }
+
+    public class Tester
+    {
+        public List<string> some { get; set; }
     }
 }
