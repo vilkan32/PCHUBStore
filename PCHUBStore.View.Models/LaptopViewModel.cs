@@ -12,6 +12,7 @@ namespace PCHUBStore.View.Models
             this.BasicCharacteristics = new List<string>();
         }
 
+        public string Id { get; set; }
         public decimal Price { get; set; }
         public string Title { get; set; }
 
@@ -19,6 +20,7 @@ namespace PCHUBStore.View.Models
 
         public string Model { get; set; }
 
+        public string LaptopAdvancedDetailsUrl { get; set; }
         public ICollection<string> BasicCharacteristics { get; set; }
     }
 }

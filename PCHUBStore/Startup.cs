@@ -15,6 +15,7 @@ using PCHUBStore.Data;
 using PCHUBStore.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
+using PCHUBStore.Services;
 
 namespace PCHUBStore
 {
@@ -56,7 +57,8 @@ namespace PCHUBStore
                 .AddEntityFrameworkStores<PCHUBDbContext>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<PCHUBDbContext>();
-     
+
+            services.AddTransient<ILaptopServices, LaptopServices>();
 
             Account cloudinaryCredentials = new Account(
               this.Configuration["Cloudinary:CloudName"],

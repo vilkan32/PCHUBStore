@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PCHUBStore.Data\PCHUBStore.Data.csproj" />
     <ProjectReference Include="..\PCHUBStore.Filter.Models\PCHUBStore.Filter.Models.csproj" />
+    <ProjectReference Include="..\PCHUBStore.Services\PCHUBStore.Services.csproj" />
     <ProjectReference Include="..\PCHUBStore.View.Models\PCHUBStore.View.Models.csproj" />
   </ItemGroup>
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PCHUBStore.Services
 {
-    public class LaptopServices
+    public class LaptopServices : ILaptopServices
     {
 
 
@@ -60,6 +60,14 @@ namespace PCHUBStore.Services
 
         }
 
+        public async Task<Product> GetLaptop(string id)
+        {
+            var category = await this.context.Categories.FirstAsync(x => x.Name == "Laptops");
+
+            var laptop = category.Products.FirstOrDefault(x => x.Id == id);
+
+            return laptop;
+        }
 
         public async Task<IEnumerable<Product>> GetAllLaptops()
         {
