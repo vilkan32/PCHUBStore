@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PCHUBStore.Filter.Models", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PCHUBStore.View.Models", "PCHUBStore.View.Models\PCHUBStore.View.Models.csproj", "{F1B7D3DE-5CCB-4EAF-8219-C4C9D778AEF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCHUBStore.Services", "PCHUBStore.Services\PCHUBStore.Services.csproj", "{C24169D7-8D86-4961-95EA-A0FE2D854F6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PCHUBStore.Services", "PCHUBStore.Services\PCHUBStore.Services.csproj", "{C24169D7-8D86-4961-95EA-A0FE2D854F6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCHUBStore.DemoTestEnvironment", "PCHUBStore.DemoTestEnvironment\PCHUBStore.DemoTestEnvironment.csproj", "{3A2F58F2-1001-4FF8-82E2-2A339F502500}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PCHUBStore.DemoTestEnvironment", "PCHUBStore.DemoTestEnvironment\PCHUBStore.DemoTestEnvironment.csproj", "{3A2F58F2-1001-4FF8-82E2-2A339F502500}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Constants", "Constants\Constants.csproj", "{C6AFD8C5-877B-4DCD-828C-107188888B9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{3A2F58F2-1001-4FF8-82E2-2A339F502500}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A2F58F2-1001-4FF8-82E2-2A339F502500}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A2F58F2-1001-4FF8-82E2-2A339F502500}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6AFD8C5-877B-4DCD-828C-107188888B9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6AFD8C5-877B-4DCD-828C-107188888B9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6AFD8C5-877B-4DCD-828C-107188888B9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6AFD8C5-877B-4DCD-828C-107188888B9E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

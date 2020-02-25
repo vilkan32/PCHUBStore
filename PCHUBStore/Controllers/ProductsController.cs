@@ -24,7 +24,7 @@ namespace PCHUBStore.Controllers
         }
 
         [HttpGet("Products/Laptops/{page:int}")]
-        public async Task<IActionResult> Laptops(int? page, LaptopFilters laptopFilters)
+        public async Task<IActionResult> Laptops([FromQuery]int? page, [FromQuery]LaptopFilters laptopFilters)
         {
 
             var laptopViewModel = new LaptopsViewModel();
@@ -35,7 +35,7 @@ namespace PCHUBStore.Controllers
         }
 
         [HttpGet("Products/Laptops/All")]
-        public async Task<IActionResult> LaptopsAll(int? page)
+        public async Task<IActionResult> LaptopsAll([FromQuery]int? page)
         {
 
             var laptopsViewModel = new LaptopsViewModel();
@@ -52,12 +52,13 @@ namespace PCHUBStore.Controllers
 
 
         [HttpGet("Products/Laptop/{laptopId}")]
-        public async Task<IActionResult> Laptop(string laptopId)
+        public async Task<IActionResult> Laptop([FromQuery]string laptopId)
         {
            await this.service.GetLaptop(laptopId);
 
             return this.View();
         }
+
 
  
 

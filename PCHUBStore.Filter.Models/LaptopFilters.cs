@@ -8,7 +8,6 @@ namespace PCHUBStore.Filter.Models
 
         public LaptopFilters()
         {
-            this.Price = new List<string>();
             this.Model = new List<string>();
             this.LaptopType = new List<string>();
             this.SuitableFor = new List<string>();
@@ -16,7 +15,7 @@ namespace PCHUBStore.Filter.Models
             this.VideoCard = new List<string>();
         }
 
-        public ICollection<string> Price { get; set; }
+        public string Price { get; set; }
 
         public ICollection<string> Model { get; set; }
 

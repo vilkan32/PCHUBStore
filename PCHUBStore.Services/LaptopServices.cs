@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Constants;
+using Microsoft.EntityFrameworkCore;
 using PCHUBStore.Data;
 using PCHUBStore.Data.Models;
 using PCHUBStore.Filter.Models;
@@ -42,7 +43,7 @@ namespace PCHUBStore.Services
         public async Task<IEnumerable<Product>> QueryLaptops(LaptopFilters laptopFilters)
         {
 
-
+            laptopFilters.Price
             // todo validate filters and add for all option create predicates
  
 
@@ -52,10 +53,13 @@ namespace PCHUBStore.Services
             return laptopCategory
             .Products
             .Where(p =>
-            laptopFilters.Model.Any(m => p.BasicCharacteristics.Any(DetermineIfAll("Model", m)))
+            laptopFilters.Model
+            .Any(m => p.BasicCharacteristics.Any(DetermineIfAll(LaptopFilterConstants.model, m)))
             &&
-            laptopFilters.Processor.Any(pr => p.BasicCharacteristics.Any(DetermineIfAll("Processor", pr)))
-
+            laptopFilters.Processor
+            .Any(pr => p.BasicCharacteristics.Any(DetermineIfAll(LaptopFilterConstants.processor, pr)))
+            &&
+            p.Price >= 
                    ).ToList();
 
         }

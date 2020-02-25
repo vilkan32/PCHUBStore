@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Constants\Constants.csproj" />
     <ProjectReference Include="..\PCHUBStore.Data\PCHUBStore.Data.csproj" />
     <ProjectReference Include="..\PCHUBStore.Filter.Models\PCHUBStore.Filter.Models.csproj" />
   </ItemGroup>
