@@ -20,10 +20,10 @@ namespace PCHUBStore.Data.Models
 
         public string UserId { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
         public ShipmentImportancy ShipmentImportancy { get; set; }
 
-        List<Activity> Activities { get; set; }
+        public virtual List<Activity> Activities { get; set; }
 
         public decimal ShipmentPrice { get; set; }
 

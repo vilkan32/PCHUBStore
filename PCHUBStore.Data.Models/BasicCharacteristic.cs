@@ -7,12 +7,16 @@ namespace PCHUBStore.Data.Models
 {
     public class BasicCharacteristic : BaseModel<int>
     {
-        // Deserialize<List<string>>(Description)
-        // description is json because it is light
+        [StringLength(50)]
         [Required]
-        public string Description { get; set; }
+        public string Key { get; set; }
 
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Value { get; set; }
+
+        public string ProductId { get; set; }
+        public virtual Product Product { get; set; }
+
     }
 }

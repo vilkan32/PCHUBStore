@@ -10,7 +10,7 @@ namespace PCHUBStore.Data.Models
     {
 
         public string OwnerId { get; set; }
-        public User Owner { get; set; }
+        public virtual User Owner { get; set; }
 
         public bool ActivityClosed { get; set; }
         public string Description { get; set; }
@@ -19,9 +19,9 @@ namespace PCHUBStore.Data.Models
 
         public int? ShipmentId { get; set; }
 
-        public Shipment Shipment { get; set; }
+        public virtual Shipment Shipment { get; set; }
 
         public int? TicketId { get; set; }
-        public Ticket Ticket { get; set; }
+        public virtual Ticket Ticket { get; set; }
     }
 }

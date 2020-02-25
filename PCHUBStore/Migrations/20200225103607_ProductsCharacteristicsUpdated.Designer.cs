@@ -3,19 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PCHUBStore.Data;
 
 namespace PCHUBStore.Migrations
 {
     [DbContext(typeof(PCHUBDbContext))]
-    partial class PCHUBDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200225103607_ProductsCharacteristicsUpdated")]
+    partial class ProductsCharacteristicsUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2")
+                .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -220,7 +222,10 @@ namespace PCHUBStore.Migrations
                     b.Property<DateTime>("ModificationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ProductId")
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
@@ -230,7 +235,7 @@ namespace PCHUBStore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId1");
 
                     b.ToTable("BasicCharacteristics");
                 });
@@ -259,7 +264,7 @@ namespace PCHUBStore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("PCHUBStore.Data.Models.FullCharacteristic", b =>
@@ -668,7 +673,7 @@ namespace PCHUBStore.Migrations
                         .HasForeignKey("OwnerId");
 
                     b.HasOne("PCHUBStore.Data.Models.Shipment", "Shipment")
-                        .WithMany("Activities")
+                        .WithMany()
                         .HasForeignKey("ShipmentId");
 
                     b.HasOne("PCHUBStore.Data.Models.Ticket", "Ticket")
@@ -680,7 +685,7 @@ namespace PCHUBStore.Migrations
                 {
                     b.HasOne("PCHUBStore.Data.Models.Product", "Product")
                         .WithMany("BasicCharacteristics")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId1");
                 });
 
             modelBuilder.Entity("PCHUBStore.Data.Models.FullCharacteristic", b =>

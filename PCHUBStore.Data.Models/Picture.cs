@@ -13,10 +13,10 @@ namespace PCHUBStore.Data.Models
 
         public bool IsVideo { get; set; }
         public int? ProductId { get; set; }
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
         [InverseProperty("Pictures")]
-        public User Uploader { get; set; } 
+        public virtual User Uploader { get; set; } 
         public virtual string RedirectTo { get; set; }
     }
 }

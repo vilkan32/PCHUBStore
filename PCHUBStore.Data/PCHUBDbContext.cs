@@ -14,6 +14,15 @@ namespace PCHUBStore.Data
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder
+                    .UseLazyLoadingProxies()
+                    .UseSqlServer("Server=DESKTOP-SLBT47B\\SQLEXPRESS;Database=PCSmartHUBLatestVersion;Trusted_Connection=True");
+            }
+        }
         public PCHUBDbContext() { }
 
         public virtual DbSet<Activity> Activities { get; set; }
@@ -23,7 +32,7 @@ namespace PCHUBStore.Data
         public virtual DbSet<FullCharacteristic> FullCharacteristics { get; set; }
 
         public virtual DbSet<Picture> Pictures { get; set; }
-
+        public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<Shipment> Shipments { get; set; }

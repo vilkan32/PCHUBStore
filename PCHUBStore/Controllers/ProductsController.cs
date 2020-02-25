@@ -13,18 +13,13 @@ namespace PCHUBStore.Controllers
     public class ProductsController : Controller
     {
         [HttpGet("Laptops")]
-        [HttpGet("Laptops/All")]
-        public async Task<IActionResult> Laptops(int page, LaptopFilters laptopFilters)
+        public async Task<IActionResult> Laptops(int? page, LaptopFilters laptopFilters)
         {
-            var showAll = this.Request.Path.Value.Contains("All");
+
             var laptopViewModel = new LaptopsViewModel();
             laptopViewModel.Pager = new Pager(150, page, 5);
-
-            if (showAll)
-            {
-               // this.ProductsService.LaptopsAll();
-            }
-         //   this.ProductsService.QueryLaptops(laptopFilters);
+  
+            //this.ProductsService.QueryLaptops(laptopFilters);
             return this.View(laptopViewModel);
         }
 

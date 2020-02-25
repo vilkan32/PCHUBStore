@@ -6,6 +6,12 @@ namespace PCHUBStore.View.Models
 {
     public class LaptopViewModel
     {
+
+        public LaptopViewModel()
+        {
+            this.BasicCharacteristics = new List<string>();
+        }
+
         public decimal Price { get; set; }
         public string Title { get; set; }
 
@@ -13,6 +19,6 @@ namespace PCHUBStore.View.Models
 
         public string Model { get; set; }
 
-        public List<string> BasicCharacteristics { get; set; }
+        public ICollection<string> BasicCharacteristics { get; set; }
     }
 }

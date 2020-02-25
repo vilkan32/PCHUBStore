@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -11,12 +12,14 @@ namespace PCHUBStore.Data.Models
         {
             this.Id = Guid.NewGuid().ToString();
             this.FullCharacteristics = new List<FullCharacteristic>();
+            this.BasicCharacteristics = new List<BasicCharacteristic>();
         }
+
 
         [Range(1, 20000)]
         public decimal Price { get; set; }
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
 
         public string Make { get; set; }
 
@@ -36,7 +39,7 @@ namespace PCHUBStore.Data.Models
         [Range(1, 20000)]
         public decimal? CurrentPrice { get; set; }
         public int BasicCharacteristicsId { get; set; }
-        public BasicCharacteristic BasicCharacteristics { get; set; }
+        public virtual ICollection<BasicCharacteristic> BasicCharacteristics { get; set; }
 
         public virtual ICollection<FullCharacteristic> FullCharacteristics { get; set; }
 

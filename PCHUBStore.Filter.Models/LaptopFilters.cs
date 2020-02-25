@@ -6,17 +6,27 @@ namespace PCHUBStore.Filter.Models
     public class LaptopFilters
     {
 
-        public string[] Prices { get; set; }
+        public LaptopFilters()
+        {
+            this.Price = new List<string>();
+            this.Model = new List<string>();
+            this.LaptopType = new List<string>();
+            this.SuitableFor = new List<string>();
+            this.Processor = new List<string>();
+            this.VideoCard = new List<string>();
+        }
 
-        public string[] Models { get; set; }
+        public ICollection<string> Price { get; set; }
 
-        public string[] LaptopTypes { get; set; }
+        public ICollection<string> Model { get; set; }
 
-        public string[] SuitableFor { get; set; }
+        public ICollection<string> LaptopType { get; set; }
 
-        public string[] Processors { get; set; }
+        public ICollection<string> SuitableFor { get; set; }
 
-        public string[] VideoCards { get; set; }
+        public ICollection<string> Processor { get; set; }
+
+        public ICollection<string> VideoCard { get; set; }
 
     }
 }

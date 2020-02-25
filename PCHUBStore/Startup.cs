@@ -42,8 +42,11 @@ namespace PCHUBStore
 
 
             services.AddDbContext<PCHUBDbContext>(options =>
-             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), 
-             b => b.MigrationsAssembly("PCHUBStore")));
+
+             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+             b => b.MigrationsAssembly("PCHUBStore"))
+                                                     .UseLazyLoadingProxies()
+                                                  );
 
             var mvcBuilder = services.AddControllersWithViews();
             mvcBuilder.AddRazorRuntimeCompilation();

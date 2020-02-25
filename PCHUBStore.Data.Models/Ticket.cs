@@ -21,7 +21,7 @@ namespace PCHUBStore.Data.Models
 
         public string OwnerId { get; set; }
 
-        public User Owner { get; set; }
+        public virtual User Owner { get; set; }
 
         public virtual ICollection<Activity> Activities { get; set; } 
 

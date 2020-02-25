@@ -18,6 +18,6 @@ namespace PCHUBStore.Data.Models
         public virtual ICollection<Shipment> Shipments { get; set; }
 
         public virtual ICollection<Activity> Activities { get; set; }
-        public Picture ProfilePicture { get; set; }
+        public virtual Picture ProfilePicture { get; set; }
     }
 }
