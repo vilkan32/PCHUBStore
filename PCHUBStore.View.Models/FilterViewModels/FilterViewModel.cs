@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PCHUBStore.View.Models.FilterViewModels
 {
-    public class Filter
+    public class FilterViewModel
     {
         public string Name { get; set; }
 

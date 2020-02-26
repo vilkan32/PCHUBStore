@@ -5,20 +5,12 @@ using System.Text;
 
 namespace PCHUBStore.Data.Models
 {
-    public class FullCharacteristic : BaseModel<int>
+    public class FullCharacteristic : BaseCharacteristicsModel
     {
-
-        [StringLength(50)]
-        [Required]
-        public string Key { get; set; }
 
         public bool ValueHasArray { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string Value { get; set; }
-
-        public int ProductId { get; set; }
+        public string ProductId { get; set; }
         public virtual Product Product { get; set; }
 
     }

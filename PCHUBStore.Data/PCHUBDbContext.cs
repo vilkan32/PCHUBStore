@@ -29,6 +29,9 @@ namespace PCHUBStore.Data
 
         public virtual DbSet<BasicCharacteristic> BasicCharacteristics { get; set; }
 
+        public virtual DbSet<Filter> Filters { get; set; }
+
+        public virtual DbSet<FilterCategory> FilterCategories { get; set; }
         public virtual DbSet<FullCharacteristic> FullCharacteristics { get; set; }
 
         public virtual DbSet<Picture> Pictures { get; set; }
@@ -37,5 +40,15 @@ namespace PCHUBStore.Data
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<Shipment> Shipments { get; set; }
 
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Picture>()
+                .HasOne(a => a.MainPicForProduct)
+                .WithOne(b => b.MainPicture)
+                .HasForeignKey<Product>(b => b.MainPictureId);
+        }
     }
 }

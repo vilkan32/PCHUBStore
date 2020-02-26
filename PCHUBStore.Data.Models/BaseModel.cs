@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PCHUBStore.Data.Models
 {
-    public class BaseModel<TKey>
+    public abstract class BaseModel<TKey>
     {
         [Key]
         public TKey Id { get; set; }

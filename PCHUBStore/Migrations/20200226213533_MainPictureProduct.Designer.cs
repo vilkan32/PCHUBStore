@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PCHUBStore.Data;
 
 namespace PCHUBStore.Migrations
 {
     [DbContext(typeof(PCHUBDbContext))]
-    partial class PCHUBDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200226213533_MainPictureProduct")]
+    partial class MainPictureProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -351,7 +353,10 @@ namespace PCHUBStore.Migrations
                     b.Property<DateTime>("ModificationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ProductId")
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
@@ -364,7 +369,7 @@ namespace PCHUBStore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId1");
 
                     b.ToTable("FullCharacteristics");
                 });
@@ -388,9 +393,6 @@ namespace PCHUBStore.Migrations
                     b.Property<bool>("IsVideo")
                         .HasColumnType("bit");
 
-                    b.Property<string>("MainPicForProductId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("ModificationDate")
                         .HasColumnType("datetime2");
 
@@ -398,6 +400,9 @@ namespace PCHUBStore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RedirectTo")
@@ -411,7 +416,7 @@ namespace PCHUBStore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId1");
 
                     b.HasIndex("UploaderId");
 
@@ -422,6 +427,9 @@ namespace PCHUBStore.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("BasicCharacteristicsId")
+                        .HasColumnType("int");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -761,14 +769,14 @@ namespace PCHUBStore.Migrations
                 {
                     b.HasOne("PCHUBStore.Data.Models.Product", "Product")
                         .WithMany("FullCharacteristics")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId1");
                 });
 
             modelBuilder.Entity("PCHUBStore.Data.Models.Picture", b =>
                 {
                     b.HasOne("PCHUBStore.Data.Models.Product", "Product")
                         .WithMany("Pictures")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId1");
 
                     b.HasOne("PCHUBStore.Data.Models.User", "Uploader")
                         .WithMany("Pictures")

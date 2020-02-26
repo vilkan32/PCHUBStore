@@ -9,10 +9,11 @@ namespace PCHUBStore.Data.Models
     public class Product : BaseModel<string>
     {
         public Product()
-        {
+        {   
             this.Id = Guid.NewGuid().ToString();
             this.FullCharacteristics = new List<FullCharacteristic>();
             this.BasicCharacteristics = new List<BasicCharacteristic>();
+            this.Pictures = new List<Picture>();
         }
 
 
@@ -20,6 +21,9 @@ namespace PCHUBStore.Data.Models
         public decimal Price { get; set; }
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
+
+        public int MainPictureId { get; set; }
+        public virtual Picture MainPicture { get; set; }
 
         public string Make { get; set; }
 
@@ -38,7 +42,6 @@ namespace PCHUBStore.Data.Models
         public decimal? PreviousPrice { get; set; }
         [Range(1, 20000)]
         public decimal? CurrentPrice { get; set; }
-        public int BasicCharacteristicsId { get; set; }
         public virtual ICollection<BasicCharacteristic> BasicCharacteristics { get; set; }
 
         public virtual ICollection<FullCharacteristic> FullCharacteristics { get; set; }

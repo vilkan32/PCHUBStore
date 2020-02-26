@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using PCHUBStore.Filter.Models;
 using PCHUBStore.Services;
 using PCHUBStore.View.Models;
+using PCHUBStore.View.Models.FilterViewModels;
 using PCHUBStore.View.Models.Pagination;
 
 namespace PCHUBStore.Controllers
@@ -23,14 +24,18 @@ namespace PCHUBStore.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet("Products/Laptops/{page:int}")]
-        public async Task<IActionResult> Laptops([FromQuery]int? page, [FromQuery]LaptopFilters laptopFilters)
+        public async Task<IActionResult> Laptops([FromQuery]int? page, [FromQuery]LaptopFiltersUrlModel laptopFilters)
         {
 
             var laptopViewModel = new LaptopsViewModel();
+
             laptopViewModel.Pager = new Pager(150, page, 5);
-  
-           await this.service.QueryLaptops(laptopFilters);
+
+            var laptops = await this.service.QueryLaptops(laptopFilters);
+            var filters = await this.service.GetFilters("Laptop");
+
+            laptopViewModel.FilterCategory = mapper.Map<FilterCategoryViewModel>(filters);
+
             return this.View(laptopViewModel);
         }
 
@@ -42,25 +47,23 @@ namespace PCHUBStore.Controllers
             laptopsViewModel.Pager = new Pager(150, page, 5);
             var result = await service.GetAllLaptops();
 
-           var laptops = mapper.Map<List<LaptopViewModel>>(result);
+            var laptops = mapper.Map<List<LaptopViewModel>>(result);
 
- 
+
             laptopsViewModel.Laptops = laptops;
             return this.View("Laptops", laptopsViewModel);
         }
 
 
-
-        [HttpGet("Products/Laptop/{laptopId}")]
         public async Task<IActionResult> Laptop([FromQuery]string laptopId)
         {
-           await this.service.GetLaptop(laptopId);
+            await this.service.GetLaptop(laptopId);
 
             return this.View();
         }
 
 
- 
+
 
         /*  
 

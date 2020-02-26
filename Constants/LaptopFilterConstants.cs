@@ -14,6 +14,8 @@ namespace Constants
 
         public const string model = "Model";
 
+        public const string make = "Make";
+
         public const string suitebleFor = "SuitableFor";
     }
 }

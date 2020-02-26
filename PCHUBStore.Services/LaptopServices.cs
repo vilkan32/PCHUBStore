@@ -22,30 +22,33 @@ namespace PCHUBStore.Services
             this.context = context;
         }
 
-        private Func<BasicCharacteristic, bool> DetermineIfAll(string parameter, string value)
+        private Func<T, bool> DetermineIfAll<T>(string parameter, string value) where T : BaseCharacteristicsModel 
         {
             if(parameter == "All")
             {
-                Func<BasicCharacteristic, bool> funcResult = (x) => true;
+                Func<T, bool> funcResult = (x) => true;
 
                 return funcResult;
             }
             else
             {
-                Func<BasicCharacteristic, bool> funcResult = (x) => x.Key == parameter && x.Value.Contains(value);
+                Func<T, bool> funcResult = (x) => x.Key == parameter && x.Value.Contains(value);
 
                 return funcResult;
             }
 
         }
 
-
-        public async Task<IEnumerable<Product>> QueryLaptops(LaptopFilters laptopFilters)
+        public async Task<FilterCategory> GetFilters(string category)
         {
+           return await this.context.FilterCategories.FirstAsync(x => x.Name == category);
+        }
 
-            laptopFilters.Price
-            // todo validate filters and add for all option create predicates
- 
+        public async Task<IEnumerable<Product>> QueryLaptops(LaptopFiltersUrlModel laptopFilters)
+        {
+            var priceArr = laptopFilters.Price.Split('-').ToArray();
+            var minPrice = decimal.Parse(priceArr[0]);
+            var maxPrice = decimal.Parse(priceArr[0]);
 
             var laptopCategory = await this.context.Categories
                 .FirstAsync(x => x.Name == "Laptops");
@@ -54,12 +57,20 @@ namespace PCHUBStore.Services
             .Products
             .Where(p =>
             laptopFilters.Model
-            .Any(m => p.BasicCharacteristics.Any(DetermineIfAll(LaptopFilterConstants.model, m)))
+            .Any(m => p.FullCharacteristics
+            .Any(DetermineIfAll<FullCharacteristic>(LaptopFilterConstants.model, m)))
             &&
             laptopFilters.Processor
-            .Any(pr => p.BasicCharacteristics.Any(DetermineIfAll(LaptopFilterConstants.processor, pr)))
+            .Any(pr => p.FullCharacteristics
+            .Any(DetermineIfAll<FullCharacteristic>(LaptopFilterConstants.processor, pr)))
             &&
-            p.Price >= 
+            p.Price >= minPrice && p.Price <= maxPrice
+            &&
+            p.IsDeleted == false
+            &&
+            laptopFilters.Make
+            .Any(m => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(LaptopFilterConstants.make, m)))
                    ).ToList();
 
         }

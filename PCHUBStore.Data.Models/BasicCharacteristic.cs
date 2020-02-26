@@ -5,16 +5,8 @@ using System.Text;
 
 namespace PCHUBStore.Data.Models
 {
-    public class BasicCharacteristic : BaseModel<int>
+    public class BasicCharacteristic : BaseCharacteristicsModel
     {
-        [StringLength(50)]
-        [Required]
-        public string Key { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string Value { get; set; }
-
         public string ProductId { get; set; }
         public virtual Product Product { get; set; }
 
