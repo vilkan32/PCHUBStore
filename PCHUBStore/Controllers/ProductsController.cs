@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PCHUBStore.Filter.Models;
+using PCHUBStore.MiddlewareFilters;
 using PCHUBStore.Services;
 using PCHUBStore.View.Models;
 using PCHUBStore.View.Models.FilterViewModels;
@@ -24,19 +25,22 @@ namespace PCHUBStore.Controllers
             this.mapper = mapper;
         }
 
-        public async Task<IActionResult> Laptops([FromQuery]int? page, [FromQuery]LaptopFiltersUrlModel laptopFilters)
+
+   //     [ValidationFilter]
+        [HttpGet("/Laptops")]
+        public async Task<IActionResult> Laptops([FromQuery]LaptopFiltersUrlModel laptopFilters)
         {
 
-            var laptopViewModel = new LaptopsViewModel();
+        //    var laptopViewModel = new LaptopsViewModel();
 
-            laptopViewModel.Pager = new Pager(150, page, 5);
+        //    laptopViewModel.Pager = new Pager(150, laptopFilters.Page, 5);
 
-            var laptops = await this.service.QueryLaptops(laptopFilters);
-            var filters = await this.service.GetFilters("Laptop");
+        //    var laptops = await this.service.QueryLaptops(laptopFilters);
+        //    var filters = await this.service.GetFilters("Laptop");
 
-            laptopViewModel.FilterCategory = mapper.Map<FilterCategoryViewModel>(filters);
+        //    laptopViewModel.FilterCategory = mapper.Map<FilterCategoryViewModel>(filters);
 
-            return this.View(laptopViewModel);
+            return this.View();
         }
 
         [HttpGet("Products/Laptops/All")]
@@ -51,7 +55,7 @@ namespace PCHUBStore.Controllers
 
 
             laptopsViewModel.Laptops = laptops;
-            return this.View("Laptops", laptopsViewModel);
+            return this.View("Laptops");
         }
 
 

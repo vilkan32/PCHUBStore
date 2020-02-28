@@ -1,8 +1,33 @@
-﻿@model  PCHUBStore.View.Models.LaptopsViewModel
+﻿<!-- model  PCHUBStore.View.Models.LaptopsViewModel -->
 
 @{
     ViewData["Title"] = "Laptops";
 
 }
 
-<partial name="~/Views/Partial/Pagination.cshtml" model="@Model"/>
+<!--  <partial name="~/Views/Partial/AppliedFiltersPartial.cshtml" model="Model.AppliedFilters"/>
+
+<partial name="~/Views/Partial/LaptopFiltersPartial.cshtml" model="Model.FilterCategory" />
+
+
+model="Model.Pager"
+
+model="Model.Laptops"
+
+
+<partial name="~/Views/Partial/Pagination.cshtml" />
+
+ <div class="col-sm-12 col-md-12 col-lg-2">
+        <partial name="~/Views/Partial/Laptops/LaptopsPartial.cshtml" />
+    </div>
+
+-->
+<p>Лаптопи</p>
+<div style="margin-top:100px; margin-left: 50px; margin-right:50px" class="row">
+    <div class="col-sm-12 col-md-12 col-lg-2">
+        <partial name="~/Views/Partial/Laptops/LaptopFiltersPartial.cshtml" />
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-10">
+        <partial name="~/Views/Partial/Laptops/LaptopsPartial.cshtml" />
+    </div>
+</div>

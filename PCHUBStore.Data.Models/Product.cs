@@ -22,7 +22,7 @@ namespace PCHUBStore.Data.Models
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
 
-        public int MainPictureId { get; set; }
+        public int? MainPictureId { get; set; }
         public virtual Picture MainPicture { get; set; }
 
         public string Make { get; set; }

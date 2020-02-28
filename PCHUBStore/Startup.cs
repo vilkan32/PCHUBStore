@@ -16,6 +16,7 @@ using PCHUBStore.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using PCHUBStore.Services;
+using PCHUBStore.MiddlewareFilters;
 
 namespace PCHUBStore
 {
@@ -38,9 +39,10 @@ namespace PCHUBStore
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.Strict;
             });
-
+          
             services.AddAutoMapper(typeof(Startup));
 
+       
 
             services.AddDbContext<PCHUBDbContext>(options =>
 
@@ -87,7 +89,7 @@ namespace PCHUBStore
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-                
+              
             app.UseRouting();
 
             app.UseAuthentication();
@@ -102,7 +104,7 @@ namespace PCHUBStore
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
+                
                 endpoints.MapRazorPages();
             });
 

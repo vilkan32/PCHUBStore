@@ -19,6 +19,7 @@ namespace PCHUBStore.View.Models
 
         public ICollection<LaptopViewModel> Laptops { get; set; }
 
+        public List<string> AppliedFilters { get; set; }
         public ICollection<string> LaptopMakeUrls { get; set; }
         public FilterCategoryViewModel FilterCategory { get; set; }
     }
