@@ -47,13 +47,13 @@ namespace PCHUBStore.Controllers
         [HttpGet("/Laptops")]
         public async Task<IActionResult> Laptops([FromQuery]LaptopFiltersUrlModel laptopFilters)
         {
-            Console.WriteLine();
+
 
             var laptopViewModel = new LaptopsViewModel();
 
             laptopViewModel.Pager = new Pager(60, laptopFilters.Page, 20);
  
-            var laptops = await this.service.GetAllLaptops();
+            var laptops = await this.service.QueryLaptops(laptopFilters);
 
             var filters = await this.service.GetFilters("Laptops");
 

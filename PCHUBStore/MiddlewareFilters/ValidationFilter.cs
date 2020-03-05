@@ -23,6 +23,7 @@ namespace PCHUBStore.MiddlewareFilters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
+            Console.WriteLine();
             var canContinue = true;
             if (context.ModelState.IsValid)
             {
@@ -43,7 +44,7 @@ namespace PCHUBStore.MiddlewareFilters
                         if (key == "OrderBy")
                         {
 
-                            if (value[0] == "All" || value[0] == "PriceDesc" || value[0] == "PriceAscending")
+                            if (value[0] == "Default" || value[0] == "PriceDesc" || value[0] == "PriceAscending")
                             {
                                 continue;
                             }
@@ -93,7 +94,7 @@ namespace PCHUBStore.MiddlewareFilters
 
                         foreach (var valueParam in value)
                         {
-                            if ((laptopFilterCategory.Any(x => x.Filters.Any(z => z.Name == key && z.Value == valueParam))
+                            if ((laptopFilterCategory.Any(x => x.Filters.Any(z => z.Name.ToLower() == key.ToLower() && z.Value.ToLower().Contains(valueParam.ToLower())))
                                 || (valueParam == "All" && laptopFilterCategory.Any(x => x.Filters.Any(z => z.Name == key)))))
                             {
 
