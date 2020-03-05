@@ -11,8 +11,6 @@ namespace PCHUBStore.Data.Models
 
         public string Value { get; set; }
 
-        public string LabelName { get; set; }
-
         public int FilterCategoryId { get; set; }
         public virtual FilterCategory FilterCategory { get; set; }
 

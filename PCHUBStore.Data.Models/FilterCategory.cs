@@ -12,8 +12,8 @@ namespace PCHUBStore.Data.Models
             this.Filters = new List<Filter>();
         }
 
-        public string Name { get; set; }
-
+        public string CategoryName { get; set; }
+        public string ViewSubCategoryName { get; set; }
         public virtual ICollection<Filter> Filters { get; set; }
 
     }

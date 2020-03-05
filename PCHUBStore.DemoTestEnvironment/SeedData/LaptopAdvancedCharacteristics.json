@@ -1,0 +1,157 @@
+﻿[
+  {
+    "key": "ДИСПЛЕЙ",
+    "value": "15.6\" (39.62 cm) Матов IPS LED Full HD (1920 x 1080)",
+    "hasArray": false
+  },
+  {
+    "key": "ПРОЦЕСОР",
+    "value": "AMD Quad Core R5-3500U Processor, 2.0 GHz (2M Cache, up to 3.6 GHz)",
+    "hasArray": false
+  },
+  {
+    "key": "RAM ПАМЕТ",
+    "value": "32 GB (2x16) DDR4 / 2 слота",
+    "hasArray": false
+  },
+  {
+    "key": "SSD ДИСК",
+    "value": "256 GB SSD",
+    "hasArray": false
+  },
+  {
+    "key": "ВИДЕО КАРТА",
+    "value": "AMD Radeon Vega 8 Graphics - Споделена памет",
+    "hasArray": false
+  },
+  {
+    "key": "ОПЕРАЦИОННА СИСТЕМА",
+    "value": "Windows 10 Professional",
+    "hasArray": false
+  },
+  {
+    "hasArray": true,
+    "key": "ПРИЛОЖЕН СОФТУЕР",
+    "value": "Без софтуер: 0.00 лв.,+ Microsoft Office Home and Student 2019: 259.00 лв.,+ Microsoft Office Home and Business 2019: 479.00 лв."
+  },
+  {
+    "hasArray": true,
+    "key": "АНТИВИРУСНА",
+    "value": "Без антивирусна: 0.00 лв.,+ ESET NOD32 Antivirus (лиценз за една година): 33.00 лв.,+ ESET NOD32 Internet Security (лиценз за една година): 56.00 лв."
+  },
+  {
+    "key": "ОПТИЧНО УСТРОЙСТВО",
+    "value": "DVD+/-RW",
+    "hasArray": false
+  },
+  {
+    "key": "БЕЗЖИЧНА ВРЪЗКА WI-FI",
+    "value": "802 11 a/c",
+    "hasArray": false
+  },
+  {
+    "key": "МРЕЖОВА КАРТА LAN",
+    "value": "Gigabit Ethernet 10/100/1000",
+    "hasArray": false
+  },
+  {
+    "key": "3G/4G ИНТЕРНЕТ",
+    "value": "НЕ",
+    "hasArray": false
+  },
+  {
+    "key": "BLUETOOTH",
+    "value": "ДА",
+    "hasArray": false
+  },
+  {
+    "key": "КАМЕРА",
+    "value": "HD Камера",
+    "hasArray": false
+  },
+  {
+    "key": "МИКРОФОН",
+    "value": "ДА",
+    "hasArray": false
+  },
+  {
+    "key": "АУДИО",
+    "value": "Dolby Audio",
+    "hasArray": false
+  },
+  {
+    "key": "ЧЕТЕЦ ЗА КАРТИ ПАМЕТ",
+    "value": "ДА",
+    "hasArray": false
+  },
+  {
+    "hasArray": true,
+    "key": "ПОРТОВЕ",
+    "value": "HDMI,1 x USB 2.0,2 x USB 3.1 Gen 1,RJ-45,USB 3.1 (Typ-C)"
+  },
+  {
+    "key": "СИГУРНОСТ",
+    "value": "Trusted Platform Module (TPM) 2.0",
+    "hasArray": false
+  },
+  {
+    "key": "ЦВЯТ",
+    "value": "Черен",
+    "hasArray": false
+  },
+  {
+    "key": "ТЕГЛО",
+    "value": "2.10 кг.",
+    "hasArray": false
+  },
+  {
+    "key": "БАТЕРИЯ",
+    "value": "3-клетъчна Li-Ion",
+    "hasArray": false
+  },
+  {
+    "key": "LED СВЕТЕЩА КЛАВИАТУРА",
+    "value": "НЕ",
+    "hasArray": false
+  },
+  {
+    "key": "MULTI-TOUCH ДИСПЛЕЙ",
+    "value": "НЕ",
+    "hasArray": false
+  },
+  {
+    "key": "СЕРИЯ",
+    "value": "ThinkPad Edge E595",
+    "hasArray": false
+  },
+  {
+    "key": "OЕM КОД",
+    "value": "20NF0006BM",
+    "hasArray": false
+  },
+  {
+    "key": "ГАРАНЦИЯ",
+    "value": "3 години",
+    "hasArray": false
+  },
+  {
+    "key": "Price",
+    "value": "1610.00 лв.",
+    "hasArray": false
+  },
+  {
+    "key": "ArticleId",
+    "value": "Арт.№: 99660_99661",
+    "hasArray": false
+  },
+  {
+    "key": "Title",
+    "value": "UPGRADED Lenovo ThinkPad Edge E595, 15.6\" FHD(1920x1080), Ryzen 5 3500U, 32 GB, 256GB SSD, Win 10 Pro | 20NF0006BM",
+    "hasArray": false
+  },
+  {
+    "key": "Pictures",
+    "value": "https://static.plasico.bg/thumbs/12/190913142748lenovo-thinkpad-edge-e595-2.jpg,https://static.plasico.bg/thumbs/12/190913142748lenovo-thinkpad-edge-e595.jpg,https://static.plasico.bg/thumbs/12/190913142748lenovo-thinkpad-edge-e595-3.jpg,https://static.plasico.bg/thumbs/12/190913142748lenovo-thinkpad-edge-e595-4.png,https://static.plasico.bg/thumbs/12/190913142748lenovo-thinkpad-edge-e595-5.jpg",
+    "hasArray": false
+  }
+]

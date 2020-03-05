@@ -19,10 +19,15 @@ namespace PCHUBStore.Data.Models
 
         [Range(1, 20000)]
         public decimal Price { get; set; }
+
         public int CategoryId { get; set; }
+
         public virtual Category Category { get; set; }
 
+        public string ArticleNumber { get; set; }
+
         public int? MainPictureId { get; set; }
+
         public virtual Picture MainPicture { get; set; }
 
         public string Make { get; set; }
@@ -51,6 +56,6 @@ namespace PCHUBStore.Data.Models
         public string HtmlDescription { get; set; }
 
         // could be video also
-        public virtual List<Picture> Pictures { get; set; }
+        public virtual ICollection<Picture> Pictures { get; set; }
     }
 }

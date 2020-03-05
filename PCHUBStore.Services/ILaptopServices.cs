@@ -13,7 +13,7 @@ namespace PCHUBStore.Services
 
         Task<IEnumerable<Product>> GetAllLaptops();
 
-        Task<FilterCategory> GetFilters(string category);
+        Task<List<FilterCategory>> GetFilters(string category);
         Task<IEnumerable<Product>> QueryLaptops(LaptopFiltersUrlModel laptopFilters);
     }
 }

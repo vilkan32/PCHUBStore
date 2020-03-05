@@ -10,7 +10,7 @@ namespace PCHUBStore.View.Models.FilterViewModels
 
         public string Value { get; set; }
 
-        public string LabelName { get; set; }
+        public bool IsChecked { get; set; }
 
     }
 }

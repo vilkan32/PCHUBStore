@@ -1,4 +1,4 @@
-﻿<!-- model  PCHUBStore.View.Models.LaptopsViewModel -->
+﻿@model PCHUBStore.View.Models.LaptopsViewModel
 
 @{
     ViewData["Title"] = "Laptops";
@@ -22,12 +22,33 @@ model="Model.Laptops"
     </div>
 
 -->
-<p>Лаптопи</p>
-<div style="margin-top:100px; margin-left: 50px; margin-right:50px" class="row">
+
+<div class="row" style="margin-left: 50px; margin-right:50px; margin-top: 75px">
+    <div class="col-2"></div>
+    <div class="col-4">
+        <h1 style="color: black">
+            Laptops Category
+        </h1>
+    </div>
+    <div class="col-6"></div>
+
+    <div class="col-2"></div>
+    <div class="col-10">
+        <p style="color: black">
+            Here you can review all of the laptops that are available on our website. By applying the filters you would be able to select the best choice for you. We combine both quality and low prices.
+        </p>
+    </div>
+</div>
+
+<div class="container">
+    <partial name="~/Views/Partial/Pagination.cshtml" model="Model" />
+</div>
+
+<div style="margin-left: 50px; margin-right:50px" class="row">
     <div class="col-sm-12 col-md-12 col-lg-2">
-        <partial name="~/Views/Partial/Laptops/LaptopFiltersPartial.cshtml" />
+        <partial name="~/Views/Partial/Laptops/LaptopFiltersPartial.cshtml" model="Model.FilterCategory" />
     </div>
     <div class="col-sm-12 col-md-12 col-lg-10">
-        <partial name="~/Views/Partial/Laptops/LaptopsPartial.cshtml" />
+        <partial name="~/Views/Partial/Laptops/LaptopsPartial.cshtml" model="Model.Laptops" />
     </div>
 </div>

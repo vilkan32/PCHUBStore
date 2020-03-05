@@ -16,11 +16,11 @@ namespace PCHUBStore.Mappings
 
             CreateMap<PCHUBStore.Data.Models.Filter, FilterViewModel>()
             .ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
-            .ForMember(x => x.Value, y => y.MapFrom(z => z.Value))
-            .ForMember(x => x.LabelName, y => y.MapFrom(z => z.LabelName));
+            .ForMember(x => x.Value, y => y.MapFrom(z => z.Value));
 
             CreateMap<FilterCategory, FilterCategoryViewModel>()
-                  .ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
+                  .ForMember(x => x.CategoryName, y => y.MapFrom(z => z.CategoryName))
+                  .ForMember(x => x.ViewSubCategoryName, y => y.MapFrom(z => z.ViewSubCategoryName))
                     .ForMember(x => x.Filters, y => y.MapFrom(z => z.Filters));
 
         }

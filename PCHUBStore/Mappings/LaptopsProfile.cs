@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PCHUBStore.Data.Models;
 using PCHUBStore.View.Models;
+using PCHUBStore.View.Models;
 
 namespace PCHUBStore.Mappings
 {

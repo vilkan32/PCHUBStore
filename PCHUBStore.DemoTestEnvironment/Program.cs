@@ -11,9 +11,10 @@ namespace PCHUBStore.DemoTestEnvironment
         static void Main(string[] args)
         {
             using var context = new PCHUBDbContext();
-            var service = new LaptopServices(context);
-            var filter = new LaptopFiltersUrlModel();
-      
+
+            var seeder = new SeedLaptops();
+            //    seeder.SeedLaptopAsync(context).GetAwaiter().GetResult();
+           seeder.SeedLaptopFiltersAsync(context).GetAwaiter().GetResult();
 
         }
     }

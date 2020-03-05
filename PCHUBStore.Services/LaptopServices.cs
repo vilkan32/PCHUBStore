@@ -39,16 +39,47 @@ namespace PCHUBStore.Services
 
         }
 
-        public async Task<FilterCategory> GetFilters(string category)
+        public async Task<List<FilterCategory>> GetFilters(string category)
         {
-           return await this.context.FilterCategories.FirstAsync(x => x.Name == category);
+            return  await this.context.FilterCategories.Where(x => x.CategoryName == category).ToListAsync();
         }
 
         public async Task<IEnumerable<Product>> QueryLaptops(LaptopFiltersUrlModel laptopFilters)
         {
-            var priceArr = laptopFilters.Price.Split('-').ToArray();
-            var minPrice = decimal.Parse(priceArr[0]);
-            var maxPrice = decimal.Parse(priceArr[0]);
+
+            decimal minPrice;
+            decimal maxPrice;
+
+            if(!decimal.TryParse(laptopFilters.MaxPrice, out maxPrice))
+            {
+                maxPrice = 30000;
+            }
+            if(!decimal.TryParse(laptopFilters.MinPrice, out minPrice))
+            {
+                minPrice = 400;
+            }
+
+
+            if (laptopFilters.Make == null)
+            {
+                laptopFilters.Make = new string[] { "All" };
+            }
+            if (laptopFilters.Model == null)
+            {
+                laptopFilters.Model = new string[] { "All" };
+            }
+            if (laptopFilters.OrderBy == null)
+            {
+                laptopFilters.OrderBy = "Default";
+            }
+            if (laptopFilters.Processor == null)
+            {
+                laptopFilters.Processor = new string[] { "All" };
+            }
+            if(laptopFilters.VideoCard == null)
+            {
+                laptopFilters.VideoCard = new string[] { "All" };
+            }
 
             var laptopCategory = await this.context.Categories
                 .FirstAsync(x => x.Name == "Laptops");
@@ -71,6 +102,10 @@ namespace PCHUBStore.Services
             laptopFilters.Make
             .Any(m => p.BasicCharacteristics
             .Any(DetermineIfAll<BasicCharacteristic>(LaptopFilterConstants.make, m)))
+            &&
+            laptopFilters.VideoCard
+            .Any(vc => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(LaptopFilterConstants.processor, vc)))
                    ).ToList();
 
         }

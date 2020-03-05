@@ -6,27 +6,38 @@ namespace PCHUBStore.Filter.Models
 {
     public class LaptopFiltersUrlModel
     {
-        [Required]
-        [MinLength(2), MaxLength(20)]
-        public string Price { get; set; }
 
-        [Required]
+        public LaptopFiltersUrlModel()
+        {
+            this.Page = 1;
+        }
+
+        [MinLength(1), MaxLength(20)]
+        public string MinPrice { get; set; }
+
+
+
+        [MinLength(1), MaxLength(20)]
+        public string MaxPrice { get; set; }
+
+
         public int Page { get; set; }
 
-        [Required]
-        [MinLength(2), MaxLength(20)]
+        [MinLength(1), MaxLength(20)]
         public string[] Model { get; set; }
 
-        [Required]
-        [MinLength(2), MaxLength(20)]
+        [MinLength(1), MaxLength(20)]
         public string[] Make { get; set; }
 
-        [Required]
-        [MinLength(2), MaxLength(20)]
+  
+        [MinLength(1), MaxLength(20)]
         public string[] Processor { get; set; }
 
-        [Required]
-        [MinLength(2), MaxLength(20)]
+        [MinLength(1), MaxLength(20)]
+        public string OrderBy { get; set; }
+
+   
+        [MinLength(1), MaxLength(20)]
         public string[] VideoCard { get; set; }
 
     }

@@ -1,4 +1,7 @@
-﻿<!-- model ICollection<PCHUBStore.View.Models.LaptopViewModel>
+﻿
+@model ICollection<PCHUBStore.View.Models.LaptopViewModel>
+
+<!-- model ICollection<PCHUBStore.View.Models.LaptopViewModel>
 
 
         <div class="col-lg-3 col-sm-12" style="background-color:white">
@@ -13,33 +16,49 @@
         </div>
 
 
+        <li style="list-style-image: url('img/listLI.png'); word-break: break-all">4 GB DDR4 / Вградена (1 свободен слот)</li>
+                    <li style="list-style-image: url('img/listLI.png'); word-break: break-all">256 GB SSD | М.2 PCIe NVMe (2280)</li>
+                    <li style="list-style-image: url('img/listLI.png'); word-break: break-all">Intel HD Graphics 620</li>
+                    <li style="list-style-image: url('img/listLI.png'); word-break: break-all">Без операционна система</li>
+
 -->
 
 
 
-    <div class="row">
+<div class="row">
 
+    @foreach (var product in Model)
+    {
+        <div class="col-lg-3 col-sm-12 col-md-6" style="background-color:white; border: solid; border-width: 2px; border-color: white">
 
+            <img style="width: inherit; height: 203px" src="@product.PictureUrl" alt="Alternate Text" />
+            <div class="text-center m-2" style="word-break: break-all; color: black; font-size: 30px; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: darkslateblue">
+                @product.Price лв
+            </div>
+            <div style="border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: red" class="text-center">
+                <a href="Products/Laptop/@product.Id" style="text-decoration:none; font-size: 17px; color:black" class="text-center m-2">
+                    @product.Title
+                </a>
+            </div>
+            <ul class="justify-content-center align-items-center productsViewStyle" style="margin-top: 20px">
+                @foreach (var feature in product.BasicCharacteristics)
+                {
+                    <li style="list-style-image: url('img/listLI.png'); word-break: break-all">@feature</li>
+                }
 
-        <div class="col-lg-3 col-sm-12 col-md-6" style="background-color:white">
-
-            <img style="width: inherit; height: 203px" src="~/img/laptop.jpg" alt="Alternate Text" />
-
-            <ul class="justify-content-center align-items-center">
-                <li style="list-style-image: url('img/listLI.png'); word-break: break-all">
-                    <p>
-                        UPGRADED Acer Aspire 3, A315-54K-36DF, 15.6" FHD, i3-7020U, 8GB, 256GB SSD, Черен | NX.HEEEX.010_NP.ACC11.01V
-                    </p>
-                </li>
-                <li>Intel Core i3-7020U | Kaby Lake | Dual-Core (2.30 GHz, 3 MB Cache, 14 nm, 15 W)</li>
-                <li>4 GB DDR4 / Вградена (1 свободен слот)</li>
-                <li>256 GB SSD | М.2 PCIe NVMe (2280)</li>
-                <li>Intel HD Graphics 620</li>
-                <li>Без операционна система</li>
             </ul>
+
+            <div id="buyProductButton" class="text-center container" style="visibility: hidden">
+
+
+                <img src="~/img/shoppingCart.png" style="width: 50px; height: 50px;" alt="Alternate Text" />
+                <button class="btn-success">Add To Cart</button>
+
+            </div>
+
         </div>
+    }
 
-      
 
 
-    </div>
+</div>

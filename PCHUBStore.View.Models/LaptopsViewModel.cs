@@ -13,6 +13,7 @@ namespace PCHUBStore.View.Models
         {
             this.Laptops = new List<LaptopViewModel>();
             this.LaptopMakeUrls = new List<string>();
+            this.FilterCategory = new List<FilterCategoryViewModel>();
         }
 
         public Pager Pager { get; set; }
@@ -21,6 +22,6 @@ namespace PCHUBStore.View.Models
 
         public List<string> AppliedFilters { get; set; }
         public ICollection<string> LaptopMakeUrls { get; set; }
-        public FilterCategoryViewModel FilterCategory { get; set; }
+        public ICollection<FilterCategoryViewModel> FilterCategory { get; set; }
     }
 }
