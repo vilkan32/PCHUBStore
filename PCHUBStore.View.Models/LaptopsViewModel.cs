@@ -14,13 +14,14 @@ namespace PCHUBStore.View.Models
             this.Laptops = new List<LaptopViewModel>();
             this.LaptopMakeUrls = new List<string>();
             this.FilterCategory = new List<FilterCategoryViewModel>();
+            this.AppliedFilters = new List<string>();
         }
 
         public Pager Pager { get; set; }
 
         public ICollection<LaptopViewModel> Laptops { get; set; }
 
-        public List<string> AppliedFilters { get; set; }
+        public ICollection<string> AppliedFilters { get; set; }
         public ICollection<string> LaptopMakeUrls { get; set; }
         public ICollection<FilterCategoryViewModel> FilterCategory { get; set; }
     }

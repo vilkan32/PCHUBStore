@@ -23,7 +23,6 @@ namespace PCHUBStore.MiddlewareFilters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            Console.WriteLine();
             var canContinue = true;
             if (context.ModelState.IsValid)
             {

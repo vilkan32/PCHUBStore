@@ -85,7 +85,6 @@ namespace PCHUBStore.Services
 
             var laptopCategory = await this.context.Categories
                 .FirstAsync(x => x.Name == "Laptops");
-            Console.WriteLine();
 
             var asd = laptopFilters.Model.Any(x => x == "All");
 
@@ -118,18 +117,10 @@ namespace PCHUBStore.Services
         {
             var category = await this.context.Categories.FirstAsync(x => x.Name == "Laptops");
 
-            var laptop = category.Products.FirstOrDefault(x => x.Id == id);
+            var laptop = category.Products.FirstOrDefault(x => x.Id == id && x.IsDeleted == false);
 
             return laptop;
         }
-
-        public async Task<IEnumerable<Product>> GetAllLaptops()
-        {
-
-            var laptopCategory = await this.context.Categories.FirstAsync(x => x.Name == "Laptops");
-
-
-            return laptopCategory.Products.ToList();
-        }
+ 
     }
 }

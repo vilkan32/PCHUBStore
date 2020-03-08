@@ -1,8 +1,70 @@
-﻿@model PCHUBStore.View.Models.LaptopsViewModel
+﻿@model PCHUBStore.View.Models.LaptopFullCharacteristicsViewModel
 
 @{
-    ViewData["Title"] = "Laptop";
-
+    ViewData["Title"] = "Laptop " + Model.Model;
 }
 
-<partial name="~/Views/Partial/Pagination.cshtml" model="@Model" />
+
+<div class="row" style="margin-left: 3em; margin-right:3em; margin-top: 75px">
+    <div class="col-lg-8 col-sm-12">
+        <div class="row text-center">
+            <div class="col-lg-8 col-sm-12" style="border-bottom: solid; border-bottom-color: darkslateblue; border-bottom-width: 2px; margin-bottom: 10px">
+                <img src="@Model.MainPicture" alt="Main Picture" style="width: inherit;  margin-bottom: 7px" />
+            </div>
+            <div class="row text-center" style="background-color: white">
+                @foreach (var pic in Model.Pictures)
+                {
+                    <div class="col-2">
+                        <img src="@pic" alt="Main Picture" style="width: 100px;" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-12" style="background-color: white">
+        <div class="container">
+            <h3 style="color: black; ">@Model.Title</h3>
+            <div class="row">
+                <div class="col">
+                    <span>Article Number: @Model.ArticleNumber</span>
+                </div>
+                <div class="col">
+                    <img src="~/img/favorite.png" alt="Add To Favorite" />
+                    <a href="?">Add to Favorites</a>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px; border-top: solid; border-color: greenyellow">
+                <div class="col">
+                    <span style="color: red; font-size: 30px">@Model.Price lv</span>
+                    <button class="btn btn-success">Add To Cart</button>
+                </div>
+                <div class="col" style="border-bottom: solid; border-bottom-color: greenyellow;">
+                    <span>Product Availability</span>
+                    <img src="~/img//productAvailable.png" alt="Alternate Text" />
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px; border-top: solid; border-color: greenyellow">
+                <ul class="justify-content-center align-items-center" style="margin-top: 20px">
+                    @foreach (var feature in Model.BasicDetails)
+                    {
+                        <li style="list-style-image: url('/img/listLI.png'); word-break: break-all; color: black">@feature</li>
+                    }
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/laptopPage.js"></script>
+}

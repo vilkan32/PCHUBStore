@@ -10,9 +10,6 @@ namespace PCHUBStore.Services
     public interface ILaptopServices
     {
         Task<Product> GetLaptop(string id);
-
-        Task<IEnumerable<Product>> GetAllLaptops();
-
         Task<List<FilterCategory>> GetFilters(string category);
         Task<IEnumerable<Product>> QueryLaptops(LaptopFiltersUrlModel laptopFilters);
     }

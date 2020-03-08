@@ -64,12 +64,14 @@ namespace PCHUBStore.Controllers
         }
 
 
-
-        public async Task<IActionResult> Laptop([FromQuery]string laptopId)
+        [HttpGet("Products/Laptop/{laptopId}")]
+        public async Task<IActionResult> Laptop(string laptopId)
         {
-            await this.service.GetLaptop(laptopId);
+            var laptop = await this.service.GetLaptop(laptopId);
 
-            return this.View();
+            var laptopViewModel = mapper.Map<LaptopFullCharacteristicsViewModel>(laptop);
+            Console.WriteLine();
+            return this.View(laptopViewModel);
         }
 
 
