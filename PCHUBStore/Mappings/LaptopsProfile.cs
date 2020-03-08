@@ -23,7 +23,7 @@ namespace PCHUBStore.Mappings
 
             //          from          to
             CreateMap<FullCharacteristic, LaptopAdvancedDetailsViewModel>()
-                 .ForMember(x => x.Key, y => y.MapFrom(z => z.Key))
+                 .ForMember(x => x.Key, y => y.MapFrom(z => z.Key + " :"))
                  .ForMember(x => x.Value, y => y.MapFrom(z => z.Value));
 
             //          from          to
