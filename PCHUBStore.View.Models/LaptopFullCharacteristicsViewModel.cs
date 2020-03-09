@@ -28,7 +28,7 @@ namespace PCHUBStore.View.Models
         public ICollection<string> Pictures { get; set; }
 
         public string MainPicture { get; set; }
-
+        public ICollection<SimilarLaptop> SimilarLaptops { get; set; }
         public ICollection<string> BasicDetails { get; set; }
     }
 }

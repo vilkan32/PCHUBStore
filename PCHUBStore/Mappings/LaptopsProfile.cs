@@ -39,7 +39,13 @@ namespace PCHUBStore.Mappings
                  .ForMember(x => x.AdvancedDetails, y => y.MapFrom(z => z.FullCharacteristics))
                  .ForMember(x => x.BasicDetails, y => y.MapFrom(z => z.BasicCharacteristics.Select(x => x.Value)));
 
-          
+            //          from          to
+            CreateMap<Product, SimilarLaptop>()
+                 .ForMember(x => x.Price, y => y.MapFrom(z => z.Price.ToString()))
+                 .ForMember(x => x.Url, y => y.MapFrom(z => z.Id))
+                 .ForMember(x => x.MainPicture, y => y.MapFrom(z => z.MainPicture.Url))
+                 .ForMember(x => x.Model, y => y.MapFrom(z => z.Model))
+                 .ForMember(x => x.Make, y => y.MapFrom(z => z.Make));
         }
     }
 }

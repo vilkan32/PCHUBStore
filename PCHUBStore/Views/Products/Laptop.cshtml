@@ -16,20 +16,21 @@
                 @foreach (var pic in Model.Pictures)
                 {
                     <div class="col-2">
-                        <img src="@pic" alt="Main Picture" style="width: inherit;" />
+                        <img src="@pic" alt="Description Pictures" style="width: inherit;" />
                     </div>
                 }
             </div>
         </div>
     </div>
-    <div class="col-lg-4 col-sm-12" style="background-color: white">
+    <div class="col-lg-4 col-sm-12" style="        background-color: white
+">
         <div class="container">
             <h3 style="color: black; ">@Model.Title</h3>
-            <div class="row">
-                <div class="col">
+            <div class="row text-center">
+                <div class="col-6">
                     <span>Article Number: @Model.ArticleNumber</span>
                 </div>
-                <div class="col">
+                <div class="col-6">
                     <img src="~/img/favorite.png" alt="Add To Favorite" />
                     <a href="?">Add to Favorites</a>
                 </div>
@@ -41,7 +42,7 @@
                 </div>
                 <div class="col" style="border-bottom: solid; border-bottom-color: greenyellow;">
                     <span>Product Availability</span>
-                    <img src="~/img//productAvailable.png" alt="Alternate Text" />
+                    <img src="~/img/productAvailable.png" alt="Alternate Text" />
                 </div>
             </div>
             <div class="row" style="margin-top: 10px; border-top: solid; border-color: greenyellow">
@@ -53,33 +54,57 @@
                 </ul>
             </div>
 
+            @if (Model.SimilarLaptops.Count > 0)
+            {
+                <p style="color: black; font-size: 30px">Similar Products</p>
+                <div class="row ml-3">
+
+                    @foreach (var similarLaptop in Model.SimilarLaptops)
+                    {
+                        <div class="col-3 text-center m-1" style="border:solid; border-width: 1px; border-color: orangered">
+                            <p>@similarLaptop.Model</p>
+                            <a style="width: inherit" href="/Products/Laptop/@similarLaptop.Url">
+                                <img src="@similarLaptop.MainPicture" alt="Alternate Text" style="width: inherit" />
+                            </a>
+                           
+
+                            <p>@similarLaptop.Price lv</p>
+                        </div>
+                    }
+
+                </div>
+            }
 
         </div>
     </div>
 </div>
+<div style="margin-left: 3em; margin-right:3em; margin-top: 75px; border-top: solid; border-top-width: 1px; border-top-color: darkslateblue">
+    <h1 style="color: black">Advanced Details</h1>
+    <p>@Model.Title</p>
+</div>
+    <!-- Advanced Details for the laptop or product depends what will happen with the generic templates will they fit and shit -->
 
-<!-- Advanced Details for the laptop or product depends what will happen with the generic templates will they fit and shit -->
-<div class="row" style="background-color: white; margin-top: 4em">
-    @foreach (var advancedDetails in Model.AdvancedDetails)
-    {
-        <div class="col-12" style="margin-bottom: 10px; color: black">
-            <div class="row">
-                <div class="col-3 text-right" style="border-bottom: solid; border-bottom-color: orangered; border-bottom-width: 1px">
-                    <span>@advancedDetails.Key</span>
-                </div>
-                <div class="col-9">
-                    <span>@advancedDetails.Value</span>
+    <div class="row" style="background-color: white; margin-left: 3em; margin-right: 3em;">
+        @foreach (var advancedDetails in Model.AdvancedDetails)
+        {
+            <div class="col-12" style="margin-bottom: 10px; color: black">
+                <div class="row">
+                    <div class="col-3 text-right" style="border-bottom: solid; border-bottom-color: orangered; border-bottom-width: 1px">
+                        <span>@advancedDetails.Key</span>
+                    </div>
+                    <div class="col-9">
+                        <span>@advancedDetails.Value</span>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+    </div>
+
+
+
+
+
+
+    @section Scripts {
+        <script type="text/javascript" src="~/js/laptopPage.js"></script>
     }
-</div>
-
-
-
-
-
-
-@section Scripts {
-    <script type="text/javascript" src="~/js/laptopPage.js"></script>
-}

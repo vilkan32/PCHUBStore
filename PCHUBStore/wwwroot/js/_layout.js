@@ -90,5 +90,3 @@ function setPadding() {
 
 setPadding();
 navFunction();
-loadPicturesLeftSide();
-loadPicturesHeader();

@@ -12,5 +12,7 @@ namespace PCHUBStore.Services
         Task<Product> GetLaptop(string id);
         Task<List<FilterCategory>> GetFilters(string category);
         Task<IEnumerable<Product>> QueryLaptops(LaptopFiltersUrlModel laptopFilters);
+
+        Task<IEnumerable<Product>> GetSimilarLaptops(decimal currentPrice);
     }
 }

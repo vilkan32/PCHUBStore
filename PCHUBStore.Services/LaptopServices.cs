@@ -115,11 +115,20 @@ namespace PCHUBStore.Services
 
         public async Task<Product> GetLaptop(string id)
         {
-            var category = await this.context.Categories.FirstAsync(x => x.Name == "Laptops");
+            var category = await this.context.Categories.FirstAsync(x => x.Name == "Laptops" && x.IsDeleted == false);
 
             var laptop = category.Products.FirstOrDefault(x => x.Id == id && x.IsDeleted == false);
 
             return laptop;
+        }
+
+        public async Task<IEnumerable<Product>> GetSimilarLaptops(decimal currentPrice)
+        {
+            var category = await this.context.Categories.FirstAsync(x => x.Name == "Laptops" && x.IsDeleted == false);
+
+            var similarLaptops = category.Products.Where(x => x.Price >= currentPrice + 200 || x.Price >= currentPrice - 300);
+
+            return similarLaptops;
         }
  
     }

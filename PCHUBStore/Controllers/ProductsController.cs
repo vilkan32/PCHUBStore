@@ -70,7 +70,11 @@ namespace PCHUBStore.Controllers
             var laptop = await this.service.GetLaptop(laptopId);
 
             var laptopViewModel = mapper.Map<LaptopFullCharacteristicsViewModel>(laptop);
-            Console.WriteLine();
+
+            var similarLaptops = await this.service.GetSimilarLaptops(laptop.Price);
+
+            laptopViewModel.SimilarLaptops = mapper.Map<ICollection<SimilarLaptop>>(similarLaptops.Take(3));
+
             return this.View(laptopViewModel);
         }
 
