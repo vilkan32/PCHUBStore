@@ -28,6 +28,10 @@
     <ProjectReference Include="..\PCHUBStore.View.Models\PCHUBStore.View.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\js\zoom\" />
+  </ItemGroup>
+
 
 
 </Project>

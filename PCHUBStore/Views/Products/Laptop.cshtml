@@ -9,10 +9,11 @@
 <div class="row" style="margin-left: 3em; margin-right:3em; margin-top: 75px">
     <div class="col-lg-8 col-sm-12">
         <div class="row text-center">
-            <div class="col-lg-8 col-sm-12" style="border-bottom: solid; border-bottom-color: darkslateblue; border-bottom-width: 2px; margin-bottom: 10px">
-                <img src="@Model.MainPicture" alt="Main Picture" style="width: inherit;  margin-bottom: 7px" />
+            <div id="mainPicture" class="col-lg-8 col-sm-12" style="border-bottom: solid; border-bottom-color: darkslateblue; border-bottom-width: 2px; margin-bottom: 10px; display:inline-block; position: relative">
+                <img src="@Model.MainPicture" alt="Main Picture" style="width: inherit;  margin-bottom: 7px;"/>
             </div>
-            <div class="row text-center" style="background-color: white">
+            <div class="row text-center" style="        background-color: white
+">
                 @foreach (var pic in Model.Pictures)
                 {
                     <div class="col-2">
@@ -22,8 +23,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4 col-sm-12" style="        background-color: white
-">
+    <div class="col-lg-4 col-sm-12" style="background-color: white">
         <div class="container">
             <h3 style="color: black; ">@Model.Title</h3>
             <div class="row text-center">
@@ -66,7 +66,7 @@
                             <a style="width: inherit" href="/Products/Laptop/@similarLaptop.Url">
                                 <img src="@similarLaptop.MainPicture" alt="Alternate Text" style="width: inherit" />
                             </a>
-                           
+
 
                             <p>@similarLaptop.Price lv</p>
                         </div>
@@ -82,29 +82,32 @@
     <h1 style="color: black">Advanced Details</h1>
     <p>@Model.Title</p>
 </div>
-    <!-- Advanced Details for the laptop or product depends what will happen with the generic templates will they fit and shit -->
+<!-- Advanced Details for the laptop or product depends what will happen with the generic templates will they fit and shit -->
 
-    <div class="row" style="background-color: white; margin-left: 3em; margin-right: 3em;">
-        @foreach (var advancedDetails in Model.AdvancedDetails)
-        {
-            <div class="col-12" style="margin-bottom: 10px; color: black">
-                <div class="row">
-                    <div class="col-3 text-right" style="border-bottom: solid; border-bottom-color: orangered; border-bottom-width: 1px">
-                        <span>@advancedDetails.Key</span>
-                    </div>
-                    <div class="col-9">
-                        <span>@advancedDetails.Value</span>
-                    </div>
+<div class="row" style="background-color: white; margin-left: 3em; margin-right: 3em;">
+    @foreach (var advancedDetails in Model.AdvancedDetails)
+    {
+        <div class="col-12" style="margin-bottom: 10px; color: black">
+            <div class="row">
+                <div class="col-3 text-right" style="border-bottom: solid; border-bottom-color: orangered; border-bottom-width: 1px">
+                    <span>@advancedDetails.Key</span>
+                </div>
+                <div class="col-9">
+                    <span>@advancedDetails.Value</span>
                 </div>
             </div>
-        }
-    </div>
-
-
-
-
-
-
-    @section Scripts {
-        <script type="text/javascript" src="~/js/laptopPage.js"></script>
+        </div>
     }
+</div>
+
+
+
+
+
+
+@section Scripts {
+    <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script>
+    <script src="~/js/zoom/jquery.zoom.js"></script>
+
+    <script type="text/javascript" src="~/js/laptopPage.js"></script> 
+}

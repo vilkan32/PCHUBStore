@@ -21,7 +21,7 @@
 
         target.style.borderColor = 'white';
 
-
+        
         target.lastElementChild.style.visibility = 'hidden';
     }
 

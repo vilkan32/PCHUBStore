@@ -70,3 +70,4 @@ function setSliderHeight() {
 }
 
 setSliderHeight();
+onMouseInMainSlider();
