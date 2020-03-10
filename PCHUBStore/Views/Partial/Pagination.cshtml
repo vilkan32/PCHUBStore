@@ -8,27 +8,27 @@
             @if (Model.Pager.CurrentPage > 1)
             {
                 <li class="page-item">
-                    <a class="page-link" href="~/Laptops">First</a>
+                    <button class="page-link">First</button>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="~/Laptops?page=@(Model.Pager.CurrentPage - 1)">Previous</a>
+                    <button class="page-link">Previous</button>
                 </li>
             }
 
             @for (var pg = Model.Pager.StartPage; pg <= Model.Pager.EndPage; pg++)
             {
                 <li class="@(pg == Model.Pager.CurrentPage ? "active" : "") page-item">
-                    <a class="page-link" href="~/Laptops?page=@pg">@pg</a>
+                    <button class="page-link">@pg</button>
                 </li>
             }
 
             @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
             {
                 <li class="page-item">
-                    <a class="page-link"  href="~/Laptops?page=@(Model.Pager.CurrentPage + 1)">Next</a>
+                    <button class="page-link">Next</button>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="~/Laptops?page=@(Model.Pager.TotalPages)">Last</a>
+                    <button class="page-link">Last</button>
                 </li>
             }
         </ul>

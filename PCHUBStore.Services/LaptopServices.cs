@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PCHUBStore.Data;
 using PCHUBStore.Data.Models;
 using PCHUBStore.Filter.Models;
+using PCHUBStore.View.Models;
 using PCHUBStore.View.Models.FilterViewModels;
 using System;
 using System.Collections.Generic;
@@ -70,16 +71,36 @@ namespace PCHUBStore.Services
                             }
                         }
 
-                        if (prop.Name == filter.Name && (prop.Name == "MinPrice" || prop.Name == "MaxPrice"))
-                        {
-                            var val = this.GetPropertyValue(urlData, prop.Name) as decimal?;
-
-                            filter.Value = val.ToString();
-                        }
-
                     }
                 }
 
+            }
+
+            if (decimal.TryParse(urlData.MaxPrice, out decimal maxPrice) && decimal.TryParse(urlData.MinPrice, out decimal minPrice))
+            {
+                string maxPriceString = maxPrice.ToString();
+                string minPriceString = minPrice.ToString();
+
+
+                filterCategory.Add(new FilterCategoryViewModel
+                {
+                    CategoryName = "Laptops",
+                    ViewSubCategoryName = "Price",
+                    Filters = new List<FilterViewModel>
+                    {
+                       new FilterViewModel
+                       {
+                            Name = "MinPrice",
+                            Value = minPriceString
+                       },
+                       new FilterViewModel
+                       {
+                           Name = "MaxPrice",
+                           Value = maxPriceString
+                       }
+                    }
+
+                });
             }
 
             var orderByCategory = filterCategory.FirstOrDefault(x => x.ViewSubCategoryName == "OrderBy");
@@ -89,9 +110,33 @@ namespace PCHUBStore.Services
             var orderBy = orderByFilters.FirstOrDefault(x => x.Value == urlData.OrderBy);
 
             orderBy.IsChecked = true;
-               
+
             return Task.CompletedTask;
         }
+
+
+        public Task OrderBy(ref LaptopsViewModel laptops, string args)
+        {
+            if(args == null)
+            {
+                args = "Default";
+                return Task.CompletedTask;
+            }
+
+            if(args == "PriceAsc")
+            {
+                laptops.Laptops = laptops.Laptops.OrderBy(x => x.Price).ToList();
+                return Task.CompletedTask;
+            }
+            else if(args == "PriceDesc")
+            {
+                laptops.Laptops = laptops.Laptops.OrderByDescending(x => x.Price).ToList();
+                return Task.CompletedTask;
+            }
+
+
+            return Task.CompletedTask;
+        } 
 
         public async Task<IEnumerable<Product>> QueryLaptops(LaptopFiltersUrlModel laptopFilters)
         {

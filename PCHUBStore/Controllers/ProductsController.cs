@@ -11,23 +11,6 @@ using PCHUBStore.View.Models.FilterViewModels;
 using PCHUBStore.View.Models;
 using PCHUBStore.View.Models.Pagination;
 
-/*
-        [HttpGet("Products/Laptops/All")]
-        public async Task<IActionResult> LaptopsAll([FromQuery]int? page)
-        {
-
-            var laptopsViewModel = new LaptopsViewModel();
-            laptopsViewModel.Pager = new Pager(150, page, 5);
-            var result = await service.GetAllLaptops();
-
-            var laptops = mapper.Map<List<LaptopViewModel>>(result);
-
-
-            laptopsViewModel.Laptops = laptops;
-            return this.View("Laptops");
-        }
-
- * */
 namespace PCHUBStore.Controllers
 {
     public class ProductsController : Controller
@@ -60,9 +43,11 @@ namespace PCHUBStore.Controllers
             laptopViewModel.FilterCategory = mapper.Map<List<FilterCategoryViewModel>>(filters);
 
             laptopViewModel.Laptops = mapper.Map<List<LaptopViewModel>>(laptops);
+            
+            await this.service.OrderBy(ref laptopViewModel, laptopFilters.OrderBy);
 
             await this.service.ApplyFiltersFromUrl(laptopViewModel.FilterCategory, laptopFilters);
-
+            
             return this.View(laptopViewModel);
         }
 

@@ -14,5 +14,7 @@ namespace PCHUBStore.View.Models.FilterViewModels
         public ICollection<FilterViewModel> Filters { get; set; }
         public string CategoryName { get; set; }
         public string ViewSubCategoryName { get; set; }
+
+
     }
 }
