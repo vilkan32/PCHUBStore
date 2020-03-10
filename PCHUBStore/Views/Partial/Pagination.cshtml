@@ -5,34 +5,31 @@
 {
    
         <ul class="pagination col-4">
-            @if (Model.Pager.CurrentPage > 1)
-            {
-                <li class="page-item">
-                    <button class="page-link">First</button>
-                </li>
-                <li class="page-item">
-                    <button class="page-link">Previous</button>
-                </li>
-            }
 
             @for (var pg = Model.Pager.StartPage; pg <= Model.Pager.EndPage; pg++)
             {
                 <li class="@(pg == Model.Pager.CurrentPage ? "active" : "") page-item">
-                    <button class="page-link">@pg</button>
+                    <button onclick="clickPageBtn(this)" value="@pg" class="page-link">@pg</button>
                 </li>
             }
-
-            @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
-            {
-                <li class="page-item">
-                    <button class="page-link">Next</button>
-                </li>
-                <li class="page-item">
-                    <button class="page-link">Last</button>
-                </li>
-            }
+         
         </ul>
+        <script>
+           
 
-  
+            function clickPageBtn(e) {
+
+                 let target = e;
+
+                let page = target.innerText;
+
+                document.getElementById('page').value = page;
+
+                document.getElementById('btn').click();
+
+           
+            };
+
+        </script>
 }
 

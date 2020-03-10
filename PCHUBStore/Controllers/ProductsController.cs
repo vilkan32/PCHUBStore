@@ -34,8 +34,6 @@ namespace PCHUBStore.Controllers
 
             var laptopViewModel = new LaptopsViewModel();
 
-            laptopViewModel.Pager = new Pager(60, laptopFilters.Page, 20);
- 
             var laptops = await this.service.QueryLaptops(laptopFilters);
 
             var filters = await this.service.GetFilters("Laptops");
@@ -45,6 +43,10 @@ namespace PCHUBStore.Controllers
             laptopViewModel.Laptops = mapper.Map<List<LaptopViewModel>>(laptops);
             
             await this.service.OrderBy(ref laptopViewModel, laptopFilters.OrderBy);
+
+            laptopViewModel.Pager = new Pager(laptopViewModel.Laptops.Count, laptopFilters.Page, 20);
+            Console.WriteLine();
+            laptopViewModel.Laptops = laptopViewModel.Laptops.Skip((laptopFilters.Page - 1) * 20).Take(20).ToList();
 
             await this.service.ApplyFiltersFromUrl(laptopViewModel.FilterCategory, laptopFilters);
             
