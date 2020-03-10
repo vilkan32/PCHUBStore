@@ -42,8 +42,8 @@ namespace PCHUBStore.MiddlewareFilters
                         var value = param.Value.ToArray();
                         if (key == "OrderBy")
                         {
-
-                            if (value[0] == "Default" || value[0] == "PriceDesc" || value[0] == "PriceAscending")
+                 
+                            if (value[0] == "Default" || value[0] == "PriceDesc" || value[0] == "PriceAsc")
                             {
                                 continue;
                             }

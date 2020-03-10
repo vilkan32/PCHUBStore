@@ -2,55 +2,89 @@
 
 
 
-    <form asp-controller="Products" asp-action="Laptops" class="productsViewStyle" style="border-style: solid; background-color: white; border-color:white" method="get">
-        <div class="container text-center border-bottom-info" style="background-color: #f6f6f6">
-            <img src="~/img/icons8-filter-64.png" alt="Filters" />
-        </div>
+<form asp-controller="Products" asp-action="Laptops" class="productsViewStyle" style="border-style: solid; background-color: white; border-color:white" method="get">
+    <div class="container text-center border-bottom-info" style="background-color: #f6f6f6">
+        <img src="~/img/icons8-filter-64.png" alt="Filters" />
+    </div>
 
 
-        <div class="container border-bottom-danger" style="margin-top: 20px">
-            <label for="OrderBy" style="font-family: sans-serif; color: black; font-size: 20px">Order By</label>
-            <select name="OrderBy" class="form-control" style="margin-bottom: 20px">
-                <option value="Default">Default</option>
-                <option value="PriceDesc">Price Descending</option>
-                <option value="PriceAscending">Price Ascending</option>
-            </select>
-        </div>
+    <div class="container border-bottom-danger" style="margin-top: 20px">
+        <label for="OrderBy" style="font-family: sans-serif; color: black; font-size: 20px">Order By</label>
+        <select onchange="changeHandler()" name="OrderBy" class="form-control" style="margin-bottom: 20px">
 
-        <div class="container border-bottom-danger text-center" style="margin-top: 20px;">
-            <div class="col-12 text-center" style="margin-bottom: 10px">
-                <p class="border-bottom-success" style="font-family: sans-serif; color: black; font-size: 20px">Price</p>
-            </div>
-            <div class="col-12" style="margin-bottom: 20px">
-                <label for="MinPrice">Minimum Price</label>
-                <input type="text" name="MinPrice" value="400" />
-
-            </div>
-            <div class="col-12" style="margin-bottom: 20px">
-                <label for="MaxPrice">Maximum Price</label>
-                <input type="text" name="MaxPrice" value="10000" />
-            </div>
-
-        </div>
-        <div class="row" style="margin-top: 20px">
-
-            @foreach (var category in Model)
+            @foreach (var orderByCategory in Model.Where(x => x.ViewSubCategoryName == "OrderBy"))
             {
-                <div class="col-12 text-center" style="margin-bottom: 10px">
-                    <p class="border-bottom-success" style="font-family: sans-serif; color: black; font-size: 20px">@category.ViewSubCategoryName</p>
-                </div>
+                @foreach (var filter in orderByCategory.Filters)
+                {
+                    @if (filter.IsChecked)
+                    {
+                        <option value="@filter.Value" selected>@filter.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@filter.Value">@filter.Name</option>
+                    }
+                }
+            }
+        </select>
+    </div>
+
+    <div class="container border-bottom-danger text-center" style="margin-top: 20px;">
+        <div class="col-12 text-center" style="margin-bottom: 10px">
+            <p class="border-bottom-success" style="font-family: sans-serif; color: black; font-size: 20px">Price</p>
+        </div>
+        <div class="col-12" style="margin-bottom: 20px">
+            <label for="MinPrice">Minimum Price</label>
+            <input type="number" style="width: inherit" name="MinPrice" value="500" />
+
+        </div>
+        <div class="col-12" style="margin-bottom: 20px">
+            <label for="MaxPrice">Maximum Price</label>
+            <input type="number" style="width: inherit" name="MaxPrice" value="10000" />
+        </div>
+
+    </div>
+    <div class="row" style="margin-top: 20px">
+
+        @foreach (var category in Model.Where(x => x.ViewSubCategoryName != "OrderBy").ToList())
+        {
+            <div class="col-12 text-center" style="margin-bottom: 10px">
+                <p class="border-bottom-success" style="font-family: sans-serif; color: black; font-size: 20px">@category.ViewSubCategoryName</p>
+            </div>
 
 
-                @foreach (var filter in category.Filters)
+            @foreach (var filter in category.Filters)
+            {
+                if (filter.IsChecked)
                 {
                     <div class="col-12">
                         <label for="@filter.Name">@filter.Value</label>
-                        <input type="checkbox" name="@filter.Name" value="@filter.Value" />
+                        <input onchange="changeHandler()" type="checkbox" checked name="@filter.Name" value="@filter.Value" />
                     </div>
                 }
+                else
+                {
+                    <div class="col-12">
+                        <label for="@filter.Name">@filter.Value</label>
+                        <input onchange="changeHandler()" type="checkbox" name="@filter.Name" value="@filter.Value" />
+                    </div>
+                }
+
+
             }
 
-        </div>
 
-            <button id="btn" style="visibility: hidden" asp-controller="Products" asp-action="Laptops">Click Me</button>
+            <script>
+                function changeHandler() {
+                    console.log("inside");
+
+                    document.getElementById('btn').click();
+
+                }
+            </script>
+        }
+
+    </div>
+
+    <button id="btn" style="visibility: hidden" asp-controller="Products" asp-action="Laptops">Click Me</button>
 </form>

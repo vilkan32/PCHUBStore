@@ -60,6 +60,9 @@ namespace PCHUBStore.Controllers
             laptopViewModel.FilterCategory = mapper.Map<List<FilterCategoryViewModel>>(filters);
 
             laptopViewModel.Laptops = mapper.Map<List<LaptopViewModel>>(laptops);
+
+            await this.service.ApplyFiltersFromUrl(laptopViewModel.FilterCategory, laptopFilters);
+
             return this.View(laptopViewModel);
         }
 

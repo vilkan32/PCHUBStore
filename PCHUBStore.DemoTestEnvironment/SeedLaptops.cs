@@ -617,6 +617,7 @@ namespace PCHUBStore.DemoTestEnvironment
             //     await context.FilterCategories.AddAsync(processorsFilterCategory);
             // end
 
+            // start
             var videCardFilterCategory = new FilterCategory
             {
                 CategoryName = "Laptops",
@@ -642,8 +643,47 @@ namespace PCHUBStore.DemoTestEnvironment
 
             videCardFilterCategory.Filters = videoCardFilters;
 
-            await context.FilterCategories.AddAsync(videCardFilterCategory);
-            await context.SaveChangesAsync();
+            //    await context.FilterCategories.AddAsync(videCardFilterCategory);
+            //   await context.SaveChangesAsync();
+
+            // start
+
+            var orderByFilterCategory = new FilterCategory
+            {
+                CategoryName = "Laptops",
+                ViewSubCategoryName = "OrderBy",
+            };
+
+
+            var orderByFilters = new List<PCHUBStore.Data.Models.Filter>()
+            {
+
+            new PCHUBStore.Data.Models.Filter
+            {
+                Name = "Default",
+                Value = "Default"
+            },
+
+              new PCHUBStore.Data.Models.Filter
+            {
+                Name = "Price Ascending",
+                Value = "PriceAsc"
+            },
+
+                new PCHUBStore.Data.Models.Filter
+            {
+                Name = "Price Descending",
+                Value = "PriceDesc"
+            },
+            };
+
+            orderByFilterCategory.Filters = orderByFilters;
+
+
+               await context.FilterCategories.AddAsync(orderByFilterCategory);
+              await context.SaveChangesAsync();
+
+
         }
 
     }

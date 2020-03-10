@@ -3,30 +3,29 @@ using Microsoft.EntityFrameworkCore;
 using PCHUBStore.Data;
 using PCHUBStore.Data.Models;
 using PCHUBStore.Filter.Models;
+using PCHUBStore.View.Models.FilterViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace PCHUBStore.Services
 {
     public class LaptopServices : ILaptopServices
     {
-
-
         private readonly PCHUBDbContext context;
-
 
         public LaptopServices(PCHUBDbContext context)
         {
             this.context = context;
         }
 
-        private Func<T, bool> DetermineIfAll<T>(string parameter, string value) where T : BaseCharacteristicsModel 
+        private Func<T, bool> DetermineIfAll<T>(string parameter, string value) where T : BaseCharacteristicsModel
         {
 
-         
-            if(value == "All")
+
+            if (value == "All")
             {
                 Func<T, bool> funcResult = (x) => true;
 
@@ -43,7 +42,55 @@ namespace PCHUBStore.Services
 
         public async Task<List<FilterCategory>> GetFilters(string category)
         {
-            return  await this.context.FilterCategories.Where(x => x.CategoryName == category).ToListAsync();
+            var filterCategory = await this.context.FilterCategories.Where(x => x.CategoryName == category && x.IsDeleted == false).ToListAsync();
+
+            return filterCategory;
+        }
+
+        public Task ApplyFiltersFromUrl(ICollection<FilterCategoryViewModel> filterCategory, LaptopFiltersUrlModel urlData)
+        {
+
+            foreach (var category in filterCategory)
+            {
+                foreach (var filter in category.Filters)
+                {
+                    var properties = urlData.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public);
+
+                    foreach (var prop in properties)
+                    {
+
+                        if (prop.Name == filter.Name && prop.Name != "MinPrice" && prop.Name != "MaxPrice" && prop.Name != "Page" && prop.Name != "OrderBy")
+                        {
+                            var val = this.GetPropertyValue(urlData, prop.Name) as string[];
+
+                            if (val.Any(x => x == filter.Value))
+                            {
+                                filter.IsChecked = true;
+                                break;
+                            }
+                        }
+
+                        if (prop.Name == filter.Name && (prop.Name == "MinPrice" || prop.Name == "MaxPrice"))
+                        {
+                            var val = this.GetPropertyValue(urlData, prop.Name) as decimal?;
+
+                            filter.Value = val.ToString();
+                        }
+
+                    }
+                }
+
+            }
+
+            var orderByCategory = filterCategory.FirstOrDefault(x => x.ViewSubCategoryName == "OrderBy");
+
+            var orderByFilters = orderByCategory.Filters;
+
+            var orderBy = orderByFilters.FirstOrDefault(x => x.Value == urlData.OrderBy);
+
+            orderBy.IsChecked = true;
+               
+            return Task.CompletedTask;
         }
 
         public async Task<IEnumerable<Product>> QueryLaptops(LaptopFiltersUrlModel laptopFilters)
@@ -52,11 +99,11 @@ namespace PCHUBStore.Services
             decimal minPrice;
             decimal maxPrice;
 
-            if(!decimal.TryParse(laptopFilters.MaxPrice, out maxPrice))
+            if (!decimal.TryParse(laptopFilters.MaxPrice, out maxPrice))
             {
                 maxPrice = 30000;
             }
-            if(!decimal.TryParse(laptopFilters.MinPrice, out minPrice))
+            if (!decimal.TryParse(laptopFilters.MinPrice, out minPrice))
             {
                 minPrice = 400;
             }
@@ -78,7 +125,7 @@ namespace PCHUBStore.Services
             {
                 laptopFilters.Processor = new string[] { "All" };
             }
-            if(laptopFilters.VideoCard == null)
+            if (laptopFilters.VideoCard == null)
             {
                 laptopFilters.VideoCard = new string[] { "All" };
             }
@@ -91,7 +138,7 @@ namespace PCHUBStore.Services
             var result = laptopCategory
             .Products
             .Where(p =>
-            p.Model != null & p.Model != null 
+            p.Model != null & p.Model != null
             &&
             laptopFilters.Model.ToList().Any(x => p.Model.ToLower() == x.ToLower() || x == "All")
             &&
@@ -126,10 +173,17 @@ namespace PCHUBStore.Services
         {
             var category = await this.context.Categories.FirstAsync(x => x.Name == "Laptops" && x.IsDeleted == false);
 
-            var similarLaptops = category.Products.Where(x => x.Price >= currentPrice + 200 || x.Price >= currentPrice - 300);
+            var similarLaptops = category.Products.Where(x => x.Price > currentPrice + 50 || x.Price > currentPrice - 400);
 
             return similarLaptops;
         }
- 
+
+        public object GetPropertyValue(LaptopFiltersUrlModel urlData, string propName)
+        {
+            var prop = urlData.GetType().GetProperty(propName);
+
+            return prop.GetValue(urlData, null);
+        }
+
     }
 }
