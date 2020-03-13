@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CloudinaryDotNet" Version="1.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Constants\Constants.csproj" />
     <ProjectReference Include="..\PCHUBStore.Data\PCHUBStore.Data.csproj" />
     <ProjectReference Include="..\PCHUBStore.Filter.Models\PCHUBStore.Filter.Models.csproj" />

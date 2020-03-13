@@ -57,10 +57,9 @@ namespace PCHUBStore
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<PCHUBDbContext>()
-                .AddDefaultTokenProviders()
-                .AddEntityFrameworkStores<PCHUBDbContext>();
+                .AddDefaultTokenProviders();
 
-            services.AddTransient<ILaptopServices, LaptopServices>();
+           
 
             Account cloudinaryCredentials = new Account(
               this.Configuration["Cloudinary:CloudName"],
@@ -69,16 +68,49 @@ namespace PCHUBStore
 
             Cloudinary cloudinaryUtility = new Cloudinary(cloudinaryCredentials);
 
-
             services.AddSingleton(cloudinaryUtility);
 
             services.AddScoped<ValidationFilter>();
 
+            services.AddTransient<ILaptopServices, LaptopServices>();
+
+            services.AddTransient<ICloudinaryServices, CloudinaryServices>();
+
+            services.AddTransient<IUserProfileServices, UserProfileServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+
+            using var scoperService = app.ApplicationServices.CreateScope();
+
+            var roleManager = scoperService.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+
+            var adminRole = roleManager.FindByNameAsync("Admin").GetAwaiter().GetResult();
+
+            var userRole = roleManager.FindByNameAsync("StoreUser").GetAwaiter().GetResult();
+
+
+            if(adminRole == null)
+            {
+                roleManager.CreateAsync(new IdentityRole
+                {
+                    Name = "Admin"
+                }).GetAwaiter().GetResult();
+            }
+
+            if(userRole == null)
+            {
+                roleManager.CreateAsync(new IdentityRole
+                {
+
+                    Name = "StoreUser"
+
+                }).GetAwaiter().GetResult();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

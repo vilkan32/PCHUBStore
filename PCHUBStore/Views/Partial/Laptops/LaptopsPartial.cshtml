@@ -1,39 +1,15 @@
 ﻿
 @model ICollection<PCHUBStore.View.Models.LaptopViewModel>
 
-<!-- model ICollection<PCHUBStore.View.Models.LaptopViewModel>
-
-
-        <div class="col-lg-3 col-sm-12" style="background-color:white">
-            <img style="width: inherit; height: 203px" src="~/img/laptop.jpg" alt="Alternate Text" />
-            <p style="border-bottom-color: black; border-bottom: solid">206.00 lv</p>
-            <p>UPGRADED Acer Aspire 3, A315-54K-36DF, 15.6" FHD, i3-7020U, 8GB, 256GB SSD, Черен | NX.HEEEX.010_NP.ACC11.01V</p>
-            <p>Processor</p>
-            <p>Hard</p>
-            <p>Video Card</p>
-            <p>OS</p>
-            <p>Make</p>
-        </div>
-
-
-        <li style="list-style-image: url('img/listLI.png'); word-break: break-all">4 GB DDR4 / Вградена (1 свободен слот)</li>
-                    <li style="list-style-image: url('img/listLI.png'); word-break: break-all">256 GB SSD | М.2 PCIe NVMe (2280)</li>
-                    <li style="list-style-image: url('img/listLI.png'); word-break: break-all">Intel HD Graphics 620</li>
-                    <li style="list-style-image: url('img/listLI.png'); word-break: break-all">Без операционна система</li>
-
--->
-
-
-
 <div class="row">
 
     @foreach (var product in Model)
     {
-    <div class="col-lg-3 col-sm-12 col-md-6 laptopsJs" style="background-color:white; border: solid; border-width: 2px; border-color: white">
+        <div class="col-lg-3 col-sm-12 col-md-6 laptopsJs" style="background-color:white; border: solid; border-width: 2px; border-color: white">
             <div class="text-center">
-            <a href="Products/Laptop/@product.Id" style="text-decoration:none; width: inherit; font-size: 17px; color:black" class="text-center">
-                <img style="width: inherit; height: 5cm" src="@product.PictureUrl" alt="Alternate Text" />
-            </a>
+                <a href="Products/Laptop/@product.Id" style="text-decoration:none; width: inherit; font-size: 17px; color:black" class="text-center">
+                    <img style="width: inherit; height: 5cm" src="@product.PictureUrl" alt="Alternate Text" />
+                </a>
             </div>
             <div class="text-center m-2" style="word-break: break-all; color: black; font-size: 30px; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: darkslateblue">
                 @product.Price лв
@@ -59,7 +35,7 @@
 
             </div>
 
-    </div>
+        </div>
     }
 
 

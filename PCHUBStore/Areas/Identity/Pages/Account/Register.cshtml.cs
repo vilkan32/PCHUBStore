@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using PCHUBStore.Data;
 using PCHUBStore.Data.Models;
 
 namespace PCHUBStore.Areas.Identity.Pages.Account
@@ -22,17 +23,21 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
-
+        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly PCHUBDbContext context;
 
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger)
+            ILogger<RegisterModel> logger,
+            RoleManager<IdentityRole> roleManager,
+            PCHUBDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-         
+            this.roleManager = roleManager;
+            this.context = context;
         }
 
         [BindProperty]
@@ -46,8 +51,13 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [StringLength(20, MinimumLength = 10)]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
+            [Required]
+            [Display(Name = "Username")]
+            public string Username { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -59,6 +69,7 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+          
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -71,12 +82,32 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            var emailAlreadyExists = this.context.Users.Any(x => x.Email == Input.Email);
+
+            Console.WriteLine();
+            if (emailAlreadyExists)
+            {
+                ModelState.AddModelError("Email", "Email already exists");
+            }
+
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.Email, Email = Input.Email };
+                var user = new User { UserName = Input.Username, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
                 if (result.Succeeded)
                 {
+
+                    var role = await this.roleManager.FindByNameAsync("StoreUser");
+
+                    await this.context.UserRoles.AddAsync(new IdentityUserRole<string>
+                    {
+                        RoleId = role.Id,
+                        UserId = user.Id
+                    });
+
+                    await this.context.SaveChangesAsync();
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
