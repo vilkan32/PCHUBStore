@@ -30,7 +30,13 @@
                     <a href="" data-target="#editSettings" data-toggle="tab" class="nav-link @Model.AccountSettingsActive">Edit Account Settings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link"  asp-action="LogOut" asp-controller="User">Log Out</a>
+                    <a href="" data-target="#editSettings" data-toggle="tab" class="nav-link @Model.AccountSettingsActive">Favorite Products</a>
+                </li>
+                <li class="nav-item">
+                    <a href="" data-target="#editSettings" data-toggle="tab" class="nav-link @Model.AccountSettingsActive">Products History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-action="LogOut" asp-controller="User">Log Out</a>
                 </li>
             </ul>
             <div class="tab-content py-4">
@@ -139,7 +145,16 @@
             </div>
         </div>
         <div class="col-lg-4 order-lg-1 text-center">
-            <img src="@Model.ProfilePictureUrl" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+
+            @if (string.IsNullOrWhiteSpace(Model.ProfilePictureUrl))
+            {
+                <img src="~/img/defaultProfilePicture.png" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+            }
+            else
+            {
+                <img src="@Model.ProfilePictureUrl" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+            }
+
             <h6 class="mt-2">Upload a different photo</h6>
             <form method="post" enctype="multipart/form-data"
                   asp-controller="User"

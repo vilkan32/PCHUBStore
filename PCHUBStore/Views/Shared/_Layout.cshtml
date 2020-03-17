@@ -25,47 +25,47 @@
 </head>
 <body style="background-color: #F2F1F0; overflow-x: hidden">
 
-    <!-- Navigation -->  
-        <nav class="navbar" style="max-width: inherit; height: auto; background-color: black" id="nav">
-                <!--lightning-->
+    <!-- Navigation -->
+    <nav class="navbar" style="max-width: inherit; height: auto; background-color: black" id="nav">
+        <!--lightning-->
 
-            <div class="row text-center" style="display: contents">
-                <!-- Home -->
-                <div style="height:80px;" class="col-sm-6 col-lg-2">
-                    <a style="display: inline-block" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="~/img/FinalLogo.png" style="width: 200px; height: 50px;" alt="Alternate Text" />
-                        <p>Electronics Hub</p>
-                    </a>
-                </div>
-                <!-- Search -->
-                <div class="col-sm-6 col-lg-4">
-                    <form class="form-inline m-4 justify-content-center">
-                        <input class="form-control mr-sm-4" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
-                    </form>
-                </div>
-                <!-- Shopping Cart -->
-                <div style="height:60px;" class="col-sm-6 col-lg-2">
-                    <a style="display: inline-block" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="~/img/shoppingCart.png" style="width: 50px; height: 50px; z-index: 1" alt="Alternate Text" />
-                        <span style="background-color:#152b53; color:#fff; padding:4px; font-weight:bold;">7</span>
-                    </a>
-                </div>
-                <!-- Chat -->
-                <div style="height:60px;" class="col-sm-6 col-lg-2">
-                    <a style="display: inline-block" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="~/img/chat.png" style="width: 50px; height: 50px; " alt="Alternate Text" />
-                    </a>
-                </div>
-                <!-- Profile -->
-                <div style="height:60px;" class="col-sm-6 col-lg-2">
-                    <partial name="_LoginPartial" />
-                </div>
-               
+        <div class="row text-center" style="display: contents">
+            <!-- Home -->
+            <div style="height:80px;" class="col-sm-6 col-lg-2">
+                <a style="display: inline-block" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/img/FinalLogo.png" style="width: 200px; height: 50px;" alt="Alternate Text" />
+                    <p>Electronics Hub</p>
+                </a>
+            </div>
+            <!-- Search -->
+            <div class="col-sm-6 col-lg-4">
+                <form class="form-inline m-4 justify-content-center">
+                    <input class="form-control mr-sm-4" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+                </form>
+            </div>
+            <!-- Shopping Cart -->
+            <div style="height:60px;" class="col-sm-6 col-lg-2">
+                <a style="display: inline-block" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/img/shoppingCart.png" style="width: 50px; height: 50px; z-index: 1" alt="Alternate Text" />
+                    <span style="background-color:#152b53; color:#fff; padding:4px; font-weight:bold;">7</span>
+                </a>
+            </div>
+            <!-- Chat -->
+            <div style="height:60px;" class="col-sm-6 col-lg-2">
+                <a style="display: inline-block" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/img/chat.png" style="width: 50px; height: 50px; " alt="Alternate Text" />
+                </a>
+            </div>
+            <!-- Profile -->
+            <div style="height:60px;" class="col-sm-6 col-lg-2">
+                <partial name="_LoginPartial" />
             </div>
 
-  
-        </nav>
+        </div>
+
+
+    </nav>
     <!-- Navigation -->
 
     <div>
@@ -75,39 +75,196 @@
 
     </div>
 
-    <footer class="page-footer font-small mdb-color darken-3 pt-4">
-
-        <!-- Footer Elements -->
-        <div class="container">
-
-            <!--Grid row-->
-            <div class="row d-flex justify-content-center">
-
-                <!--Grid column-->
-                <div class="col-md-6">
-
-                    <!-- Video -->
-                    <div class="embed-responsive embed-responsive-16by9 mb-4">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/vlDzYIIOYmM"
-                                allowfullscreen></iframe>
+    <!-- Last Checked Products-->
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <div style="color: black; margin-bottom: 4em" class="container text-center border bg-white">
+            <h3 class="bg-white border font-weight-bold">Products that have already been reviewed</h3>
+            <div class="row">
+                <div class="col-sm-4 col-lg-2 text-center border bg-white m-2">
+                    <div class="container">
+                        <img style="width: inherit" src="https://laptop.bg/system/images/224557/medium/amd_ryzen_5_3400g.jpg" alt="Alternate Text" />
                     </div>
+                    <div class="container">
+                        <p>AMD Ryzen 5 3400G</p>
+                    </div>
+                    <div class="container">
+                        <p>200.<span style="font-size:10px">00</span></p>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-lg-2 text-center border bg-white m-2">
+                    <div class="container">
+                        <img style="width: inherit" src="https://laptop.bg/system/images/224557/medium/amd_ryzen_5_3400g.jpg" alt="Alternate Text" />
+                    </div>
+                    <div class="container">
+                        <p>AMD Ryzen 5 3400G</p>
+                    </div>
+                    <div class="container">
+                        <p>200.<span style="font-size:10px">00</span></p>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-lg-2 text-center border bg-white m-2">
+                    <div class="container">
+                        <img style="width: inherit" src="https://laptop.bg/system/images/224557/medium/amd_ryzen_5_3400g.jpg" alt="Alternate Text" />
+                    </div>
+                    <div class="container">
+                        <p>AMD Ryzen 5 3400G</p>
+                    </div>
+                    <div class="container">
+                        <p>200.<span style="font-size:10px">00</span></p>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-lg-2 text-center border bg-white m-2">
+                    <div class="container">
+                        <img style="width: inherit" src="https://laptop.bg/system/images/224557/medium/amd_ryzen_5_3400g.jpg" alt="Alternate Text" />
+                    </div>
+                    <div class="container">
+                        <p>AMD Ryzen 5 3400G</p>
+                    </div>
+                    <div class="container">
+                        <p>200.<span style="font-size:10px">00</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    }
+
+    <!-- Footer -->
+    <footer class="page-footer font-small unique-color-dark">
+
+        <div style="background-color: #6351ce;">
+            <div class="container">
+
+                <!-- Grid row-->
+                <div class="row py-4 d-flex align-items-center">
+
+                    <!-- Grid column -->
+                    <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
+                        <h6 class="mb-0">Get connected with us on social networks!</h6>
+                    </div>
+                    <!-- Grid column -->
+                    <!-- Grid column -->
+                    <div class="col-md-6 col-lg-7 text-center text-md-right">
+
+                        <!-- Facebook -->
+                        <a class="fb-ic">
+                            <i class="fab fa-facebook-f white-text mr-4"> </i>
+                        </a>
+                        <!-- Twitter -->
+                        <a class="tw-ic">
+                            <i class="fab fa-twitter white-text mr-4"> </i>
+                        </a>
+                        <!-- Google +-->
+                        <a class="gplus-ic">
+                            <i class="fab fa-google-plus-g white-text mr-4"> </i>
+                        </a>
+                        <!--Linkedin -->
+                        <a class="li-ic">
+                            <i class="fab fa-linkedin-in white-text mr-4"> </i>
+                        </a>
+                        <!--Instagram-->
+                        <a class="ins-ic">
+                            <i class="fab fa-instagram white-text"> </i>
+                        </a>
+
+                    </div>
+                    <!-- Grid column -->
 
                 </div>
-                <!--Grid column-->
+                <!-- Grid row-->
 
             </div>
-            <!--Grid row-->
+        </div>
+
+
+        <!-- Footer Links -->
+        <div class="container text-center text-md-left mt-5">
+
+            <!-- Grid row -->
+            <div class="row mt-3">
+
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+
+                    <!-- Content -->
+                    <h6 class="text-uppercase font-weight-bold">PCHUB Store</h6>
+                    <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                    <p>
+                        You can select from wide variety of electronics and pick up a good deal.
+                    </p>
+
+                </div>
+                <!-- Grid column -->
+                <!-- Grid column -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+
+                    <!-- Links -->
+                    <h6 class="text-uppercase font-weight-bold">Products</h6>
+                    <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                    <p>
+                        <a href="#!">Laptops</a>
+                    </p>
+                    <p>
+                        <a href="#!">Mice</a>
+                    </p>
+                    <p>
+                        <a href="#!">Keyboards</a>
+                    </p>
+                    <p>
+                        <a href="#!">Monitors</a>
+                    </p>
+
+                </div>
+                <!-- Grid column -->
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+
+                    <!-- Links -->
+                    <h6 class="text-uppercase font-weight-bold">Useful links</h6>
+                    <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                    <p>
+                        <!-- Login Or Register -->
+                        <a href="#!">Account</a>
+                    </p>
+                    <p>
+                        <a href="#!">Shopping Cart</a>
+                    </p>
+                    <p>
+                        <a href="#!">Chat</a>
+                    </p>
+
+                </div>
+                <!-- Grid column -->
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+
+                    <!-- Links -->
+                    <h6 class="text-uppercase font-weight-bold">Contact</h6>
+                    <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                    <p>
+                        <i class="fas fa-home mr-3"></i> Sofia, Mladost 2
+                    </p>
+                    <p>
+                        <i class="fas fa-envelope mr-3"></i> pchubstore@pchub.com
+                    </p>
+                    <p>
+                        <i class="fas fa-phone mr-3"></i> + 01 234 567 88
+                    </p>
+
+
+                </div>
+                <!-- Grid column -->
+
+            </div>
+            <!-- Grid row -->
 
         </div>
-        <!-- Footer Elements -->
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3">
-            © 2020 Copyright:
-            <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
-        </div>
-        <!-- Copyright -->
+        <!-- Footer Links -->
 
     </footer>
+    <!-- Footer -->
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

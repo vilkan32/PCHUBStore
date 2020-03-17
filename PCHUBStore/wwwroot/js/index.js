@@ -4,7 +4,7 @@
 
     let regex = /option\d/;
 
-    fetch("/api/index/slider").then(res => res.json()).then(x => {
+    fetch("api/MainSlider").then(res => res.json()).then(x => {
         let obj = JSON.parse(x);
         let pictures = obj["Pictures"].filter(x => regex.exec(x.Name) && x.IsDeleted === false);
         document.getElementById('mainSlidePic').src = pictures[randomInteger(0, 3)].Url;

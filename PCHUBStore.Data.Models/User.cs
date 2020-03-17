@@ -31,5 +31,8 @@ namespace PCHUBStore.Data.Models
 
         public virtual ICollection<Activity> Activities { get; set; }
         public virtual Picture ProfilePicture { get; set; }
+
+        public virtual ICollection<Product> LastReviewedProducts { get; set; }
+
     }
 }

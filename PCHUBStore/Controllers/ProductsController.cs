@@ -57,7 +57,7 @@ namespace PCHUBStore.Controllers
         [HttpGet("Products/Laptop/{laptopId}")]
         public async Task<IActionResult> Laptop(string laptopId)
         {
-            var laptop = await this.service.GetLaptop(laptopId);
+            var laptop = await this.service.GetLaptop(laptopId, this.User.Identity.Name, this.User.Identity.IsAuthenticated);
 
             var laptopViewModel = mapper.Map<LaptopFullCharacteristicsViewModel>(laptop);
 

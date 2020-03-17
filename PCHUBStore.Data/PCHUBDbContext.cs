@@ -34,6 +34,12 @@ namespace PCHUBStore.Data
         public virtual DbSet<FilterCategory> FilterCategories { get; set; }
         public virtual DbSet<FullCharacteristic> FullCharacteristics { get; set; }
 
+        public virtual DbSet<ColorfulBox> ColorfulBoxes { get; set; }
+
+        public virtual DbSet<IndexCategory> IndexCategories { get; set; }
+
+        public virtual DbSet<IndexCategoryItems> Items { get; set; }
+        public virtual DbSet<IndexPage> IndexPages { get; set; }
         public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }

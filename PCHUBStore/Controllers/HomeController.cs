@@ -11,44 +11,24 @@ using Newtonsoft.Json;
 using PCHUBStore.Data;
 using PCHUBStore.Data.Models;
 using PCHUBStore.Models;
+using PCHUBStore.Services.EmailSender;
 
 namespace PCHUBStore.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IEmailSender sender;
 
-        private readonly PCHUBDbContext context;
-        public HomeController(ILogger<HomeController> logger, PCHUBDbContext context)
+        public HomeController(ILogger<HomeController> logger, IEmailSender sender)
         {
             _logger = logger;
-            this.context = context;
+            this.sender = sender;
         }
 
-        public IActionResult Index(string[] some)
+        public async Task<IActionResult> Index(string[] some)
         {
-      
-
-            var category = new Category { Name = "Laptops" };
-
-            var product = new Product();
-
-            var basicCharModel = new BasicCharacteristic();
-            basicCharModel.Key = "Model";
-            basicCharModel.Value = "Acer";
-
-            var basicCharProcessor = new BasicCharacteristic();
-            basicCharProcessor.Key = "Processor";
-            basicCharProcessor.Value = "Intel Core i5";
-
-            product.BasicCharacteristics.Add(basicCharModel);
-            product.BasicCharacteristics.Add(basicCharProcessor);
-
-            category.Products.Add(product);
-
-            context.Categories.Add(category);
-
-            context.SaveChanges();
+         //   await sender.SendEmailAsync("velislav1@students.softuni.bg", "test", "test");
             return View();
         }
 
@@ -65,8 +45,5 @@ namespace PCHUBStore.Controllers
 
     }
 
-    public class Tester
-    {
-        public List<string> some { get; set; }
-    }
+
 }

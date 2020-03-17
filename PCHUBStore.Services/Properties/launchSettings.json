@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PCHUBStore.Services": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "SENDEMAILDEMO_ENVIRONMENT_SENDGRID_KEY": "9yvdX4BRQoq3tvweuR0bmw"
+      }
+    }
+  }
+}

@@ -11,7 +11,7 @@ namespace PCHUBStore.Services
 {
     public interface ILaptopServices
     {
-        Task<Product> GetLaptop(string id);
+        Task<Product> GetLaptop(string id, string userId, bool isAuthenticated);
         Task<List<FilterCategory>> GetFilters(string category);
         Task<IEnumerable<Product>> QueryLaptops(LaptopFiltersUrlModel laptopFilters);
         Task OrderBy(ref LaptopsViewModel laptops, string args);

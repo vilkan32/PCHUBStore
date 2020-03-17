@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PCHUBStore.Data;
 
 namespace PCHUBStore.Migrations
 {
     [DbContext(typeof(PCHUBDbContext))]
-    partial class PCHUBDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200317160003_indexPageAdministration")]
+    partial class indexPageAdministration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -615,9 +617,6 @@ namespace PCHUBStore.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserLastReviewedId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Views")
                         .HasColumnType("int");
 
@@ -630,8 +629,6 @@ namespace PCHUBStore.Migrations
                         .HasFilter("[MainPictureId] IS NOT NULL");
 
                     b.HasIndex("ShipmentId");
-
-                    b.HasIndex("UserLastReviewedId");
 
                     b.ToTable("Products");
                 });
@@ -979,10 +976,6 @@ namespace PCHUBStore.Migrations
                     b.HasOne("PCHUBStore.Data.Models.Shipment", null)
                         .WithMany("ShippedProducts")
                         .HasForeignKey("ShipmentId");
-
-                    b.HasOne("PCHUBStore.Data.Models.User", "UserLastReviewed")
-                        .WithMany("LastReviewedProducts")
-                        .HasForeignKey("UserLastReviewedId");
                 });
 
             modelBuilder.Entity("PCHUBStore.Data.Models.Shipment", b =>

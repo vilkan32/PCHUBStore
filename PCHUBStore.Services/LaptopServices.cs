@@ -117,18 +117,18 @@ namespace PCHUBStore.Services
 
         public Task OrderBy(ref LaptopsViewModel laptops, string args)
         {
-            if(args == null)
+            if (args == null)
             {
                 args = "Default";
                 return Task.CompletedTask;
             }
 
-            if(args == "PriceAsc")
+            if (args == "PriceAsc")
             {
                 laptops.Laptops = laptops.Laptops.OrderBy(x => x.Price).ToList();
                 return Task.CompletedTask;
             }
-            else if(args == "PriceDesc")
+            else if (args == "PriceDesc")
             {
                 laptops.Laptops = laptops.Laptops.OrderByDescending(x => x.Price).ToList();
                 return Task.CompletedTask;
@@ -136,7 +136,7 @@ namespace PCHUBStore.Services
 
 
             return Task.CompletedTask;
-        } 
+        }
 
         public async Task<IEnumerable<Product>> QueryLaptops(LaptopFiltersUrlModel laptopFilters)
         {
@@ -205,11 +205,22 @@ namespace PCHUBStore.Services
             return result;
         }
 
-        public async Task<Product> GetLaptop(string id)
+        public async Task<Product> GetLaptop(string id, string userId, bool isAuthenticated)
         {
             var category = await this.context.Categories.FirstAsync(x => x.Name == "Laptops" && x.IsDeleted == false);
 
             var laptop = category.Products.FirstOrDefault(x => x.Id == id && x.IsDeleted == false);
+
+            laptop.Views += 1;
+
+            if (isAuthenticated)
+            {
+                var user = await context.Users.FirstOrDefaultAsync(x => x.UserName == userId);
+
+                user.LastReviewedProducts.Add(laptop);
+            }
+
+            await this.context.SaveChangesAsync();
 
             return laptop;
         }

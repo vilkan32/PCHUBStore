@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using PCHUBStore.Data;
 using PCHUBStore.Data.Models;
+using PCHUBStore.Services.EmailSender;
 
 namespace PCHUBStore.Areas.Identity.Pages.Account
 {
@@ -24,20 +25,20 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly RoleManager<IdentityRole> roleManager;
-        private readonly PCHUBDbContext context;
+        private readonly IEmailSender emailSender;
 
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
             RoleManager<IdentityRole> roleManager,
-            PCHUBDbContext context)
+            IEmailSender emailSender)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             this.roleManager = roleManager;
-            this.context = context;
+            this.emailSender = emailSender;
         }
 
         [BindProperty]
@@ -51,7 +52,7 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
-            [StringLength(20, MinimumLength = 10)]
+            [StringLength(40, MinimumLength = 10)]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
@@ -82,13 +83,7 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            var emailAlreadyExists = this.context.Users.Any(x => x.Email == Input.Email);
-
-            Console.WriteLine();
-            if (emailAlreadyExists)
-            {
-                ModelState.AddModelError("Email", "Email already exists");
-            }
+          
 
             if (ModelState.IsValid)
             {
@@ -98,16 +93,7 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
 
-                    var role = await this.roleManager.FindByNameAsync("StoreUser");
-
-                    await this.context.UserRoles.AddAsync(new IdentityUserRole<string>
-                    {
-                        RoleId = role.Id,
-                        UserId = user.Id
-                    });
-
-                    await this.context.SaveChangesAsync();
-
+                    await this._userManager.AddToRoleAsync(user, "StoreUser");
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -118,7 +104,9 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code },
                         protocol: Request.Scheme);
 
-
+                    await emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+               
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email });

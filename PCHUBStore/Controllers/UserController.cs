@@ -128,7 +128,8 @@ namespace PCHUBStore.Controllers
             return this.Redirect("/Home/Index");
         }
 
-
+        // reviewedProductsHistory
+        // favoriteProductsDisplay
 
     }
 }

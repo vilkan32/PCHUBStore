@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using PCHUBStore.Services;
 using PCHUBStore.MiddlewareFilters;
+using Microsoft.AspNetCore.Mvc;
+using PCHUBStore.Services.EmailSender;
 
 namespace PCHUBStore
 {
@@ -51,11 +53,13 @@ namespace PCHUBStore
                                                      .UseLazyLoadingProxies()
                                                   );
 
-            var mvcBuilder = services.AddControllersWithViews();
+            var mvcBuilder = services.AddControllersWithViews(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
             mvcBuilder.AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(options =>
+            options.User.RequireUniqueEmail = true
+            )
                 .AddEntityFrameworkStores<PCHUBDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -67,6 +71,8 @@ namespace PCHUBStore
               this.Configuration["Cloudinary:ApiSecret"]);
 
             Cloudinary cloudinaryUtility = new Cloudinary(cloudinaryCredentials);
+
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddSingleton(cloudinaryUtility);
 

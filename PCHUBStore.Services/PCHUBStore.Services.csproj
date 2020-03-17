@@ -1,11 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="EmailSenderService\**" />
+    <EmbeddedResource Remove="EmailSenderService\**" />
+    <None Remove="EmailSenderService\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CloudinaryDotNet" Version="1.10.0" />
+    <PackageReference Include="Sendgrid" Version="9.13.0" />
   </ItemGroup>
 
   <ItemGroup>

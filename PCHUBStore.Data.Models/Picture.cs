@@ -19,7 +19,8 @@ namespace PCHUBStore.Data.Models
         public virtual Product MainPicForProduct { get; set; }
 
         [InverseProperty("Pictures")]
-        public virtual User Uploader { get; set; } 
+        public virtual User Uploader { get; set; }
         public virtual string RedirectTo { get; set; }
+
     }
 }

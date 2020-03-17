@@ -57,5 +57,8 @@ namespace PCHUBStore.Data.Models
 
         // could be video also
         public virtual ICollection<Picture> Pictures { get; set; }
+
+        public string UserLastReviewedId { get; set; }
+        public virtual User UserLastReviewed { get; set; }
     }
 }
