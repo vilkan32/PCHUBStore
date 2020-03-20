@@ -44,6 +44,9 @@ namespace PCHUBStore.Controllers
             var user = await this.userProfileServices.GetUserProfileInformationAsync(this.User.Identity.Name);
 
             var userViewModel = this.mapper.Map<UserProfileViewModel>(user);
+            userViewModel.History = this.mapper.Map<List<ProductHistoryViewModel>>(user.ProductUserReviews.Select(x => x.Product));
+            userViewModel.Favorites = this.mapper.Map<List<ProductFavoriteViewModel>>(user.FavoriteUserProducts.Select(x => x.Product));
+
 
             userViewModel.ProfileActive = "active";
 
@@ -60,11 +63,9 @@ namespace PCHUBStore.Controllers
             if(userViewModel.AccountSettings == null)
             {
                 userViewModel.AccountSettings = new EditAccountSettingsForm();
-
                 userViewModel.AccountSettings.Username = userViewModel.Username;
                 userViewModel.AccountSettings.Email = userViewModel.Email;
             }
-
 
             return View(userViewModel);
         }
@@ -83,6 +84,9 @@ namespace PCHUBStore.Controllers
             var user = await this.userProfileServices.GetUserProfileInformationAsync(this.User.Identity.Name);
 
             var userViewModel = this.mapper.Map<UserProfileViewModel>(user);
+            userViewModel.History = this.mapper.Map<List<ProductHistoryViewModel>>(user.ProductUserReviews.Select(x => x.Product));
+            userViewModel.Favorites = this.mapper.Map<List<ProductFavoriteViewModel>>(user.FavoriteUserProducts.Select(x => x.Product));
+
 
             userViewModel.OrderInformation = editForm.OrderInformation;
             userViewModel.DeliveryInformationActive = "active";
@@ -103,6 +107,9 @@ namespace PCHUBStore.Controllers
             var user = await this.userProfileServices.GetUserProfileInformationAsync(this.User.Identity.Name);
 
             var userViewModel = this.mapper.Map<UserProfileViewModel>(user);
+            userViewModel.History = this.mapper.Map<List<ProductHistoryViewModel>>(user.ProductUserReviews.Select(x => x.Product));
+            userViewModel.Favorites = this.mapper.Map<List<ProductFavoriteViewModel>>(user.FavoriteUserProducts.Select(x => x.Product));
+
 
             userViewModel.AccountSettings = editForm.AccountSettings;
             userViewModel.AccountSettingsActive = "active";

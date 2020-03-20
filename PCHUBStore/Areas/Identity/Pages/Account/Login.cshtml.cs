@@ -57,6 +57,7 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
                 ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -75,7 +76,7 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-
+       
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -83,6 +84,12 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+
+                    if (this.User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("BlacksmithIndex", "Administratior", new { area = "Administration" });
+                    }
+
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

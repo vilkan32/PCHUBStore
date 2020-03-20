@@ -19,6 +19,7 @@ using PCHUBStore.Services;
 using PCHUBStore.MiddlewareFilters;
 using Microsoft.AspNetCore.Mvc;
 using PCHUBStore.Services.EmailSender;
+using PCHUBStore.Areas.Administration.Services;
 
 namespace PCHUBStore
 {
@@ -78,11 +79,17 @@ namespace PCHUBStore
 
             services.AddScoped<ValidationFilter>();
 
-            services.AddTransient<ILaptopServices, LaptopServices>();
+            services.AddTransient<IProductServices, ProductServices>();
 
             services.AddTransient<ICloudinaryServices, CloudinaryServices>();
 
             services.AddTransient<IUserProfileServices, UserProfileServices>();
+
+            services.AddTransient<IHomeService, HomeService>();
+
+            services.AddTransient<IAdminProductsServices, AdminProductsServices>();
+
+            services.AddTransient<IAdminCharacteristicsServices, AdminCharacteristicsServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

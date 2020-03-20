@@ -30,10 +30,10 @@
                     <a href="" data-target="#editSettings" data-toggle="tab" class="nav-link @Model.AccountSettingsActive">Edit Account Settings</a>
                 </li>
                 <li class="nav-item">
-                    <a href="" data-target="#editSettings" data-toggle="tab" class="nav-link @Model.AccountSettingsActive">Favorite Products</a>
+                    <a href="" data-target="#favoriteProducts" data-toggle="tab" class="nav-link">Favorite Products</a>
                 </li>
                 <li class="nav-item">
-                    <a href="" data-target="#editSettings" data-toggle="tab" class="nav-link @Model.AccountSettingsActive">Products History</a>
+                    <a href="" data-target="#productsHistory" data-toggle="tab" class="nav-link">Products History</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" asp-action="LogOut" asp-controller="User">Log Out</a>
@@ -141,6 +141,61 @@
                 </div>
 
 
+                <div class="tab-pane" id="productsHistory">
+
+                    @if (Model.History.Count == 0)
+                    {
+                        <p>You have not reviewed any products yet.</p>
+                    }
+                    else
+                    {
+
+                        <div class="row">
+                            @foreach (var item in Model.History)
+                            {
+                                <div class="col-3">
+                                    <div class="card text-center">
+                                        <img style="width: inherit; height: 10em" class="card-img-top" src="@item.PictureUrl" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 style="font-size: 12px" class="card-title">@item.Title</h5>
+                                            <a href="@item.LinkToProduct" class="btn btn-primary">Visit Product</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                </div>
+
+
+                <div class="tab-pane" id="favoriteProducts">
+
+                    @if (Model.History.Count == 0)
+                    {
+                        <p>There are not favorite products yet.</p>
+                    }
+                    else
+                    {
+
+                        <div class="row">
+                            @foreach (var item in Model.Favorites)
+                            {
+                                <div class="col-3">
+                                    <div class="card">
+                                        <img style="width: inherit; height: 10em" class="card-img-top" src="@item.PictureUrl" alt="Card image cap">
+                                        <div class="card-body text-center">
+                                            <h5 style="font-size: 12px" class="card-title">@item.Title</h5>
+                                            <a href="@item.LinkToProduct" class="btn btn-primary">Visit Product</a>
+                                            <img src="~/img/favorite.png" alt="Add To Favorite" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+
+                </div>
 
             </div>
         </div>

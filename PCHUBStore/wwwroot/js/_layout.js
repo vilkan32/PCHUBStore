@@ -1,4 +1,4 @@
-﻿function loadPicturesHeader() {    
+﻿function loadPicturesHeader() {
 
 
     let regex = /option\d/;
@@ -11,11 +11,11 @@
         document.getElementById('logo').src = logoInfo.Url;
 
         let sliderOptionPictures = obj["Pictures"].filter(x => regex.exec(x.Name) && x.IsDeleted === false);
-       
+
         var info = setInterval(function () {
-        
+
             document.getElementById('slideShowPicture').src = sliderOptionPictures[randomInteger(0, 3)].Url;
-            
+
         }, 5000);
 
         window.info = info;
@@ -31,21 +31,6 @@
 
 }
 
-function loadPicturesLeftSide() {
-
-    let counter = 0;
-    fetch("/api/layout/leftSide").then(res => res.json()).then(x => {
-        let obj = JSON.parse(x);
-        let leftSidePictures = obj["Pictures"].forEach(x => {
-
-           
-            Array.from(document.getElementsByClassName("leftSider"))[counter].src = x.Url;
-            counter++;
-        });
-    });
-    
-
-}
 
 function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -56,7 +41,7 @@ function changePicture(x, obj) {
     let picture = document.getElementById('slideShowPicture');
     let target = x.target;
     clearInterval(window.info);
-    let requiredUrl = obj["Pictures"].find(x => x.Name === target.value).Url;    
+    let requiredUrl = obj["Pictures"].find(x => x.Name === target.value).Url;
     picture.src = requiredUrl;
 }
 
@@ -74,7 +59,7 @@ function navFunction() {
         if (window.scrollY === 0) {
             document.getElementById("nav").classList.remove("fixed-top");
         }
-       
+
     });
 }
 

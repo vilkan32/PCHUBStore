@@ -6,20 +6,23 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PCHUBStore.Filter.Models;
 using PCHUBStore.MiddlewareFilters;
-using PCHUBStore.Services;
 using PCHUBStore.View.Models.FilterViewModels;
 using PCHUBStore.View.Models;
 using PCHUBStore.View.Models.Pagination;
+using PCHUBStore.Services;
 
 namespace PCHUBStore.Controllers
 {
     public class ProductsController : Controller
     {
 
-        private readonly ILaptopServices service;
+        private readonly IProductServices service;
 
         private readonly IMapper mapper;
-        public ProductsController(ILaptopServices service, IMapper mapper)
+
+
+        public ProductsController(IProductServices service,
+            IMapper mapper)
         {
             this.service = service;
             this.mapper = mapper;
@@ -27,71 +30,66 @@ namespace PCHUBStore.Controllers
 
 
         [TypeFilter(typeof(ValidationFilter))]
-        [HttpGet("/Laptops")]
-        public async Task<IActionResult> Laptops([FromQuery]LaptopFiltersUrlModel laptopFilters)
+        [HttpGet("/Products/{category}")]
+        public async Task<IActionResult> Products([FromQuery]ProductFiltersUrlModel productFilters, string category)
         {
+            var categoryExists = await this.service.CategoryExistsAsync(category);
 
+            if (!categoryExists)
+            {
+                return this.RedirectToAction("Error");
+            }
 
-            var laptopViewModel = new LaptopsViewModel();
+            var productViewModel = new ProductsViewModel();
 
-            var laptops = await this.service.QueryLaptops(laptopFilters);
+            var products = await this.service.QueryProductsAsync(productFilters, category);
 
-            var filters = await this.service.GetFilters("Laptops");
+            var filters = await this.service.GetFiltersAsync(category);
 
-            laptopViewModel.FilterCategory = mapper.Map<List<FilterCategoryViewModel>>(filters);
+            productViewModel.FilterCategory = mapper.Map<List<FilterCategoryViewModel>>(filters);
 
-            laptopViewModel.Laptops = mapper.Map<List<LaptopViewModel>>(laptops);
+            productViewModel.Products = mapper.Map<List<ProductViewModel>>(products);
             
-            await this.service.OrderBy(ref laptopViewModel, laptopFilters.OrderBy);
+            await this.service.OrderByAsync(ref productViewModel, productFilters.OrderBy);
 
-            laptopViewModel.Pager = new Pager(laptopViewModel.Laptops.Count, laptopFilters.Page, 20);
+            productViewModel.Pager = new Pager(productViewModel.Products.Count, productFilters.Page, 20);
 
-            laptopViewModel.Laptops = laptopViewModel.Laptops.Skip((laptopFilters.Page - 1) * 20).Take(20).ToList();
+            productViewModel.Products = productViewModel.Products.Skip((productFilters.Page - 1) * 20).Take(20).ToList();
 
-            await this.service.ApplyFiltersFromUrl(laptopViewModel.FilterCategory, laptopFilters);
+            productViewModel.Category = category;
+
+            await this.service.ApplyFiltersFromUrlAsync(productViewModel.FilterCategory, productFilters);
             
-            return this.View(laptopViewModel);
+            return this.View(productViewModel);
         }
 
 
-        [HttpGet("Products/Laptop/{laptopId}")]
-        public async Task<IActionResult> Laptop(string laptopId)
+        [HttpGet("Products/{category}/{productId}")]
+        public async Task<IActionResult> Product(string productId, string category)
         {
-            var laptop = await this.service.GetLaptop(laptopId, this.User.Identity.Name, this.User.Identity.IsAuthenticated);
+            var categoryExists = await this.service.CategoryExistsAsync(category);
 
-            var laptopViewModel = mapper.Map<LaptopFullCharacteristicsViewModel>(laptop);
+            var product = await this.service.GetProductAsync(productId, this.User.Identity.Name, this.User.Identity.IsAuthenticated);
 
-            var similarLaptops = await this.service.GetSimilarLaptops(laptop.Price);
+            if (!categoryExists || product.Category.Name != category)
+            {
+                return this.Redirect("/Products/Error");
+            }
 
-            laptopViewModel.SimilarLaptops = mapper.Map<ICollection<SimilarLaptop>>(similarLaptops.Take(3));
+            var productViewModel = mapper.Map<ProductFullCharacteristicsViewModel>(product);
 
-            return this.View(laptopViewModel);
+            var similarProducts = await this.service.GetSimilarProductsAsync(product.Price, category);
+
+            productViewModel.SimilarProducts = mapper.Map<ICollection<SimilarProduct>>(similarProducts.Take(3));
+
+            return this.View(productViewModel);
         }
 
-
-
-
-        /*  
-
-        public async Task<IActionResult> Keyboards(KeyboardFilters laptopFilters)
+        public IActionResult Error()
         {
-
             return this.View();
         }
-
-        public async Task<IActionResult> Monitors(MonitorFilters laptopFilters)
-        {
-
-            return this.View();
-        }
-
-        public async Task<IActionResult> Mice(MiceFilters laptopFilters)
-        {
-
-            return this.View("Products", ProductsViewModel);
-        }
-        */
-
+     
 
     }
 }

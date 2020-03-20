@@ -8,9 +8,24 @@ namespace PCHUBStore.Controllers
 {
     public class ShoppingCartController : Controller
     {
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult ReviewCart()
         {
-            return View();
+            return this.View();
         }
+
+        [HttpPost]
+        public IActionResult ExcludeProduct()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public IActionResult BuyProducts()
+        {
+            return this.View();
+        }
+
+
     }
 }

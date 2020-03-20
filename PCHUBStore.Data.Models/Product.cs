@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace PCHUBStore.Data.Models
@@ -14,6 +15,7 @@ namespace PCHUBStore.Data.Models
             this.FullCharacteristics = new List<FullCharacteristic>();
             this.BasicCharacteristics = new List<BasicCharacteristic>();
             this.Pictures = new List<Picture>();
+            this.ProductCarts = new List<ProductCart>();
         }
 
 
@@ -58,7 +60,10 @@ namespace PCHUBStore.Data.Models
         // could be video also
         public virtual ICollection<Picture> Pictures { get; set; }
 
-        public string UserLastReviewedId { get; set; }
-        public virtual User UserLastReviewed { get; set; }
+        public virtual ICollection<ProductUserReview> ProductUserReviews { get; set; }
+
+        public virtual ICollection<ProductUserFavorite> FavoriteUserProducts { get; set; }
+
+        public virtual ICollection<ProductCart> ProductCarts { get; set; }
     }
 }

@@ -8,8 +8,4 @@
     <ProjectReference Include="..\PCHUBStore.Filter.Models\PCHUBStore.Filter.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="LaptopViewModels\" />
-  </ItemGroup>
-
 </Project>

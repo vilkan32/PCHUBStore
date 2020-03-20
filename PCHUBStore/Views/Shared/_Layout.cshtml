@@ -80,51 +80,8 @@
     {
         <div style="color: black; margin-bottom: 4em" class="container text-center border bg-white">
             <h3 class="bg-white border font-weight-bold">Products that have already been reviewed</h3>
-            <div class="row">
-                <div class="col-sm-4 col-lg-2 text-center border bg-white m-2">
-                    <div class="container">
-                        <img style="width: inherit" src="https://laptop.bg/system/images/224557/medium/amd_ryzen_5_3400g.jpg" alt="Alternate Text" />
-                    </div>
-                    <div class="container">
-                        <p>AMD Ryzen 5 3400G</p>
-                    </div>
-                    <div class="container">
-                        <p>200.<span style="font-size:10px">00</span></p>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-lg-2 text-center border bg-white m-2">
-                    <div class="container">
-                        <img style="width: inherit" src="https://laptop.bg/system/images/224557/medium/amd_ryzen_5_3400g.jpg" alt="Alternate Text" />
-                    </div>
-                    <div class="container">
-                        <p>AMD Ryzen 5 3400G</p>
-                    </div>
-                    <div class="container">
-                        <p>200.<span style="font-size:10px">00</span></p>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-lg-2 text-center border bg-white m-2">
-                    <div class="container">
-                        <img style="width: inherit" src="https://laptop.bg/system/images/224557/medium/amd_ryzen_5_3400g.jpg" alt="Alternate Text" />
-                    </div>
-                    <div class="container">
-                        <p>AMD Ryzen 5 3400G</p>
-                    </div>
-                    <div class="container">
-                        <p>200.<span style="font-size:10px">00</span></p>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-lg-2 text-center border bg-white m-2">
-                    <div class="container">
-                        <img style="width: inherit" src="https://laptop.bg/system/images/224557/medium/amd_ryzen_5_3400g.jpg" alt="Alternate Text" />
-                    </div>
-                    <div class="container">
-                        <p>AMD Ryzen 5 3400G</p>
-                    </div>
-                    <div class="container">
-                        <p>200.<span style="font-size:10px">00</span></p>
-                    </div>
-                </div>
+            <div class="row" id="reviewedProducts">
+
             </div>
         </div>
 
@@ -224,10 +181,23 @@
                     <!-- Links -->
                     <h6 class="text-uppercase font-weight-bold">Useful links</h6>
                     <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-                    <p>
-                        <!-- Login Or Register -->
-                        <a href="#!">Account</a>
-                    </p>
+
+
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <p>
+                            <a href="/User/Profile">Account</a>
+                        </p>
+                    }
+                    else
+                    {
+                        <p>
+                            <a asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        </p>
+                        <p>
+                            <a asp-area="Identity" asp-page="/Account/Login">Login</a>
+                        </p>
+                    }
                     <p>
                         <a href="#!">Shopping Cart</a>
                     </p>
@@ -286,8 +256,6 @@
     </environment>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <script src="~/js/removeVideoFromIndex.js"></script>
-
     <script src="~/vendor/jquery/jquery.min.js"></script>
     <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -303,6 +271,10 @@
     <!-- Page level custom scripts -->
     <script src="~/js/_layout.js"></script>
 
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <script src="~/js/productsHistory.js"></script>
+    }
     <script src="~/js/index.js"></script>
     @RenderSection("Scripts", required: false)
 </body>

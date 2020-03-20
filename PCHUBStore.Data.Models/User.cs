@@ -12,6 +12,8 @@ namespace PCHUBStore.Data.Models
             this.Pictures = new List<Picture>();
             this.Shipments = new List<Shipment>();
             this.Activities = new List<Activity>();
+            this.ProductUserReviews = new List<ProductUserReview>();
+            this.FavoriteUserProducts = new List<ProductUserFavorite>();
         }
 
         [StringLength(50, MinimumLength = 4)]
@@ -31,8 +33,9 @@ namespace PCHUBStore.Data.Models
 
         public virtual ICollection<Activity> Activities { get; set; }
         public virtual Picture ProfilePicture { get; set; }
-
-        public virtual ICollection<Product> LastReviewedProducts { get; set; }
+        public virtual ICollection<ProductUserReview> ProductUserReviews { get; set; }
+        public virtual ShoppingCart Cart { get; set; }
+        public virtual ICollection<ProductUserFavorite> FavoriteUserProducts { get; set; }
 
     }
 }

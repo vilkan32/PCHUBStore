@@ -196,6 +196,72 @@ namespace PCHUBStore.Migrations
                     b.ToTable("Activities");
                 });
 
+            modelBuilder.Entity("PCHUBStore.Data.Models.AdminCharacteristic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AdminBasicCharacteristicsCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("AdminFullCharacteristicsCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminBasicCharacteristicsCategoryId");
+
+                    b.HasIndex("AdminFullCharacteristicsCategoryId");
+
+                    b.ToTable("AdminCharacteristics");
+                });
+
+            modelBuilder.Entity("PCHUBStore.Data.Models.AdminCharacteristicsCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AdminCharacteristicsCategories");
+                });
+
             modelBuilder.Entity("PCHUBStore.Data.Models.BasicCharacteristic", b =>
                 {
                     b.Property<int>("Id")
@@ -615,9 +681,6 @@ namespace PCHUBStore.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserLastReviewedId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Views")
                         .HasColumnType("int");
 
@@ -631,9 +694,55 @@ namespace PCHUBStore.Migrations
 
                     b.HasIndex("ShipmentId");
 
-                    b.HasIndex("UserLastReviewedId");
-
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("PCHUBStore.Data.Models.ProductCart", b =>
+                {
+                    b.Property<string>("CartId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductCarts");
+                });
+
+            modelBuilder.Entity("PCHUBStore.Data.Models.ProductUserFavorite", b =>
+                {
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ProductId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ProductUserFavorites");
+                });
+
+            modelBuilder.Entity("PCHUBStore.Data.Models.ProductUserReview", b =>
+                {
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ProductId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ProductUserReviews");
                 });
 
             modelBuilder.Entity("PCHUBStore.Data.Models.Shipment", b =>
@@ -653,6 +762,9 @@ namespace PCHUBStore.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeliveryConfirmationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeliveryDetails")
@@ -691,6 +803,12 @@ namespace PCHUBStore.Migrations
                     b.Property<DateTime?>("ShippedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ShippingCompany")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShippingCompanyDetails")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("TotalProductsPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -702,6 +820,35 @@ namespace PCHUBStore.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Shipments");
+                });
+
+            modelBuilder.Entity("PCHUBStore.Data.Models.ShoppingCart", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
+
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("PCHUBStore.Data.Models.Ticket", b =>
@@ -903,6 +1050,17 @@ namespace PCHUBStore.Migrations
                         .HasForeignKey("TicketId");
                 });
 
+            modelBuilder.Entity("PCHUBStore.Data.Models.AdminCharacteristic", b =>
+                {
+                    b.HasOne("PCHUBStore.Data.Models.AdminCharacteristicsCategory", "AdminBasicCharacteristicsCategory")
+                        .WithMany("BasicCharacteristics")
+                        .HasForeignKey("AdminBasicCharacteristicsCategoryId");
+
+                    b.HasOne("PCHUBStore.Data.Models.AdminCharacteristicsCategory", "AdminFullCharacteristicsCategory")
+                        .WithMany("FullCharacteristics")
+                        .HasForeignKey("AdminFullCharacteristicsCategoryId");
+                });
+
             modelBuilder.Entity("PCHUBStore.Data.Models.BasicCharacteristic", b =>
                 {
                     b.HasOne("PCHUBStore.Data.Models.Product", "Product")
@@ -979,10 +1137,51 @@ namespace PCHUBStore.Migrations
                     b.HasOne("PCHUBStore.Data.Models.Shipment", null)
                         .WithMany("ShippedProducts")
                         .HasForeignKey("ShipmentId");
+                });
 
-                    b.HasOne("PCHUBStore.Data.Models.User", "UserLastReviewed")
-                        .WithMany("LastReviewedProducts")
-                        .HasForeignKey("UserLastReviewedId");
+            modelBuilder.Entity("PCHUBStore.Data.Models.ProductCart", b =>
+                {
+                    b.HasOne("PCHUBStore.Data.Models.ShoppingCart", "Cart")
+                        .WithMany("ProductCarts")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PCHUBStore.Data.Models.Product", "Product")
+                        .WithMany("ProductCarts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PCHUBStore.Data.Models.ProductUserFavorite", b =>
+                {
+                    b.HasOne("PCHUBStore.Data.Models.Product", "Product")
+                        .WithMany("FavoriteUserProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PCHUBStore.Data.Models.User", "User")
+                        .WithMany("FavoriteUserProducts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PCHUBStore.Data.Models.ProductUserReview", b =>
+                {
+                    b.HasOne("PCHUBStore.Data.Models.Product", "Product")
+                        .WithMany("ProductUserReviews")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PCHUBStore.Data.Models.User", "User")
+                        .WithMany("ProductUserReviews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PCHUBStore.Data.Models.Shipment", b =>
@@ -990,6 +1189,13 @@ namespace PCHUBStore.Migrations
                     b.HasOne("PCHUBStore.Data.Models.User", "User")
                         .WithMany("Shipments")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("PCHUBStore.Data.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("PCHUBStore.Data.Models.User", "Holder")
+                        .WithOne("Cart")
+                        .HasForeignKey("PCHUBStore.Data.Models.ShoppingCart", "UserId");
                 });
 
             modelBuilder.Entity("PCHUBStore.Data.Models.Ticket", b =>

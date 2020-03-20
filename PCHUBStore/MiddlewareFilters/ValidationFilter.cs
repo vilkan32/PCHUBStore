@@ -13,9 +13,9 @@ namespace PCHUBStore.MiddlewareFilters
     {
 
 
-        private readonly ILaptopServices service;
+        private readonly IProductServices service;
 
-        public ValidationFilter(ILaptopServices service)
+        public ValidationFilter(IProductServices service)
         {
             this.service = service;
         }
@@ -23,6 +23,7 @@ namespace PCHUBStore.MiddlewareFilters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
+
             var canContinue = true;
             if (context.ModelState.IsValid)
             {
@@ -32,9 +33,18 @@ namespace PCHUBStore.MiddlewareFilters
                 }
                 else
                 {
-                    var laptopFilterCategory = this.service.GetFilters("Laptops").GetAwaiter().GetResult();
-
                     var urlParameters = context.HttpContext.Request.Query.ToList();
+
+                    var kvp = context.HttpContext.Request.RouteValues.FirstOrDefault(x => x.Key == "category");
+
+                    var category = (string)kvp.Value;
+
+                    var laptopFilterCategory = this.service.GetFiltersAsync(category).GetAwaiter().GetResult();
+
+                    if(laptopFilterCategory.Count == 0)
+                    {
+                        canContinue = false;
+                    }
 
                     foreach (var param in urlParameters)
                     {
@@ -42,7 +52,7 @@ namespace PCHUBStore.MiddlewareFilters
                         var value = param.Value.ToArray();
                         if (key == "OrderBy")
                         {
-                 
+
                             if (value[0] == "Default" || value[0] == "PriceDesc" || value[0] == "PriceAsc")
                             {
                                 continue;
@@ -54,7 +64,7 @@ namespace PCHUBStore.MiddlewareFilters
                         }
                         else if (key == "MinPrice")
                         {
-                            if(decimal.TryParse(value[0], out decimal num) && num >= 0 && num <= 30000)
+                            if (decimal.TryParse(value[0], out decimal num) && num >= 0 && num <= 30000)
                             {
                                 continue;
                             }
@@ -84,6 +94,10 @@ namespace PCHUBStore.MiddlewareFilters
                             {
                                 canContinue = false;
                             }
+                        }
+                        else if (key == "Category")
+                        {
+                            continue;
                         }
 
                         if (!canContinue)
@@ -125,8 +139,8 @@ namespace PCHUBStore.MiddlewareFilters
             if (!canContinue)
             {
                 RouteValueDictionary redirectTargetDictionaryRedirect = new RouteValueDictionary();
-                redirectTargetDictionaryRedirect.Add("action", "Laptops");
-                redirectTargetDictionaryRedirect.Add("controller", "Products");
+                redirectTargetDictionaryRedirect.Add("action", "Error");
+                redirectTargetDictionaryRedirect.Add("controller", "Home");
 
                 var urlParametersRedirect = new RedirectToRouteResult(redirectTargetDictionaryRedirect);
                 context.Result = urlParametersRedirect;

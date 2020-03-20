@@ -1,0 +1,49 @@
+﻿@model PCHUBStore.Areas.Administration.Models.CharacteristicsViewModels.InsertCharacteristicsViewModel
+
+@{
+
+    ViewData["Title"] = "Create Characteristics ";
+
+}
+
+
+<div class="container">
+    <div class="col-12">
+        <h1 style="color: black" class="text-center">Create Characteristics</h1>
+    </div>
+</div>
+
+<div class="container">
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <select asp-for="Category">
+            <option value="Default">Default</option>
+            @foreach (var item in Model.Categories)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+        <h1 class="text-center">Basic Characteristics</h1>
+        @for (int i = 0; i < Model.BasicCharacteristics.Count; i++)
+        {
+            <div class="form-group text-center">
+                <label asp-for="@Model.BasicCharacteristics[i]">Key</label>
+                <input class="js-basic-key" asp-for="@Model.BasicCharacteristics[i]">
+                <span asp-validation-for="@Model.BasicCharacteristics[i]" class="text-danger"></span>
+
+            </div>
+        }
+        <h1 class="text-center">Full Characteristics</h1>
+        @for (int i = 0; i < Model.FullCharacteristics.Count; i++)
+        {
+            <div class="form-group text-center">
+                <label asp-for="@Model.FullCharacteristics[i]">Key</label>
+                <input class="js-full-key" asp-for="@Model.FullCharacteristics[i]">
+                <span asp-validation-for="@Model.FullCharacteristics[i]" class="text-danger"></span>
+        
+            </div>
+        }
+
+        <button type="submit" class="btn btn-primary">Craft Characteristics</button>
+    </form>
+</div>

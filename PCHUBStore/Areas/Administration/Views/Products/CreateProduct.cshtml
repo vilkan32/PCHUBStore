@@ -1,0 +1,99 @@
+﻿@model PCHUBStore.Areas.Administration.Models.ProductViewModel.InsertProductViewModel
+
+@{
+
+    ViewData["Title"] = "Create Product ";
+
+}
+
+<div class="container">
+    <div class="col-12">
+        <h1 style="color: black" class="text-center">Create Product</h1>
+    </div>
+</div>
+
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <select asp-for="Category">
+            <option value="Default">Default</option>
+            @foreach (var item in Model.Categories)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+        <div class="form-group">
+            <label asp-for="ArticleNumber"></label>
+            <input asp-for="ArticleNumber" class="form-control" />
+            <span asp-validation-for="ArticleNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Make"></label>
+            <input asp-for="Make" class="form-control" />
+            <span asp-validation-for="Make" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Model"></label>
+            <input asp-for="Model" class="form-control" />
+            <span asp-validation-for="Model" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Price"></label>
+            <input type="number" asp-for="Price" class="form-control" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Quantity"></label>
+            <input asp-for="Quantity" class="form-control" />
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="HtmlDescription"></label>
+            <textarea asp-for="HtmlDescription" class="form-control"></textarea>
+            <span asp-validation-for="HtmlDescription" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <label asp-for="MainPicture"></label>
+            <input asp-for="MainPicture" type="file" multiple>
+            <span asp-validation-for="MainPicture" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <label asp-for="Pictures"></label>
+            <input asp-for="Pictures" type="file" multiple>
+            <span asp-validation-for="Pictures" class="text-danger"></span>
+        </div>
+        <h1 style="color: black" class="text-center">Characteristics</h1>
+        <button class="btn btn-danger" value="Laptops">Apply Characteristics From Laptops</button>
+        <h1 class="text-center">Basic Characteristics</h1>
+        @for (int i = 0; i < Model.BasicCharacteristics.Count; i++)
+        {
+            <div class="form-group text-center">
+                <label asp-for="@Model.BasicCharacteristics[i].Key"></label>
+                <input class="js-basic-key" asp-for="@Model.BasicCharacteristics[i].Key">
+                <span asp-validation-for="@Model.BasicCharacteristics[i].Key" class="text-danger"></span>
+                <label asp-for="@Model.BasicCharacteristics[i].Value"></label>
+                <input asp-for="@Model.BasicCharacteristics[i].Value">
+                <span asp-validation-for="@Model.BasicCharacteristics[i].Value" class="text-danger"></span>
+            </div>
+        }
+        <h1 class="text-center">Full Characteristics</h1>
+        @for (int i = 0; i < Model.FullCharacteristics.Count; i++)
+        {
+            <div class="form-group text-center">
+                <label asp-for="@Model.FullCharacteristics[i].Key"></label>
+                <input class="js-full-key" asp-for="@Model.FullCharacteristics[i].Key">
+                <span asp-validation-for="@Model.FullCharacteristics[i].Key" class="text-danger"></span>
+                <label asp-for="@Model.FullCharacteristics[i].Value"></label>
+                <input asp-for="@Model.FullCharacteristics[i].Value">
+                <span asp-validation-for="@Model.FullCharacteristics[i].Value" class="text-danger"></span>
+            </div>
+        }
+
+        <button type="submit" class="btn btn-primary">Craft Product</button>
+    </form>
+</div>

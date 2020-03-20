@@ -8,7 +8,6 @@ namespace PCHUBStore.View.Models.UserProfileViewModels
     public class UserProfileViewModel
     {
 
-
         public string Username { get; set; }
 
         [Display(Name = "First Name")]
@@ -39,6 +38,10 @@ namespace PCHUBStore.View.Models.UserProfileViewModels
         public EditAccountSettingsForm AccountSettings { get; set; }
 
         public ICollection<UserOrdersViewModel> Orders { get; set; }
+
+        public ICollection<ProductHistoryViewModel> History { get; set; }
+
+        public ICollection<ProductFavoriteViewModel> Favorites { get; set; }
     }
 
 }

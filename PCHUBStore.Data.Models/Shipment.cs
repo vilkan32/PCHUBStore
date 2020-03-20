@@ -13,11 +13,13 @@ namespace PCHUBStore.Data.Models
 
         public ShipmentDetails ShipmentDetails { get; set; }
 
+        // many to many shipmentProducts
         public virtual List<Product> ShippedProducts { get; set; }
 
         public decimal TotalProductsPrice { get; set; }
         public ShipmentStatus ShipmentStatus { get; set; }
 
+        public DateTime? DeliveryConfirmationDate { get; set; }
         public string UserId { get; set; }
 
         public virtual User User { get; set; }
@@ -29,8 +31,13 @@ namespace PCHUBStore.Data.Models
 
         public DateTime? ShippedOn { get; set; }
 
+        // could be json for Unauthorized users
         public string DeliveryDetails { get; set; }
         public DateTime? ReceivedOn { get; set; }
+
+        public ShippingCompany ShippingCompany { get; set; }
+
+        public string ShippingCompanyDetails { get; set; }
 
         public string ShipmentCoveredBy { get; set; }
 
