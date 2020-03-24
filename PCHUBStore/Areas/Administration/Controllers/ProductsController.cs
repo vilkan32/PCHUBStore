@@ -12,10 +12,12 @@ namespace PCHUBStore.Areas.Administration.Controllers
     public class ProductsController : AdministrationController
     {
         private readonly IAdminProductsServices service;
+        private readonly IAdminCharacteristicsServices adminCharacteristicsServices;
 
-        public ProductsController(IAdminProductsServices service)
+        public ProductsController(IAdminProductsServices service, IAdminCharacteristicsServices adminCharacteristicsServices)
         {
             this.service = service;
+            this.adminCharacteristicsServices = adminCharacteristicsServices;
         }
 
         [HttpGet]
@@ -48,13 +50,13 @@ namespace PCHUBStore.Areas.Administration.Controllers
         }
 
 
-
         [HttpGet]
         public async Task<IActionResult> CreateProduct()
         {
             var model = new InsertProductViewModel();
             var categories = await this.service.GetAllCategoryNamesAsync();
             model.Categories = categories.ToList();
+            model.CategoryPattern = await this.adminCharacteristicsServices.GetAvailableCharacteristicsAsync();
             return this.View(model);
         }
 
@@ -64,6 +66,7 @@ namespace PCHUBStore.Areas.Administration.Controllers
 
             var categories = await this.service.GetAllCategoryNamesAsync();
             form.Categories = categories.ToList();
+            form.CategoryPattern = await this.adminCharacteristicsServices.GetAvailableCharacteristicsAsync();
 
             if (!categories.Contains(form.Category))
             {
@@ -78,19 +81,58 @@ namespace PCHUBStore.Areas.Administration.Controllers
             await this.service.CreateProductAsync(form);
 
             return this.RedirectToAction("Success", "Blacksmith", new { message = $"Successfully Created Product with id: {form.ArticleNumber} in category: {form.Category}" });
+
+
         }
 
         [HttpGet]
-        public IActionResult InsertJsonProduct()
+        public async Task<IActionResult> InsertJsonProduct()
         {
-            return this.View();
+            var categories = await this.service.GetAllCategoryNamesAsync();
+            
+
+            var model = new InsertJsonProductViewModel { Categories = categories.ToList() };
+            return this.View(model);
         }
 
 
         [HttpPost]
-        public IActionResult InsertJsonProduct(string text)
+        public async Task<IActionResult> InsertJsonProduct(InsertJsonProductViewModel form)
         {
-            return this.View();
+
+            var categories = await this.service.GetAllCategoryNamesAsync();
+            form.Categories = categories.ToList();
+            if (!categories.Any(x => x == form.Category))
+            {
+                this.ModelState.AddModelError("Category", "Category Doesnt Exist");
+            }
+
+           
+            if (this.ModelState.IsValid)
+            {
+                if(form.Category == "Laptops")
+                {
+                    await this.service.CreateLaptopFromJSONAsync(form);
+
+                }else if(form.Category == "Monitors")
+                {
+                    await this.service.CreateMonitorFromJSONAsync(form);
+                }
+                else if (form.Category == "Keyboards")
+                {
+                    await this.service.CreateKeyboardFromJSONAsync(form);
+
+                }else if(form.Category == "Mice")
+                {
+                    await this.service.CreateMouseFromJSONAsync(form);
+
+                }else if(form.Category == "Computers")
+                {
+                    await this.service.CreateComputerFromJSONAsync(form);
+                }
+                return this.RedirectToAction("Success", "Blacksmith", new { message = "Successfully added Product" });
+            }
+            return this.View(form);
         }
     }
 }

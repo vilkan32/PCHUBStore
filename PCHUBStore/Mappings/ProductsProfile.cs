@@ -38,6 +38,7 @@ namespace PCHUBStore.Mappings
                  .ForMember(x => x.Pictures, y => y.MapFrom(z => z.Pictures.Select(x => x.Url)))
                  .ForMember(x => x.AdvancedDetails, y => y.MapFrom(z => z.FullCharacteristics))
                  .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
+                 .ForMember(x => x.Category, y => y.MapFrom(z => z.Category.Name))
                  .ForMember(x => x.BasicDetails, y => y.MapFrom(z => z.BasicCharacteristics.Select(x => x.Value)));
 
             //          from          to

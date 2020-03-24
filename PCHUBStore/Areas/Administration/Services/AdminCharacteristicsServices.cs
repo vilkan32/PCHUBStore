@@ -67,5 +67,11 @@ namespace PCHUBStore.Areas.Administration.Services
             x.BasicCharacteristics.Count > 0 &&
             x.FullCharacteristics.Count > 0);
         }
+
+        public async Task<List<string>> GetAvailableCharacteristicsAsync()
+        {
+
+            return await this.context.AdminCharacteristicsCategories.Select(x => x.CategoryName).ToListAsync();
+        }
     }
 }

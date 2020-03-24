@@ -10,13 +10,13 @@
     <div class="col-lg-8 col-sm-12">
         <div class="row text-center">
             <div id="mainPicture" class="col-lg-8 col-sm-12" style="border-bottom: solid; border-bottom-color: darkslateblue; border-bottom-width: 2px; margin-bottom: 10px; display:inline-block; position: relative">
-                <img src="@Model.MainPicture" alt="Main Picture" style="width: inherit;  margin-bottom: 7px;" />
+                <img src="@Model.MainPicture" alt="Main Picture" style="max-width: 30em; max-height:30em;  margin-bottom: 7px;" />
             </div>
             <div class="row text-center" style="background-color: white">
                 @foreach (var pic in Model.Pictures)
                 {
-                    <div class="col-2 miniPictures" style="border: solid; border-color: white; border-width: 1px; z-index: 200;">
-                        <img src="@pic" alt="Description Pictures" style="width: inherit;" />
+                    <div class="col-3 miniPictures" style="border: solid; border-color: white; border-width: 1px;">
+                        <img src="@pic" alt="Description Pictures" style="width: inherit; max-height: 10em" />
                     </div>
                 }
             </div>
@@ -68,7 +68,7 @@
                     {
                         <div class="col-3 text-center m-1" style="border:solid; border-width: 1px; border-color: orangered">
                             <p>@similarLaptop.Model</p>
-                            <a style="width: inherit" href="/Products/Laptop/@similarLaptop.Url">
+                            <a style="width: inherit" href="/Products/@Model.Category/@similarLaptop.Url">
                                 <img src="@similarLaptop.MainPicture" alt="Alternate Text" style="width: inherit" />
                             </a>
                             <p>@similarLaptop.Price lv</p>

@@ -8,7 +8,7 @@
         <div class="col-lg-3 col-sm-12 col-md-6 laptopsJs" style="background-color:white; border: solid; border-width: 2px; border-color: white">
             <div style="width: inherit" class="text-center">
                 <a href="@product.ProductAdvancedDetailsUrl" style="text-decoration:none; width: inherit; font-size: 17px; color:black" class="text-center">
-                    <img style="width: inherit; height: 5cm" src="@product.PictureUrl" alt="Alternate Text" />
+                    <img style="width: 15em; height: 5cm" src="@product.PictureUrl" alt="Alternate Text" />
                 </a>
             </div>
             <div class="text-center m-2" style="word-break: break-all; color: black; font-size: 30px; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: darkslateblue">
@@ -22,7 +22,7 @@
             <ul class="justify-content-center align-items-center productsViewStyle" style="margin-top: 20px">
                 @foreach (var feature in product.BasicCharacteristics)
                 {
-                    <li style="list-style-image: url('img/listLI.png'); word-break: break-all">@feature</li>
+                    <li style="list-style-image: url('/img/listLI.png'); word-break: break-all">@feature</li>
                 }
 
             </ul>

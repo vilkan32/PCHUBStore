@@ -36,10 +36,10 @@ namespace PCHUBStore.Data
 
         public virtual DbSet<ColorfulBox> ColorfulBoxes { get; set; }
         public virtual DbSet<ProductUserFavorite> ProductUserFavorites { get; set; }
-        public virtual DbSet<IndexCategory> IndexCategories { get; set; }
+        public virtual DbSet<PageCategory> PageCategories { get; set; }
         public virtual DbSet<ProductUserReview> ProductUserReviews { get; set; }
-        public virtual DbSet<IndexCategoryItems> Items { get; set; }
-        public virtual DbSet<IndexPage> IndexPages { get; set; }
+        public virtual DbSet<PageCategoryItems> Items { get; set; }
+        public virtual DbSet<Page> Pages { get; set; }
         public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }

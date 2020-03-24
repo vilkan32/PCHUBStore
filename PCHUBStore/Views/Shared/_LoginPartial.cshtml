@@ -9,7 +9,7 @@
         @if (SignInManager.IsSignedIn(User))
         {
 
-            @if (UserManager.IsInRoleAsync(UserManager.Users.FirstOrDefault(x => x.UserName == this.User.Identity.Name), "Admin").GetAwaiter().GetResult())
+            @if (this.User.IsInRole("Admin"))
             {
                 <li style="height:60px;" class="col">
                     <a style="display: inline-block" class="nav-link text-white" asp-area="Administration" asp-controller="Blacksmith" asp-action="Index">

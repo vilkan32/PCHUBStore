@@ -27,6 +27,20 @@ namespace PCHUBStore.MiddlewareFilters
             var canContinue = true;
             if (context.ModelState.IsValid)
             {
+                var cat = context.HttpContext.Request.RouteValues.FirstOrDefault(x => x.Key == "category");
+
+                var categ = (string)cat.Value;
+                if (!this.service.CategoryExistsAsync(categ).GetAwaiter().GetResult())
+                {
+                    RouteValueDictionary redirectTargetDictionaryRedirect = new RouteValueDictionary();
+                    redirectTargetDictionaryRedirect.Add("action", "Error");
+                    redirectTargetDictionaryRedirect.Add("controller", "Home");
+
+                    var urlParametersRedirect = new RedirectToRouteResult(redirectTargetDictionaryRedirect);
+                    context.Result = urlParametersRedirect;
+                    base.OnActionExecuting(context);
+                }
+         
                 if (!context.HttpContext.Request.QueryString.HasValue)
                 {
                     base.OnActionExecuting(context);
@@ -39,9 +53,8 @@ namespace PCHUBStore.MiddlewareFilters
 
                     var category = (string)kvp.Value;
 
-                    var laptopFilterCategory = this.service.GetFiltersAsync(category).GetAwaiter().GetResult();
-
-                    if(laptopFilterCategory.Count == 0)
+                    var productFilterCategory = this.service.GetFiltersAsync(category).GetAwaiter().GetResult();
+                    if(productFilterCategory.Count == 0)
                     {
                         canContinue = false;
                     }
@@ -95,7 +108,7 @@ namespace PCHUBStore.MiddlewareFilters
                                 canContinue = false;
                             }
                         }
-                        else if (key == "Category")
+                        else if (key == "Category" || key == "category")
                         {
                             continue;
                         }
@@ -107,8 +120,8 @@ namespace PCHUBStore.MiddlewareFilters
 
                         foreach (var valueParam in value)
                         {
-                            if ((laptopFilterCategory.Any(x => x.Filters.Any(z => z.Name.ToLower() == key.ToLower() && z.Value.ToLower().Contains(valueParam.ToLower())))
-                                || (valueParam == "All" && laptopFilterCategory.Any(x => x.Filters.Any(z => z.Name == key)))))
+                            if ((productFilterCategory.Any(x => x.Filters.Any(z => z.Name.ToLower() == key.ToLower() && z.Value.ToLower().Contains(valueParam.ToLower())))
+                                || (valueParam == "All" && productFilterCategory.Any(x => x.Filters.Any(z => z.Name == key)))))
                             {
 
                             }

@@ -21,8 +21,11 @@ namespace PCHUBStore.Areas.Administration.Models.ProductViewModel
                     new InserBasicCharacteristicsViewModel(),
                      new InserBasicCharacteristicsViewModel(),
                       new InserBasicCharacteristicsViewModel(),
+                      new InserBasicCharacteristicsViewModel(),
+                      new InserBasicCharacteristicsViewModel(),
+                      new InserBasicCharacteristicsViewModel(),
 
-             
+
             };
 
             this.FullCharacteristics = new List<InsertAdvancedCharacteristicsViewModel>
@@ -48,7 +51,9 @@ namespace PCHUBStore.Areas.Administration.Models.ProductViewModel
                                   new InsertAdvancedCharacteristicsViewModel(),
                                    new InsertAdvancedCharacteristicsViewModel(),
                                     new InsertAdvancedCharacteristicsViewModel(),
-
+                                    new InsertAdvancedCharacteristicsViewModel(),
+                                    new InsertAdvancedCharacteristicsViewModel(),
+                                    new InsertAdvancedCharacteristicsViewModel(),
 
             };
         }
@@ -85,6 +90,7 @@ namespace PCHUBStore.Areas.Administration.Models.ProductViewModel
 
         public virtual List<InsertAdvancedCharacteristicsViewModel> FullCharacteristics { get; set; }
 
+        public List<string> CategoryPattern { get; set; }
 
         // thats goona be cool
         [Display(Name = "Html Description")]

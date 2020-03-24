@@ -16,6 +16,6 @@ namespace PCHUBStore.Areas.Administration.Services
 
         Task<bool> CharacteristicsExistsAsync(string name);
 
-
+        Task<List<string>> GetAvailableCharacteristicsAsync();
     }
 }

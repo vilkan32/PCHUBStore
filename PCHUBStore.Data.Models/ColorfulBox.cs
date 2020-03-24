@@ -14,6 +14,6 @@ namespace PCHUBStore.Data.Models
         public string Href { get; set; }
 
         public int IndexPageId { get; set; }
-        public virtual IndexPage IndexPage { get; set; }
+        public virtual Page IndexPage { get; set; }
     }
 }

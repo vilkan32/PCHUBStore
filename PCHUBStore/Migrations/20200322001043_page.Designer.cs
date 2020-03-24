@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PCHUBStore.Data;
 
 namespace PCHUBStore.Migrations
 {
     [DbContext(typeof(PCHUBDbContext))]
-    partial class PCHUBDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200322001043_page")]
+    partial class page
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -494,7 +496,7 @@ namespace PCHUBStore.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pages");
+                    b.ToTable("IndexPages");
                 });
 
             modelBuilder.Entity("PCHUBStore.Data.Models.PageCategory", b =>
@@ -541,7 +543,7 @@ namespace PCHUBStore.Migrations
 
                     b.HasIndex("IndexPageId");
 
-                    b.ToTable("PageCategories");
+                    b.ToTable("IndexCategories");
                 });
 
             modelBuilder.Entity("PCHUBStore.Data.Models.PageCategoryItems", b =>

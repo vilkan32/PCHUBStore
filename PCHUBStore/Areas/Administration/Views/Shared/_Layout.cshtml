@@ -206,14 +206,7 @@
     <!-- Page level plugins -->
     <script src="~/vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="~/js/_layout.js"></script>
 
-    @if (this.User.Identity.IsAuthenticated)
-    {
-        <script src="~/js/productsHistory.js"></script>
-    }
-    <script src="~/js/index.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

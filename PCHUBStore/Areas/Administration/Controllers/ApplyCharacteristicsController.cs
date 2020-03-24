@@ -27,8 +27,8 @@ namespace PCHUBStore.Areas.Administration.Controllers
    
             var cat = await this.context.AdminCharacteristicsCategories.FirstOrDefaultAsync(x => x.CategoryName == category);
 
-            var basicChar = cat.BasicCharacteristics;
-            var fullChar = cat.FullCharacteristics;
+            var basicChar = cat.BasicCharacteristics.Select(x => x.Name);
+            var fullChar = cat.FullCharacteristics.Select(x => x.Name);
 
             var param = new { basicChar, fullChar };
             var json = JsonConvert.SerializeObject(param, Formatting.Indented, new JsonSerializerSettings

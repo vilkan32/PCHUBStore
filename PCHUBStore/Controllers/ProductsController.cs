@@ -37,15 +37,15 @@ namespace PCHUBStore.Controllers
 
             if (!categoryExists)
             {
-                return this.RedirectToAction("Error");
+                return this.RedirectToAction("Error", "Home");
             }
 
             var productViewModel = new ProductsViewModel();
-
+            Console.WriteLine();
             var products = await this.service.QueryProductsAsync(productFilters, category);
-
+            
             var filters = await this.service.GetFiltersAsync(category);
-
+            Console.WriteLine();
             productViewModel.FilterCategory = mapper.Map<List<FilterCategoryViewModel>>(filters);
 
             productViewModel.Products = mapper.Map<List<ProductViewModel>>(products);
@@ -69,11 +69,12 @@ namespace PCHUBStore.Controllers
         {
             var categoryExists = await this.service.CategoryExistsAsync(category);
 
-            var product = await this.service.GetProductAsync(productId, this.User.Identity.Name, this.User.Identity.IsAuthenticated);
+
+            var product = await this.service.GetProductAsync(productId, this.User.Identity.Name, this.User.Identity.IsAuthenticated, category);
 
             if (!categoryExists || product.Category.Name != category)
             {
-                return this.Redirect("/Products/Error");
+                return this.Redirect("Home/Error");
             }
 
             var productViewModel = mapper.Map<ProductFullCharacteristicsViewModel>(product);
@@ -84,12 +85,6 @@ namespace PCHUBStore.Controllers
 
             return this.View(productViewModel);
         }
-
-        public IActionResult Error()
-        {
-            return this.View();
-        }
-     
 
     }
 }

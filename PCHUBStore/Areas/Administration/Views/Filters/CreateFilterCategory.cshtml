@@ -1,0 +1,52 @@
+﻿@model PCHUBStore.Areas.Administration.Models.FilterViewModels.InserFilterCategoryViewModel
+
+@{
+
+    ViewData["Title"] = "Create Filter Category ";
+
+}
+
+<div class="container">
+    <div class="col-12">
+        <h1 style="color: black" class="text-center">Create Filter Category</h1>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row">
+        @if (Model.Categories.Count > 0)
+        {
+            <div class="col-12">
+                <h1 style="color: black" class="text-center">Existing Items</h1>
+            </div>
+            @foreach (var item in Model.Categories)
+            {
+
+                <div class="col">
+                    <p style="color: black" class="bg-danger">
+                        @item
+                    </p>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<div class="container">
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <select asp-for="Category" class="form-control form-control-lg">
+            @foreach (var item in Model.Categories)
+            {
+                <option>@item</option>
+            }
+        </select>
+        <div class="form-group text-center">
+            <label asp-for="@Model.CategoryViewSubName"></label>
+            <input class="js-full-key" asp-for="@Model.CategoryViewSubName">
+            <span asp-validation-for="@Model.CategoryViewSubName" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Craft Filter Category</button>
+    </form>
+</div>

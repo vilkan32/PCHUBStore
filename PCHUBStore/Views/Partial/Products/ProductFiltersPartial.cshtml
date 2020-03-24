@@ -10,7 +10,7 @@
         <label for="OrderBy" style="font-family: sans-serif; color: black; font-size: 20px">Order By</label>
         <select onchange="changeHandler()" name="OrderBy" class="form-control" style="margin-bottom: 20px">
 
-            @foreach (var orderByCategory in Model.FilterCategory.Where(x => x.ViewSubCategoryName == "OrderBy"))
+            @foreach (var orderByCategory in Model.FilterCategory.Where(x => x.ViewSubCategoryName == "Order By"))
             {
                 @foreach (var filter in orderByCategory.Filters)
                 {
@@ -64,7 +64,7 @@
     </div>
     <div class="row" style="margin-top: 20px">
 
-        @foreach (var category in Model.FilterCategory.Where(x => x.ViewSubCategoryName != "OrderBy" && x.ViewSubCategoryName != "Price").ToList())
+        @foreach (var category in Model.FilterCategory.Where(x => x.ViewSubCategoryName != "Order By" && x.ViewSubCategoryName != "Price").ToList())
         {
             <div class="col-12 text-center" style="margin-bottom: 10px">
                 <p class="border-bottom-success" style="font-family: sans-serif; color: black; font-size: 20px">@category.ViewSubCategoryName</p>
@@ -92,12 +92,13 @@
             }
 
 
-            <script>
-                function changeHandler() {
-                    document.getElementById('btn').click();
-                }
-            </script>
         }
+
+        <script>
+            function changeHandler() {
+                document.getElementById('btn').click();
+            }
+        </script>
 
     </div>
     <div class="row" style="visibility: hidden">

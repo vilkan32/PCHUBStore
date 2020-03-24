@@ -8,6 +8,6 @@ namespace PCHUBStore.Services
 {
     public interface IHomeService
     {
-        Task<IndexPage> LoadIndexPageComponentsAsync();
+        Task<Page> LoadIndexPageComponentsAsync();
     }
 }

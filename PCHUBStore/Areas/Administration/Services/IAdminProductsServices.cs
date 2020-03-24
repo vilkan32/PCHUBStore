@@ -14,5 +14,14 @@ namespace PCHUBStore.Areas.Administration.Services
 
         Task CreateProductAsync(InsertProductViewModel form);
 
+        Task CreateLaptopFromJSONAsync(InsertJsonProductViewModel form);
+
+        Task CreateMonitorFromJSONAsync(InsertJsonProductViewModel form);
+
+        Task CreateKeyboardFromJSONAsync(InsertJsonProductViewModel form);
+
+        Task CreateMouseFromJSONAsync(InsertJsonProductViewModel form);
+
+        Task CreateComputerFromJSONAsync(InsertJsonProductViewModel form);
     }
 }

@@ -18,9 +18,9 @@ namespace PCHUBStore.Services
         }
 
 
-        public async Task<IndexPage> LoadIndexPageComponentsAsync()
+        public async Task<Page> LoadIndexPageComponentsAsync()
         {
-            var indexModel = await this.context.IndexPages.FirstOrDefaultAsync(x => x.IsDeleted == false);
+            var indexModel = await this.context.Pages.FirstOrDefaultAsync(x => x.IsDeleted == false);
 
             return indexModel;
         }

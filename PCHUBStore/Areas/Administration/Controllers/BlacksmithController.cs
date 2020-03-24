@@ -18,6 +18,10 @@ namespace PCHUBStore.Areas.Administration.Controllers
             return this.View();
         }
 
+        public IActionResult EditUserCategoryPage()
+        {
+            return this.View();
+        }
 
         [HttpGet]
         public IActionResult Success(string message)

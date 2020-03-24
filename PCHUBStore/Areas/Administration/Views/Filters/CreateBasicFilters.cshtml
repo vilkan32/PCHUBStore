@@ -1,0 +1,49 @@
+﻿@model PCHUBStore.Areas.Administration.Models.FilterViewModels.InsertBasicFiltersViewModel
+
+@{
+
+    ViewData["Title"] = "Create Basic Filter Category ";
+
+}
+
+<div class="container">
+    <div class="col-12">
+        <h1 style="color: black" class="text-center">Create Basic Filters Category</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="col-12">
+        <h1 style="color: black" class="text-center">Create Characteristics Category</h1>
+    </div>
+    <div class="row">
+        @if (Model.Categories.Count > 0)
+        {
+            <div class="col-12">
+                <h1 style="color: black" class="text-center">Existing Items</h1>
+            </div>
+            @foreach (var item in Model.Categories)
+            {
+
+                <div class="col">
+                    <p style="color: black" class="bg-danger">
+                        @item
+                    </p>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<div class="container">
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <select asp-for="Category" class="form-control form-control-lg">
+            @foreach (var item in Model.Categories)
+            {
+                <option>@item</option>
+            }
+        </select>
+        <button type="submit" class="btn btn-primary">Craft Basic Filters</button>
+    </form>
+</div>

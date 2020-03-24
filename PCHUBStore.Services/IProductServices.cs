@@ -11,7 +11,7 @@ namespace PCHUBStore.Services
 {
     public interface IProductServices
     {
-        Task<Product> GetProductAsync(string id, string userId, bool isAuthenticated);
+        Task<Product> GetProductAsync(string id, string userId, bool isAuthenticated, string category);
         Task<List<FilterCategory>> GetFiltersAsync(string category);
         Task<IEnumerable<Product>> QueryProductsAsync(ProductFiltersUrlModel productFilters, string category);
         Task OrderByAsync(ref ProductsViewModel products, string args);

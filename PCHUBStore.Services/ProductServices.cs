@@ -22,7 +22,7 @@ namespace PCHUBStore.Services
             this.context = context;
         }
 
-        private Func<T, bool> DetermineIfAll<T>(string parameter, string value) where T : BaseCharacteristicsModel
+        private Func<T, bool> DetermineIfAll<T>(string value) where T : BaseCharacteristicsModel
         {
 
 
@@ -34,7 +34,7 @@ namespace PCHUBStore.Services
             }
             else
             {
-                Func<T, bool> funcResult = (x) => x.Key.ToLower() == parameter.ToLower() && x.Value.ToLower().Contains(value.ToLower());
+                Func<T, bool> funcResult = (x) => x.Value.ToLower().Contains(value.ToLower());
 
                 return funcResult;
             }
@@ -82,35 +82,24 @@ namespace PCHUBStore.Services
                 string minPriceString = minPrice.ToString();
 
 
-                filterCategory.Add(new FilterCategoryViewModel
-                {
-                    CategoryName = "Laptops",
-                    ViewSubCategoryName = "Price",
-                    Filters = new List<FilterViewModel>
-                    {
-                       new FilterViewModel
-                       {
-                            Name = "MinPrice",
-                            Value = minPriceString
-                       },
-                       new FilterViewModel
-                       {
-                           Name = "MaxPrice",
-                           Value = maxPriceString
-                       }
-                    }
+                var priceFilters = filterCategory.FirstOrDefault(x => x.ViewSubCategoryName == "Price");
 
-                });
+                priceFilters.Filters.FirstOrDefault(x => x.Name == "MinPrice").Value = minPriceString;
+
+                priceFilters.Filters.FirstOrDefault(x => x.Name == "MaxPrice").Value = maxPriceString;
             }
 
-            var orderByCategory = filterCategory.FirstOrDefault(x => x.ViewSubCategoryName == "OrderBy");
+            var orderByCategory = filterCategory.FirstOrDefault(x => x.ViewSubCategoryName == "Order By");
 
-            var orderByFilters = orderByCategory.Filters;
 
-            var orderBy = orderByFilters.FirstOrDefault(x => x.Value == urlData.OrderBy);
+            if (orderByCategory != null)
+            {
 
-            orderBy.IsChecked = true;
+                var orderByFilters = orderByCategory.Filters;
+                var orderBy = orderByFilters.FirstOrDefault(x => x.Value == urlData.OrderBy);
+                orderBy.IsChecked = true;
 
+            }
             return Task.CompletedTask;
         }
 
@@ -150,7 +139,7 @@ namespace PCHUBStore.Services
             }
             if (!decimal.TryParse(productFilters.MinPrice, out minPrice))
             {
-                minPrice = 400;
+                minPrice = 0;
             }
 
 
@@ -175,27 +164,33 @@ namespace PCHUBStore.Services
                 productFilters.VideoCard = new string[] { "All" };
             }
 
-            List<Product> result = new List<Product>();
+            var result = new List<Product>();
 
             if (category.ToLower() == "laptops")
             {
                 result = await QueryLaptopsAsync(productFilters, minPrice, maxPrice);
             }
-            else if (category.ToLower() == "computers")
-            {
-
-            }
             else if (category.ToLower() == "keyboards")
             {
-
+                // todo fix the query method
+       
+                result = await QueryKeyboardsAsync(productFilters, minPrice, maxPrice);
             }
             else if (category.ToLower() == "mice")
             {
-
+                // todo fix the query method
+                result = await QueryMiceAsync(productFilters, minPrice, maxPrice);
             }
             else if (category.ToLower() == "monitors")
             {
+                // todo fix the query method
+                result = await QueryMonitorsAsync(productFilters, minPrice, maxPrice);
+            }
+            else if (category.ToLower() == "computers")
+            {
 
+              // todo fix the query method
+                result = await QueryComputersAsync(productFilters, minPrice, maxPrice);
             }
 
             return result;
@@ -215,7 +210,7 @@ namespace PCHUBStore.Services
             &&
             productFilters.Processor
             .Any(pr => p.BasicCharacteristics
-            .Any(DetermineIfAll<BasicCharacteristic>(LaptopFilterConstants.processor, pr)))
+            .Any(DetermineIfAll<BasicCharacteristic>(pr)))
             &&
             p.Price >= minPrice && p.Price <= maxPrice
             &&
@@ -225,15 +220,118 @@ namespace PCHUBStore.Services
             &&
             productFilters.VideoCard
             .Any(vc => p.BasicCharacteristics
-            .Any(DetermineIfAll<BasicCharacteristic>(LaptopFilterConstants.videoCard, vc)))
-                   ).ToList();
+            .Any(DetermineIfAll<BasicCharacteristic>(vc)))
+                ).ToList();
 
             return result;
         }
 
-        public async Task<Product> GetProductAsync(string id, string userId, bool isAuthenticated)
+        private async Task<List<Product>> QueryMonitorsAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
         {
-            var category = await this.context.Categories.FirstAsync(x => x.Name == "Laptops" && x.IsDeleted == false);
+            var productCategory = await this.context.Categories
+              .FirstAsync(x => x.Name.ToLower() == "monitors");
+
+            var result = productCategory
+            .Products
+            .Where(p =>
+            productFilters.Processor
+            .Any(pr => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(pr)))
+            &&
+            p.Price >= minPrice && p.Price <= maxPrice
+            &&
+            p.IsDeleted == false
+            &&
+            productFilters.Make.ToList().Any(x => p.Make.ToLower() == x.ToLower() || x == "All")
+            &&
+            productFilters.VideoCard
+            .Any(vc => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(vc)))
+                ).ToList();
+
+            return result;
+        }
+
+        private async Task<List<Product>> QueryKeyboardsAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
+        {
+            var productCategory = await this.context.Categories
+            .FirstAsync(x => x.Name.ToLower() == "keyboards");
+
+            var result = productCategory
+            .Products
+            .Where(p =>
+            productFilters.Processor
+            .Any(pr => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(pr)))
+            &&
+            p.Price >= minPrice && p.Price <= maxPrice
+            &&
+            p.IsDeleted == false
+            &&
+            productFilters.Make.ToList().Any(x => p.Make.ToLower() == x.ToLower() || x == "All")
+            &&
+            productFilters.VideoCard
+            .Any(vc => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(vc)))
+                ).ToList();
+
+            return result;
+        }
+
+        private async Task<List<Product>> QueryMiceAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
+        {
+            var productCategory = await this.context.Categories
+            .FirstAsync(x => x.Name.ToLower() == "mice");
+
+            var result = productCategory
+            .Products
+            .Where(p =>
+            productFilters.Processor
+            .Any(pr => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(pr)))
+            &&
+            p.Price >= minPrice && p.Price <= maxPrice
+            &&
+            p.IsDeleted == false
+            &&
+            productFilters.Make.ToList().Any(x => p.Make.ToLower() == x.ToLower() || x == "All")
+            &&
+            productFilters.VideoCard
+            .Any(vc => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(vc)))
+                ).ToList();
+
+            return result;
+        }
+
+        private async Task<List<Product>> QueryComputersAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
+        {
+            var productCategory = await this.context.Categories
+               .FirstAsync(x => x.Name.ToLower() == "computers");
+
+            var result = productCategory
+            .Products
+            .Where(p =>
+            productFilters.Processor
+            .Any(pr => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(pr)))
+            &&
+            p.Price >= minPrice && p.Price <= maxPrice
+            &&
+            p.IsDeleted == false
+            &&
+            productFilters.Make.ToList().Any(x => p.Make.ToLower() == x.ToLower() || x == "All")
+            &&
+            productFilters.VideoCard
+            .Any(vc => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(vc)))
+                ).ToList();
+
+            return result;
+        }
+        public async Task<Product> GetProductAsync(string id, string userId, bool isAuthenticated, string cat)
+        {
+            var category = await this.context.Categories.FirstAsync(x => x.Name == cat && x.IsDeleted == false);
 
             var product = category.Products.FirstOrDefault(x => x.Id == id && x.IsDeleted == false);
 
