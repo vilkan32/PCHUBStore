@@ -22,19 +22,13 @@ namespace PCHUBStore.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IEmailSender sender;
         private readonly IHomeService service;
-        private readonly IMapper mapper;
 
         public HomeController(ILogger<HomeController> logger,
-            IEmailSender sender,
-            IHomeService service,
-             IMapper mapper)
+            IHomeService service)
         {
             _logger = logger;
-            this.sender = sender;
             this.service = service;
-            this.mapper = mapper;
         }
 
         public  async Task<IActionResult> Index()
