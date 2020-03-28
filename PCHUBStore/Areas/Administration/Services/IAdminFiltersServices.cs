@@ -15,5 +15,9 @@ namespace PCHUBStore.Areas.Administration.Services
         Task CreateFilterCategoryAsync(InserFilterCategoryViewModel form);
 
         Task<bool> FilterForCategoryExistsAsync(string category, string viewSub);
+
+        Task UpdateCategoryAsync(string category);
+
+
     }
 }

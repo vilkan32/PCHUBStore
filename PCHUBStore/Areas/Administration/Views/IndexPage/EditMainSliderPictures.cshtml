@@ -1,0 +1,50 @@
+﻿@model List<PCHUBStore.Areas.Administration.Models.IndexPageViewModels.EditMainSliderPictures>
+
+@{
+
+    ViewData["Title"] = "Edit Main Slider Pictures ";
+
+}
+
+<div class="container bg-warning">
+    <div class="col-12">
+        <h1 style="color: black" class="text-center">Edit Main Slider Pictures</h1>
+    </div>
+</div>
+
+<div class="container">
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <div class="container">
+                <img src="@Model[i].Url" style="max-width: 20em; max-height: 20em" alt="Alternate Text" />
+            </div>
+            <div class="form-group text-center">
+                <label asp-for="@Model[i].Name"></label>
+                <input class="js-full-key" asp-for="@Model[i].Name">
+                <span asp-validation-for="@Model[i].Name" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center">
+                <label asp-for="@Model[i].Url"></label>
+                <input class="js-full-key" asp-for="@Model[i].Url">
+                <span asp-validation-for="@Model[i].Url" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center">
+                <label asp-for="@Model[i].RedirectTo"></label>
+                <input class="js-full-key" asp-for="@Model[i].RedirectTo">
+                <span asp-validation-for="@Model[i].RedirectTo" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center">
+                <label asp-for="@Model[i].IsDeleted"></label>
+                <input type="checkbox" class="js-full-key" asp-for="@Model[i].IsDeleted">
+                <span asp-validation-for="@Model[i].IsDeleted" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center">
+                <input type="hidden" class="js-full-key" asp-for="@Model[i].Id">
+                <span asp-validation-for="@Model[i].Id" class="text-danger"></span>
+            </div>
+        }
+        <button type="submit" class="btn btn-primary">Edit Main Slider Pictures</button>
+    </form>
+</div>

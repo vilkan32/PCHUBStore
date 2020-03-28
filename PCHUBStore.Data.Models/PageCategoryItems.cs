@@ -11,7 +11,7 @@ namespace PCHUBStore.Data.Models
         public string Href { get; set; }
 
         public int CategoryId { get; set; }
-        public virtual PageCategory Category { get; set; }
+        public virtual ItemsCategory Category { get; set; }
 
     }
 }

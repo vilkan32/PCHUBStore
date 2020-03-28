@@ -101,11 +101,11 @@ namespace PCHUBStore.Areas.Administration.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> UpdateFilterCategories()
+        public async Task<IActionResult> UpdateFilterCategory()
         {
             var categories = await this.productsServices.GetAllCategoryNamesAsync();
 
-            var model = new InserFilterCategoryViewModel
+            var model = new UpdateFilterCategoryViewModel
             {
                 Categories = categories.ToList()
             };
@@ -114,10 +114,20 @@ namespace PCHUBStore.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateFilterCategories(UpdateFilterCategoryViewModel form)
+        public async Task<IActionResult> UpdateFilterCategory(UpdateFilterCategoryViewModel form)
         {
             var categories = await this.productsServices.GetAllCategoryNamesAsync();
             form.Categories = categories.ToList();
+
+            if (!categories.Any(x => x == form.Category))
+            {
+                this.ModelState.AddModelError("Category", "Category does not exist");
+            }
+
+            if (this.ModelState.IsValid)
+            {
+                await this.service.UpdateCategoryAsync(form.Category);
+            }
 
             return View(form);
         }

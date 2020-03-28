@@ -24,16 +24,11 @@ namespace PCHUBStore.Data
             }
         }
         public PCHUBDbContext() { }
-
         public virtual DbSet<Activity> Activities { get; set; }
-
         public virtual DbSet<BasicCharacteristic> BasicCharacteristics { get; set; }
-
         public virtual DbSet<Filter> Filters { get; set; }
-
         public virtual DbSet<FilterCategory> FilterCategories { get; set; }
         public virtual DbSet<FullCharacteristic> FullCharacteristics { get; set; }
-
         public virtual DbSet<ColorfulBox> ColorfulBoxes { get; set; }
         public virtual DbSet<ProductUserFavorite> ProductUserFavorites { get; set; }
         public virtual DbSet<PageCategory> PageCategories { get; set; }
@@ -49,6 +44,8 @@ namespace PCHUBStore.Data
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public virtual DbSet<AdminCharacteristicsCategory> AdminCharacteristicsCategories { get; set; }
         public virtual DbSet<AdminCharacteristic> AdminCharacteristics { get; set; }
+        public virtual DbSet<ItemsCategory> ItemsCategories { get; set; }
+        public virtual DbSet<MainSlider> MainSliders { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

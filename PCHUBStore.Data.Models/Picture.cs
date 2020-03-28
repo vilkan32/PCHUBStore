@@ -22,5 +22,11 @@ namespace PCHUBStore.Data.Models
         public virtual User Uploader { get; set; }
         public virtual string RedirectTo { get; set; }
 
+        public int? PageCategoryId { get; set; }
+        public virtual PageCategory PageCategory { get; set; }
+
+        public int? MainSliderId { get; set; }
+
+        public virtual MainSlider MainSlider { get; set; }
     }
 }

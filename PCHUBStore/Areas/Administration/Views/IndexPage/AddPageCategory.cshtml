@@ -1,0 +1,38 @@
+﻿@model PCHUBStore.Areas.Administration.Models.IndexPageViewModels.CreatePageCategoryViewModel
+
+@{
+
+    ViewData["Title"] = "Create Page Category ";
+
+}
+
+<div class="container bg-warning">
+    <div class="col-12">
+        <h1 style="color: black" class="text-center">Create Page Category</h1>
+    </div>
+</div>
+
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.CategoryName"></label>
+            <input class="js-full-key" asp-for="@Model.CategoryName">
+            <span asp-validation-for="@Model.CategoryName" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <input type="file" name="files" multiple>
+        </div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.AllName"></label>
+            <input class="js-full-key" asp-for="@Model.AllName">
+            <span asp-validation-for="@Model.AllName" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.AllHref"></label>
+            <input class="js-full-key" asp-for="@Model.AllHref">
+            <span asp-validation-for="@Model.AllHref" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Page Category</button>
+    </form>
+</div>

@@ -48,6 +48,7 @@ namespace PCHUBStore.Areas.Administration.Models.CharacteristicsViewModels
 
             };
         }
+
         [Required]
         public string Category { get; set; }
 

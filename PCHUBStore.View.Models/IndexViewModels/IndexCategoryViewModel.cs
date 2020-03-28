@@ -8,7 +8,7 @@ namespace PCHUBStore.View.Models.IndexViewModels
     {
         public IndexCategoryViewModel()
         {
-            this.Items = new List<IndexCategoryItemViewModel>();
+            this.ItemCategories = new List<IndexItemCategoryViewModel>();
         }
 
         public string CategoryName { get; set; }
@@ -18,7 +18,7 @@ namespace PCHUBStore.View.Models.IndexViewModels
 
         public string AllHref { get; set; }
 
-        public ICollection<IndexCategoryItemViewModel> Items { get; set; }
+        public ICollection<IndexItemCategoryViewModel> ItemCategories { get; set; }
 
         public string PictureUrl { get; set; }
     }

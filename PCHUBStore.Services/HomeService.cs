@@ -20,7 +20,7 @@ namespace PCHUBStore.Services
 
         public async Task<Page> LoadIndexPageComponentsAsync()
         {
-            var indexModel = await this.context.Pages.FirstOrDefaultAsync(x => x.IsDeleted == false);
+            var indexModel = await this.context.Pages.FirstOrDefaultAsync(x => x.IsDeleted == false && x.PageName == "Index");
 
             return indexModel;
         }

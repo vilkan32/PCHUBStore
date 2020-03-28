@@ -22,7 +22,7 @@ namespace PCHUBStore.Services
             this.context = context;
         }
 
-        private Func<T, bool> DetermineIfAll<T>(string value) where T : BaseCharacteristicsModel
+        private Func<T, bool> DetermineIfAll<T>(string value, string key) where T : BaseCharacteristicsModel
         {
 
 
@@ -34,7 +34,7 @@ namespace PCHUBStore.Services
             }
             else
             {
-                Func<T, bool> funcResult = (x) => x.Value.ToLower().Contains(value.ToLower());
+                Func<T, bool> funcResult = (x) => x.Value.ToLower().Contains(value.ToLower()) && x.Key == key;
 
                 return funcResult;
             }
@@ -163,6 +163,54 @@ namespace PCHUBStore.Services
             {
                 productFilters.VideoCard = new string[] { "All" };
             }
+            if (productFilters.OS == null)
+            {
+                productFilters.OS = new string[] { "All" };
+            }
+            if (productFilters.RAM == null)
+            {
+                productFilters.RAM = new string[] { "All" };
+            }
+            if (productFilters.Resolution == null)
+            {
+                productFilters.Resolution = new string[] { "All" };
+            }
+            if (productFilters.FPS == null)
+            {
+                productFilters.FPS = new string[] { "All" };
+            }
+            if (productFilters.ReactionTime == null)
+            {
+                productFilters.ReactionTime = new string[] { "All" };
+            }
+            if (productFilters.MatrixType == null)
+            {
+                productFilters.MatrixType = new string[] { "All" };
+            }
+            if (productFilters.DisplaySize == null)
+            {
+                productFilters.DisplaySize = new string[] { "All" };
+            }
+            if (productFilters.Gaming == null)
+            {
+                productFilters.Gaming = new string[] { "All" };
+            }
+            if (productFilters.Interface == null)
+            {
+                productFilters.Interface = new string[] { "All" };
+            }
+            if (productFilters.Connectivity == null)
+            {
+                productFilters.Connectivity = new string[] { "All" };
+            }
+            if (productFilters.Type == null)
+            {
+                productFilters.Type = new string[] { "All" };
+            }
+            if (productFilters.Mechanical == null)
+            {
+                productFilters.Mechanical = new string[] { "All" };
+            }
 
             var result = new List<Product>();
 
@@ -172,24 +220,18 @@ namespace PCHUBStore.Services
             }
             else if (category.ToLower() == "keyboards")
             {
-                // todo fix the query method
-       
                 result = await QueryKeyboardsAsync(productFilters, minPrice, maxPrice);
             }
             else if (category.ToLower() == "mice")
             {
-                // todo fix the query method
                 result = await QueryMiceAsync(productFilters, minPrice, maxPrice);
             }
             else if (category.ToLower() == "monitors")
             {
-                // todo fix the query method
                 result = await QueryMonitorsAsync(productFilters, minPrice, maxPrice);
             }
             else if (category.ToLower() == "computers")
             {
-
-              // todo fix the query method
                 result = await QueryComputersAsync(productFilters, minPrice, maxPrice);
             }
 
@@ -210,7 +252,7 @@ namespace PCHUBStore.Services
             &&
             productFilters.Processor
             .Any(pr => p.BasicCharacteristics
-            .Any(DetermineIfAll<BasicCharacteristic>(pr)))
+            .Any(DetermineIfAll<BasicCharacteristic>(pr, "Processor")))
             &&
             p.Price >= minPrice && p.Price <= maxPrice
             &&
@@ -220,7 +262,15 @@ namespace PCHUBStore.Services
             &&
             productFilters.VideoCard
             .Any(vc => p.BasicCharacteristics
-            .Any(DetermineIfAll<BasicCharacteristic>(vc)))
+            .Any(DetermineIfAll<BasicCharacteristic>(vc, "VideoCard")))
+            &&
+            productFilters.OS
+            .Any(os => p.FullCharacteristics
+            .Any(DetermineIfAll<FullCharacteristic>(os, "OS")))
+            &&
+               productFilters.RAM
+            .Any(ram => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(ram, "Ram")))
                 ).ToList();
 
             return result;
@@ -234,9 +284,9 @@ namespace PCHUBStore.Services
             var result = productCategory
             .Products
             .Where(p =>
-            productFilters.Processor
+            productFilters.Resolution
             .Any(pr => p.BasicCharacteristics
-            .Any(DetermineIfAll<BasicCharacteristic>(pr)))
+            .Any(DetermineIfAll<BasicCharacteristic>(pr, "Resolution")))
             &&
             p.Price >= minPrice && p.Price <= maxPrice
             &&
@@ -244,10 +294,23 @@ namespace PCHUBStore.Services
             &&
             productFilters.Make.ToList().Any(x => p.Make.ToLower() == x.ToLower() || x == "All")
             &&
-            productFilters.VideoCard
-            .Any(vc => p.BasicCharacteristics
-            .Any(DetermineIfAll<BasicCharacteristic>(vc)))
-                ).ToList();
+            productFilters.FPS
+            .Any(fps => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(fps, "FPS")))
+            &&
+            productFilters.ReactionTime
+            .Any(rt => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(rt, "Reaction Time")))
+            &&
+             productFilters.MatrixType
+            .Any(mt => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(mt, "Matrix Type")))
+            &&
+             productFilters.DisplaySize
+            .Any(ds => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(ds, "Display Size")))
+            )
+            .ToList();
 
             return result;
         }
@@ -258,22 +321,28 @@ namespace PCHUBStore.Services
             .FirstAsync(x => x.Name.ToLower() == "keyboards");
 
             var result = productCategory
-            .Products
-            .Where(p =>
-            productFilters.Processor
-            .Any(pr => p.BasicCharacteristics
-            .Any(DetermineIfAll<BasicCharacteristic>(pr)))
+                .Products
+                .Where(p =>
+            productFilters.Type
+            .Any(t => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(t, "Type")))
             &&
             p.Price >= minPrice && p.Price <= maxPrice
             &&
             p.IsDeleted == false
             &&
-            productFilters.Make.ToList().Any(x => p.Make.ToLower() == x.ToLower() || x == "All")
+            p.Make != null
             &&
-            productFilters.VideoCard
-            .Any(vc => p.BasicCharacteristics
-            .Any(DetermineIfAll<BasicCharacteristic>(vc)))
-                ).ToList();
+            productFilters.Make.Any(x => p.Make.ToLower() == x.ToLower() || x == "All")
+            &&
+            productFilters.Interface
+            .Any(i => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(i, "Interface")))
+            &&
+            productFilters.Mechanical
+            .Any(m => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(m, "Mechanical"))))
+            .ToList();
 
             return result;
         }
@@ -282,24 +351,29 @@ namespace PCHUBStore.Services
         {
             var productCategory = await this.context.Categories
             .FirstAsync(x => x.Name.ToLower() == "mice");
-
             var result = productCategory
             .Products
             .Where(p =>
-            productFilters.Processor
-            .Any(pr => p.BasicCharacteristics
-            .Any(DetermineIfAll<BasicCharacteristic>(pr)))
+            productFilters.Gaming
+            .Any(g => p.FullCharacteristics
+            .Any(DetermineIfAll<FullCharacteristic>(g, "Gaming")))
             &&
             p.Price >= minPrice && p.Price <= maxPrice
             &&
             p.IsDeleted == false
             &&
+            p.Make != null
+            &&
             productFilters.Make.ToList().Any(x => p.Make.ToLower() == x.ToLower() || x == "All")
             &&
-            productFilters.VideoCard
-            .Any(vc => p.BasicCharacteristics
-            .Any(DetermineIfAll<BasicCharacteristic>(vc)))
-                ).ToList();
+            productFilters.Connectivity
+            .Any(c => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(c, "Connectivity")))
+            &&
+            productFilters.Interface
+            .Any(i => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(i, "Interface"))))
+            .ToList();
 
             return result;
         }
@@ -311,21 +385,27 @@ namespace PCHUBStore.Services
 
             var result = productCategory
             .Products
-            .Where(p =>
+             .Where(p =>
             productFilters.Processor
             .Any(pr => p.BasicCharacteristics
-            .Any(DetermineIfAll<BasicCharacteristic>(pr)))
+            .Any(DetermineIfAll<BasicCharacteristic>(pr, "Processor")))
             &&
             p.Price >= minPrice && p.Price <= maxPrice
             &&
             p.IsDeleted == false
             &&
-            productFilters.Make.ToList().Any(x => p.Make.ToLower() == x.ToLower() || x == "All")
-            &&
             productFilters.VideoCard
             .Any(vc => p.BasicCharacteristics
-            .Any(DetermineIfAll<BasicCharacteristic>(vc)))
-                ).ToList();
+            .Any(DetermineIfAll<BasicCharacteristic>(vc, "VideoCard")))
+            &&
+            productFilters.OS
+            .Any(os => p.FullCharacteristics
+            .Any(DetermineIfAll<FullCharacteristic>(os, "OS")))
+            &&
+               productFilters.RAM
+            .Any(ram => p.BasicCharacteristics
+            .Any(DetermineIfAll<BasicCharacteristic>(ram, "Ram"))))
+             .ToList();
 
             return result;
         }

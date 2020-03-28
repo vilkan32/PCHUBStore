@@ -1,0 +1,21 @@
+﻿@{
+
+    ViewData["Title"] = "Upload Main Slider Pictures ";
+
+}
+
+<div class="container bg-warning">
+    <div class="col-12">
+        <h1 style="color: black" class="text-center">Upload Main Slider Pictures</h1>
+    </div>
+</div>
+
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group text-center">
+            <input type="file" name="files" multiple>
+        </div>     
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+</div>

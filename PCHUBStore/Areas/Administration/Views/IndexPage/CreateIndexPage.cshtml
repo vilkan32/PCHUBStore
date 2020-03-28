@@ -1,0 +1,25 @@
+﻿@model PCHUBStore.Areas.Administration.Models.IndexPageViewModels.CreateIndexPageViewModel
+
+@{
+
+    ViewData["Title"] = "Create Index Page ";
+
+}
+
+<div class="container bg-warning">
+    <div class="col-12">
+        <h1 style="color: black" class="text-center">Create Index Page</h1>
+    </div>
+</div>
+
+<div class="container">
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.PageName"></label>
+            <input class="js-full-key" asp-for="@Model.PageName">
+            <span asp-validation-for="@Model.PageName" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Create Index Page</button>
+    </form>
+</div>

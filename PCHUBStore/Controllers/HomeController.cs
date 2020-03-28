@@ -37,17 +37,58 @@ namespace PCHUBStore.Controllers
             this.mapper = mapper;
         }
 
-        public async Task<IActionResult> Index()
+        public  async Task<IActionResult> Index()
         {
-            var indexModel = await this.service.LoadIndexPageComponentsAsync();
+            var page = await this.service.LoadIndexPageComponentsAsync();
 
-            var viewModel = this.mapper.Map<IndexViewModel>(indexModel);
+            var viewModel = new IndexViewModel();
+
+            foreach (var item in page.ColorfulBoxes.Where(x => x.IsDeleted == false))
+            {
+                viewModel.Boxes.Add(new BoxViewModel { Color = item.Color, Href = item.Href, Text = item.Text });                
+            }
+
+
+            foreach (var cat in page.Categories)
+            {
+                var categories = new List<IndexItemCategoryViewModel>();
+
+                foreach (var ic in cat.ItemsCategories)
+                {
+                    var items = new List<IndexCategoryItemViewModel>();
+
+                    foreach (var item in ic.Items)
+                    {
+                        items.Add(new IndexCategoryItemViewModel
+                        {
+
+                            Text = item.Text,
+                            Href = item.Href
+
+                        });
+                    }
+
+                    categories.Add(new IndexItemCategoryViewModel { ItemCategory = ic.Category, Items = items });
+
+
+                }
+
+                viewModel.Categories.Add(new IndexCategoryViewModel
+                {
+                    CategoryName = cat.CategoryName,
+                    AllHref = cat.AllHref,
+                    AllName = cat.AllName,
+                    PictureUrl = cat.Pictures.FirstOrDefault().Url,
+                    ItemCategories = categories
+                });
+            }
+
 
             // todo tova utre plus shopping card plus many to many na shipment administration page for crafting other categories 
           //  this.HttpContext.Response.Cookies.Append("shoppingCart", "productId", new CookieOptions { HttpOnly = true, SameSite = SameSiteMode.Strict, Expires =DateTimeOffset.UtcNow.AddDays(20) }) ;
 
             // this.HttpContext.Response.Cookies.Re["asd"] = "asdasd";
-            return View();
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

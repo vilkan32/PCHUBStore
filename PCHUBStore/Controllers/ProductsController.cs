@@ -41,11 +41,11 @@ namespace PCHUBStore.Controllers
             }
 
             var productViewModel = new ProductsViewModel();
-            Console.WriteLine();
+
             var products = await this.service.QueryProductsAsync(productFilters, category);
             
             var filters = await this.service.GetFiltersAsync(category);
-            Console.WriteLine();
+
             productViewModel.FilterCategory = mapper.Map<List<FilterCategoryViewModel>>(filters);
 
             productViewModel.Products = mapper.Map<List<ProductViewModel>>(products);

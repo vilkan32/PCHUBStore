@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PCHUBStore.Data;
+using PCHUBStore.View.Models.MainSliderApiModels;
 
 namespace PCHUBStore.Controllers
 {
@@ -22,11 +23,19 @@ namespace PCHUBStore.Controllers
         }
         // GET: api/MainSlider
         [HttpGet]
-        public string Get()
+        public async Task<string> Get()
         {
-            var pictures = this.context.Pictures.Where(x => x.Name.Contains("MainSlider")).Select(x => x.Url).ToList();
+            var mainSlider = await this.context.MainSliders.FirstOrDefaultAsync(x => x.Name == "MainSlider");
 
-            var json = JsonConvert.SerializeObject(pictures);
+            var mainSliderPictures = mainSlider.MainSliderPictures.Where(x => x.IsDeleted == false);
+
+            var jsonModel = new List<MainSliderPicturesViewModel>();
+            
+            foreach (var item in mainSliderPictures)
+            {
+                jsonModel.Add(new MainSliderPicturesViewModel { Url = item.Url, Href = item.RedirectTo });
+            }
+            var json = JsonConvert.SerializeObject(jsonModel);
 
             return json;
         }

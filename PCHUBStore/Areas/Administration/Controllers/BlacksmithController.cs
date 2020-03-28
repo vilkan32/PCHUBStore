@@ -13,11 +13,13 @@ namespace PCHUBStore.Areas.Administration.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult EditUserIndexPage()
         {
             return this.View();
         }
 
+        [HttpGet]
         public IActionResult EditUserCategoryPage()
         {
             return this.View();

@@ -92,6 +92,8 @@ namespace PCHUBStore
             services.AddTransient<IAdminCharacteristicsServices, AdminCharacteristicsServices>();
 
             services.AddTransient<IAdminFiltersServices, AdminFiltersServices>();
+
+            services.AddTransient<IAdminIndexPageServices, AdminIndexPageServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

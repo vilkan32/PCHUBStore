@@ -1,0 +1,76 @@
+﻿@model PCHUBStore.Areas.Administration.Models.IndexPageViewModels.EditIndexCategoryViewModel
+
+@{
+
+    ViewData["Title"] = "Edit Index Category ";
+
+}
+
+<div class="container bg-warning">
+    <div class="col-12">
+        <h1 style="color: black" class="text-center">Edit Index Category</h1>
+    </div>
+</div>
+
+<div class="container">
+    @if (!Model.DisplayForm)
+    {
+        <form method="get">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <select asp-for="Category" class="form-control form-control-lg">
+                @foreach (var item in Model.Categories)
+                {
+                    <option>@item</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-primary">Edit Index Category</button>
+        </form>
+    }
+    else
+    {
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @for (int i = 0; i < Model.PageCategory.Count; i++)
+            {
+                <div class="form-group text-center">
+                    <label asp-for="@Model.PageCategory[i].CategoryName"></label>
+                    <input class="js-full-key" asp-for="@Model.PageCategory[i].CategoryName">
+                    <span asp-validation-for="@Model.PageCategory[i].CategoryName" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    <label asp-for="@Model.PageCategory[i].AllHref">Text</label>
+                    <input class="js-full-key" asp-for="@Model.PageCategory[i].AllHref">
+                    <span asp-validation-for="@Model.PageCategory[i].AllHref" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    <label asp-for="@Model.PageCategory[i].AllName">Href</label>
+                    <input class="js-full-key" asp-for="@Model.PageCategory[i].AllName">
+                    <span asp-validation-for="@Model.PageCategory[i].AllName" class="text-danger"></span>
+                </div>
+
+                @for (int x = 0; x < Model.PageCategory[i].ItemCategories.Count; x++)
+                {
+                    <div class="form-group text-center">
+                        <label asp-for="@Model.PageCategory[i].ItemCategories[x].ItemCategory"></label>
+                        <input class="js-full-key" asp-for="@Model.PageCategory[i].ItemCategories[x].ItemCategory">
+                        <span asp-validation-for="@Model.PageCategory[i].ItemCategories[x].ItemCategory" class="text-danger"></span>
+                    </div>
+                    @for (int z = 0; z < Model.PageCategory[i].ItemCategories[x].Items.Count; z++)
+                    {
+                        <div class="form-group text-center">
+                            <label asp-for="@Model.PageCategory[i].ItemCategories[x].Items[z].Text"></label>
+                            <input class="js-full-key" asp-for="@Model.PageCategory[i].ItemCategories[x].Items[z].Text">
+                            <span asp-validation-for="@Model.PageCategory[i].ItemCategories[x].Items.ToList()[z].Text" class="text-danger"></span>
+                        </div>
+                        <div class="form-group text-center">
+                            <label asp-for="@Model.PageCategory[i].ItemCategories[x].Items.ToList()[z].Href"></label>
+                            <input class="js-full-key" asp-for="@Model.PageCategory[i].ItemCategories[x].Items[z].Href">
+                            <span asp-validation-for="@Model.PageCategory[i].ItemCategories[x].Items[z].Href" class="text-danger"></span>
+                        </div>
+                    }
+                }
+            }
+            <button type="submit" class="btn btn-primary">Edit Index Category</button>
+        </form>
+    }
+</div>

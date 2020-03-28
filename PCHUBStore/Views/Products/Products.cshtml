@@ -33,10 +33,14 @@
     <div class="col-sm-12 col-md-12 col-lg-10">
         <partial name="~/Views/Partial/Products/ProductsPartial.cshtml" model="Model.Products" />
     </div>
+    <div class="container">
+        <partial name="~/Views/Partial/Pagination.cshtml" model="Model" />
+    </div>
 </div>
 
 
 
 @section Scripts {
     <script type="text/javascript" src="~/js/laptopsPage.js"></script>
+    <script type="text/javascript" src="~/js/filterPartial.js"></script>
 }

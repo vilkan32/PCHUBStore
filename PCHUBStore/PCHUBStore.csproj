@@ -5,6 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200327110206_picturesPage.cs" />
+    <Compile Remove="Migrations\20200327110206_picturesPage.Designer.cs" />
+    <Compile Remove="Migrations\20200327140456_itemCategoris.cs" />
+    <Compile Remove="Migrations\20200327140456_itemCategoris.Designer.cs" />
+    <Compile Remove="Migrations\20200327141005_something.cs" />
+    <Compile Remove="Migrations\20200327141005_something.Designer.cs" />
+    <Compile Remove="Migrations\20200328121906_slider.cs" />
+    <Compile Remove="Migrations\20200328121906_slider.Designer.cs" />
+    <Compile Remove="Migrations\20200328122612_mainSlider2.1.cs" />
+    <Compile Remove="Migrations\20200328122612_mainSlider2.1.Designer.cs" />
+    <Compile Remove="Migrations\20200328122803_mainSlider2.1.cs" />
+    <Compile Remove="Migrations\20200328122803_mainSlider2.1.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="CloudinaryDotNet" Version="1.10.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />

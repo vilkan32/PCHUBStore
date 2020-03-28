@@ -469,6 +469,65 @@ namespace PCHUBStore.Migrations
                     b.ToTable("FullCharacteristics");
                 });
 
+            modelBuilder.Entity("PCHUBStore.Data.Models.ItemsCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PageCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PageCategoryId");
+
+                    b.ToTable("ItemsCategories");
+                });
+
+            modelBuilder.Entity("PCHUBStore.Data.Models.MainSlider", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MainSliders");
+                });
+
             modelBuilder.Entity("PCHUBStore.Data.Models.Page", b =>
                 {
                     b.Property<int>("Id")
@@ -516,9 +575,6 @@ namespace PCHUBStore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CategoryViewName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -533,9 +589,6 @@ namespace PCHUBStore.Migrations
 
                     b.Property<DateTime>("ModificationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PictureUrl")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -601,11 +654,17 @@ namespace PCHUBStore.Migrations
                     b.Property<string>("MainPicForProductId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("MainSliderId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("ModificationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PageCategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ProductId")
                         .HasColumnType("nvarchar(450)");
@@ -620,6 +679,10 @@ namespace PCHUBStore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MainSliderId");
+
+                    b.HasIndex("PageCategoryId");
 
                     b.HasIndex("ProductId");
 
@@ -1100,6 +1163,15 @@ namespace PCHUBStore.Migrations
                         .HasForeignKey("ProductId");
                 });
 
+            modelBuilder.Entity("PCHUBStore.Data.Models.ItemsCategory", b =>
+                {
+                    b.HasOne("PCHUBStore.Data.Models.PageCategory", "PageCategory")
+                        .WithMany("ItemsCategories")
+                        .HasForeignKey("PageCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PCHUBStore.Data.Models.PageCategory", b =>
                 {
                     b.HasOne("PCHUBStore.Data.Models.Page", "IndexPage")
@@ -1111,7 +1183,7 @@ namespace PCHUBStore.Migrations
 
             modelBuilder.Entity("PCHUBStore.Data.Models.PageCategoryItems", b =>
                 {
-                    b.HasOne("PCHUBStore.Data.Models.PageCategory", "Category")
+                    b.HasOne("PCHUBStore.Data.Models.ItemsCategory", "Category")
                         .WithMany("Items")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1120,6 +1192,14 @@ namespace PCHUBStore.Migrations
 
             modelBuilder.Entity("PCHUBStore.Data.Models.Picture", b =>
                 {
+                    b.HasOne("PCHUBStore.Data.Models.MainSlider", "MainSlider")
+                        .WithMany("MainSliderPictures")
+                        .HasForeignKey("MainSliderId");
+
+                    b.HasOne("PCHUBStore.Data.Models.PageCategory", "PageCategory")
+                        .WithMany("Pictures")
+                        .HasForeignKey("PageCategoryId");
+
                     b.HasOne("PCHUBStore.Data.Models.Product", "Product")
                         .WithMany("Pictures")
                         .HasForeignKey("ProductId");

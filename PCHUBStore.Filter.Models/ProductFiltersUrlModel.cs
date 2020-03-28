@@ -12,28 +12,40 @@ namespace PCHUBStore.Filter.Models
             this.Page = 1;
         }
 
-        [MinLength(1), MaxLength(20)]
+
         public string MinPrice { get; set; }
 
-
-        [MinLength(1), MaxLength(20)]
         public string MaxPrice { get; set; }
 
         public int Page { get; set; }
 
-        [MinLength(1), MaxLength(20)]
         public string[] Model { get; set; }
 
-        [MinLength(1), MaxLength(20)]
         public string[] Make { get; set; }
 
-        [MinLength(1), MaxLength(20)]
+        public string[] OS { get; set; }
+
+        public string[] RAM { get; set; }
+
         public string[] VideoCard { get; set; }
 
-        [MinLength(1), MaxLength(20)]
         public string[] Processor { get; set; }
 
-        [MinLength(1), MaxLength(20)]
+        public string[] Resolution { get; set; }
+
+        public string[] FPS { get; set; }
+        public string[] ReactionTime { get; set; }
+
+        public string[] MatrixType { get; set; }
+        public string[] Gaming { get; set; }
+
+        public string[] Interface { get; set; }
+
+        public string[] Mechanical { get; set; }
+
+        public string[] Type { get; set; }
+        public string[] Connectivity { get; set; }
+        public string[] DisplaySize { get; set; }
         public string OrderBy { get; set; }
 
 

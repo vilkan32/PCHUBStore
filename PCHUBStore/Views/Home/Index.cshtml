@@ -1,4 +1,6 @@
-﻿@{
+﻿@model PCHUBStore.View.Models.IndexViewModels.IndexViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 
 }
@@ -97,141 +99,51 @@
 
 <div class="container text-center" style="margin-top: 3em">
     <div class="row" style="font-size: 25px">
-        <div class="col m-1" style="background-color: red;">
-            <a href="" style="color: white">Acer Laptops</a>
-        </div>
-        <div class="col m-1" style="background-color: yellowgreen;">
-            <a href="" style="color: white">Dell Monitors</a>
-        </div>
-        <div class="col m-1" style="background-color: blueviolet;">
-            <a href="" style="color: white">Alienware</a>
-        </div>
-        <div class="col m-1" style="background-color: deepskyblue;">
-            <a href="" style="color: white">Keyboards</a>
-        </div>
+        @foreach (var item in Model.Boxes)
+        {
+            <div class="col m-1" style="background-color: @item.Color;">
+                <a href="@item.Href" style="color: white">@item.Text</a>
+            </div>
+        }
     </div>
 </div>
 
 
 
 <div class="row justify-content-center" style="margin-top: 40px">
-    <div class="col-lg-5 m-1 col-sm-10">
-        <div class="row bg-white">
-            <div class="col-2">
-                <p style="font-size: 20px; color: black">Laptops</p>
-                <a href="#">All Laptops</a>
-            </div>
-            <div class="col-10 text-right">
-                <div class="row">
-                    <div class="col-lg-6 col-sm-12">
-                        <ul style="list-style: none; font-size: 15px">
-                            <li><a style="color: orangered" href="#">Лаптопи за игри</a></li>
-                            <li><a href="#">RTX 2060 Ново !</a></li>
-                            <li><a href="#">RTX 2070 Ново !</a></li>
-                            <li><a href="#">RTX 2070 Ново !</a></li>
-                            <li><a href="#">RTX 2070 Ново !</a></li>
-                            <li><a href="#">RTX 2070 Ново !</a></li>
-                            <li><a href="#">RTX 2070 Ново !</a></li>
-                            <li><a href="#">RTX 2070 Ново !</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-lg-6 col-sm-12">
-                        <ul style="list-style: none; font-size: 15px">
-                            <li><a style="color: orangered" href="#">Лаптопи за игри</a></li>
-                            <li><a href="#">RTX 2060 Ново !</a></li>
-                            <li><a href="#">RTX 2070 Ново !</a></li>
-                            <li><a href="#">RTX 2070 Ново !</a></li>
-                            <li><a href="#">RTX 2070 Ново !</a></li>
-                            <li><a href="#">RTX 2070 Ново !</a></li>
-                            <li><a href="#">RTX 2070 Ново !</a></li>
-                            <li><a href="#">RTX 2070 Ново !</a></li>
-                        </ul>
+    @foreach (var cat in Model.Categories)
+    {
+        <div class="col-lg-5 m-1 col-sm-10">
+            <div class="row bg-white">
+                <div class="col-2">
+                    <p style="font-size: 20px; color: black">@cat.CategoryName</p>
+                    <a href="@cat.AllHref">@cat.AllName</a>
+                </div>
+                <div class="col-10 text-right">
+                    <div class="row">
+                        @foreach (var ic in cat.ItemCategories)
+                        {
+                            <div class="col-lg-6 col-sm-12">
+                                <ul style="list-style: none; font-size: 15px">
+                                    <li><a style="color: orangered">@ic.ItemCategory</a></li>
+                                    @foreach (var item in ic.Items)
+                                    {
+                                        <li style="font-size: 10px"><a href="@item.Href">@item.Text</a></li>   
+                                    }
+                                </ul>
+                            </div>
+                        }
                     </div>
                 </div>
-            </div>
-            <div class="col-12 text-center">
-                <a href="#" style="width: inherit">
-                    <img style="width: inherit" src="https://static.plasico.bg/resources/asusgl704-home-min.jpg" alt="Alternate Text" />
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-5 m-1 col-sm-10">
-        <div class="row bg-white">
-            <div class="col-2">
-                <p style="font-size: 20px; color: black">Monitors</p>
-                <a href="#">All Laptops</a>
-            </div>
-            <div class="col-10 text-right">
-                <ul style="list-style: none; font-size: 15px">
-                    <li><a href="#">Лаптопи за игри</a></li>
-                    <li><a href="#">RTX 2060 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                </ul>
-            </div>
-            <div class="col-12 text-center">
-                <a href="#" style="width: inherit">
-                    <img style="width: inherit" src="https://static.plasico.bg/resources/1-2-benq.jpg" alt="Alternate Text" />
-                </a>
+                <div class="col-12 text-center">
+                    <a href="@cat.AllHref" style="width: inherit">
+                        <img style="width: inherit; height: inherit" src="@cat.PictureUrl" alt="Alternate Text" />
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-lg-5 m-1 col-sm-10">
-        <div class="row bg-white">
-            <div class="col-2">
-                <p style="font-size: 20px; color: black">Keyboards</p>
-                <a href="#">All Laptops</a>
-            </div>
-            <div class="col-10 text-right">
-                <ul style="list-style: none; font-size: 15px">
-                    <li><a href="#">Лаптопи за игри</a></li>
-                    <li><a href="#">RTX 2060 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                </ul>
-            </div>
-            <div class="col-12 text-center">
-                <a href="#" style="width: inherit">
-                    <img style="width: inherit" src="https://static.plasico.bg/resources/asusgl704-home-min.jpg" alt="Alternate Text" />
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-5 m-1 col-sm-10">
-        <div class="row bg-white">
-            <div class="col-2">
-                <p style="font-size: 20px; color: black">PC</p>
-                <a href="#">All PCs</a>
-            </div>
-            <div class="col-10 text-right">
-                <ul style="list-style: none; font-size: 15px">
-                    <li><a href="#">Лаптопи за игри</a></li>
-                    <li><a href="#">RTX 2060 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                    <li><a href="#">RTX 2070 Ново !</a></li>
-                </ul>
-            </div>
-            <div class="col-12 text-center">
-                <a href="#" style="width: inherit">
-                    <img style="width: inherit" src="https://static.plasico.bg/resources/assembled-gaming-home.1.1.1.jpg" alt="Alternate Text" />
-                </a>
-            </div>
-        </div>
-    </div>
+    }
 </div>
 
 

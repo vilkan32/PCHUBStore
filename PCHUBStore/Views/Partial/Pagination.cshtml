@@ -3,33 +3,38 @@
 
 @if (Model.Pager.EndPage > 1)
 {
-   
-        <ul class="pagination col-4">
 
+    <div class="container">
+        <div class="row">
             @for (var pg = Model.Pager.StartPage; pg <= Model.Pager.EndPage; pg++)
             {
-                <li class="@(pg == Model.Pager.CurrentPage ? "active" : "") page-item">
+
+
+
+                <div class="@(pg == Model.Pager.CurrentPage ? "active" : "") page-item">
                     <button onclick="clickPageBtn(this)" value="@pg" class="page-link">@pg</button>
-                </li>
+                </div>
+
+
             }
-         
-        </ul>
-        <script>
-           
+        </div>
+    </div>
+    <script>
 
-            function clickPageBtn(e) {
 
-                 let target = e;
+        function clickPageBtn(e) {
 
-                let page = target.innerText;
+            let target = e;
 
-                document.getElementById('page').value = page;
+            let page = target.innerText;
 
-                document.getElementById('btn').click();
+            document.getElementById('page').value = page;
 
-           
-            };
+            document.getElementById('btn').click();
 
-        </script>
+
+        };
+
+    </script>
 }
 
