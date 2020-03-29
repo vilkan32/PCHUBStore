@@ -23,7 +23,7 @@ namespace PCHUBStore.Controllers
         }
         // GET: api/MainSlider
         [HttpGet]
-        public async Task<string> Get()
+        public async Task<ActionResult<List<MainSliderPicturesViewModel>>> Get()
         {
             var mainSlider = await this.context.MainSliders.FirstOrDefaultAsync(x => x.Name == "MainSlider");
 
@@ -34,10 +34,8 @@ namespace PCHUBStore.Controllers
             foreach (var item in mainSliderPictures)
             {
                 jsonModel.Add(new MainSliderPicturesViewModel { Url = item.Url, Href = item.RedirectTo });
-            }
-            var json = JsonConvert.SerializeObject(jsonModel);
-
-            return json;
+            }         
+            return jsonModel;
         }
 
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using PCHUBStore.Data.Models;
 
 namespace PCHUBStore.Controllers
 {
+    [Authorize(Roles = "StoreUser")]
     [Route("api/[controller]")]
     [ApiController]
     public class FavoritesController : ControllerBase
@@ -30,7 +32,7 @@ namespace PCHUBStore.Controllers
 
             var product = await this.context.Products.FirstOrDefaultAsync(x => x.Id == id && x.IsDeleted == false);
 
-            if (!user.FavoriteUserProducts.Select(x => x.Product).Any(x => x.Id == id))
+            if (product != null && !user.FavoriteUserProducts.Select(x => x.Product).Any(x => x.Id == id))
             {
                 user.FavoriteUserProducts.Add(new ProductUserFavorite
                 {

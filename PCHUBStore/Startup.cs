@@ -56,6 +56,7 @@ namespace PCHUBStore
 
             var mvcBuilder = services.AddControllersWithViews(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
             mvcBuilder.AddRazorRuntimeCompilation();
+            services.AddSession(options => { options.IdleTimeout = TimeSpan.FromDays(1); });
             services.AddRazorPages();
 
             services.AddIdentity<User, IdentityRole>(options =>
@@ -94,6 +95,8 @@ namespace PCHUBStore
             services.AddTransient<IAdminFiltersServices, AdminFiltersServices>();
 
             services.AddTransient<IAdminIndexPageServices, AdminIndexPageServices>();
+
+            services.AddTransient<IShopServices, ShopServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -138,6 +141,8 @@ namespace PCHUBStore
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
               
@@ -145,7 +150,7 @@ namespace PCHUBStore
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

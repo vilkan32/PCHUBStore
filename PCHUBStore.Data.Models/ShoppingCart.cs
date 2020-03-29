@@ -9,6 +9,7 @@ namespace PCHUBStore.Data.Models
         public ShoppingCart()
         {
             this.ProductCarts = new List<ProductCart>();
+            this.Id = Guid.NewGuid().ToString();
         }
         public string UserId { get; set; }
         public virtual User Holder { get; set; }

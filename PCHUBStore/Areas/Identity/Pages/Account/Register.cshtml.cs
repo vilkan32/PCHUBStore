@@ -93,7 +93,7 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
 
-                    await this._userManager.AddToRoleAsync(user, "Admin");
+                    await this._userManager.AddToRoleAsync(user, "StoreUser");
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

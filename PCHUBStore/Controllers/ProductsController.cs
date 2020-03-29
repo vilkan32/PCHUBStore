@@ -63,7 +63,6 @@ namespace PCHUBStore.Controllers
             return this.View(productViewModel);
         }
 
-
         [HttpGet("Products/{category}/{productId}")]
         public async Task<IActionResult> Product(string productId, string category)
         {

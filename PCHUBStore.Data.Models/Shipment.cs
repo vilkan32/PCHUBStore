@@ -20,6 +20,7 @@ namespace PCHUBStore.Data.Models
         public ShipmentStatus ShipmentStatus { get; set; }
 
         public DateTime? DeliveryConfirmationDate { get; set; }
+
         public string UserId { get; set; }
 
         public virtual User User { get; set; }

@@ -77,11 +77,6 @@ namespace PCHUBStore.Controllers
                 });
             }
 
-
-            // todo tova utre plus shopping card plus many to many na shipment administration page for crafting other categories 
-          //  this.HttpContext.Response.Cookies.Append("shoppingCart", "productId", new CookieOptions { HttpOnly = true, SameSite = SameSiteMode.Strict, Expires =DateTimeOffset.UtcNow.AddDays(20) }) ;
-
-            // this.HttpContext.Response.Cookies.Re["asd"] = "asdasd";
             return View(viewModel);
         }
 

@@ -43,7 +43,15 @@
             <div class="row" style="margin-top: 10px; border-top: solid; border-color: greenyellow">
                 <div class="col">
                     <span style="color: red; font-size: 30px">@Model.Price lv</span>
-                    <button class="btn btn-success">Add To Cart</button>
+
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <a class="btn btn-info" role="button" asp-controller="ShoppingCart" asp-action="ReviewCart">Add To Cart</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-info" role="button" asp-controller="ShoppingCart" asp-action="BuyProductAnonymous">Add To Cart</a>
+                    }
                 </div>
                 <div class="col" style="border-bottom: solid; border-bottom-color: greenyellow;">
                     <span>Product Availability</span>
