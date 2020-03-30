@@ -18,5 +18,7 @@ namespace PCHUBStore.Services
         Task ApplyFiltersFromUrlAsync(ICollection<FilterCategoryViewModel> filterCategory, ProductFiltersUrlModel urlData);
         Task<IEnumerable<Product>> GetSimilarProductsAsync(decimal currentPrice, string category);
         Task<bool> CategoryExistsAsync(string category);
+        Task<bool> ProductExistsAsync(string productId);
+        Task<Product> GetProductAsync(string id);
     }
 }

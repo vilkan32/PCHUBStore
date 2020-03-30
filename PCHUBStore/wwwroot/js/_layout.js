@@ -73,5 +73,17 @@ function setPadding() {
 
 }
 
+function showNumberOfProducts() {
+
+    fetch("/api/NumberOfProducts").then(x => x.json()).then(x => {
+
+        let number = JSON.parse(x);
+
+        document.getElementById("cartNumberOfProducts").innerText = number;
+    });
+
+}
+
+showNumberOfProducts();
 setPadding();
 navFunction();

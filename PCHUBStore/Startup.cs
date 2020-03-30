@@ -56,7 +56,7 @@ namespace PCHUBStore
 
             var mvcBuilder = services.AddControllersWithViews(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
             mvcBuilder.AddRazorRuntimeCompilation();
-            services.AddSession(options => { options.IdleTimeout = TimeSpan.FromDays(1); });
+            services.AddSession(options => { options.IdleTimeout = TimeSpan.FromDays(20);options.Cookie.HttpOnly = true; options.Cookie.IsEssential = true; });
             services.AddRazorPages();
 
             services.AddIdentity<User, IdentityRole>(options =>

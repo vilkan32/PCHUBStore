@@ -25,25 +25,5 @@ namespace PCHUBStore.Controllers
             this.mapper = mapper;
         }
 
-        // GET: api/ReviewedProducts
-        [HttpGet]
-        public async Task<string> Get()
-        {
-            if (this.User.Identity.IsAuthenticated)
-            {
-                var user = await this.context.Users.FirstOrDefaultAsync(x => x.UserName == this.User.Identity.Name);
-
-                var history = this.mapper.Map<List<ApiProductHistoryViewModel>>(user.ProductUserReviews.Select(x => x.Product).TakeLast(10));
-
-                var json = JsonConvert.SerializeObject(history);
-
-                return json;
-            }
-
-            return "";
-
-        }
-
-
     }
 }

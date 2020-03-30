@@ -5,6 +5,7 @@ using PCHUBStore.Data.Models;
 using PCHUBStore.View.Models.UserProfileViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,12 +15,36 @@ namespace PCHUBStore.Services
     {
         private readonly PCHUBDbContext context;
         private readonly UserManager<User> userManager;
+        private readonly IProductServices productService;
 
         public UserProfileServices(PCHUBDbContext context, 
-            UserManager<User> userManager)
+            UserManager<User> userManager, IProductServices productService)
         {
             this.context = context;
             this.userManager = userManager;
+            this.productService = productService;
+        }
+
+
+        public async Task<bool> AddToFavoritesAsync(string username, string id)
+        {
+            var user = await this.context.Users.FirstOrDefaultAsync(x => x.UserName == username);
+
+
+            var product = await this.productService.GetProductAsync(id);
+
+            if (product != null && !user.FavoriteUserProducts.Select(x => x.Product).Any(x => x.Id == id))
+            {
+                user.FavoriteUserProducts.Add(new ProductUserFavorite
+                {
+                    User = user,
+                    Product = product
+                });
+                await this.context.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
 
         public async Task AddProfilePictureToUserAsync(string picUrl, string userName)

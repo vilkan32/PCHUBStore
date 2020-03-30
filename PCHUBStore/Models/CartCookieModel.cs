@@ -10,7 +10,7 @@ namespace PCHUBStore.Models
     {
         public CartCookieModel()
         {
-            this.ProductIds = new List<string>();
+            this.Products = new List<ProductCookieModel>();
         }
         public string Address { get; set; }
 
@@ -24,7 +24,7 @@ namespace PCHUBStore.Models
 
         public string Email { get; set; }
 
-        public ICollection<string> ProductIds { get; set; }
+        public ICollection<ProductCookieModel> Products { get; set; }
 
     }
 }

@@ -1,10 +1,12 @@
-﻿@{
+﻿@model List<PCHUBStore.View.Models.ShoppingCartViewModels.ReviewCartViewModel>
+
+@{
     ViewData["Title"] = "Cart ";
 }
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">PCHUB - Store Cart</h1>
+        <h1 class="jumbotron-heading" style="color: black">Shopping Cart</h1>
     </div>
 </section>
 
@@ -24,54 +26,66 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Dada</td>
-                            <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">124,90 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Toto</td>
-                            <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">33,90 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
-                            <td>Product Name Titi</td>
-                            <td>In stock</td>
-                            <td><input class="form-control" type="text" value="1" /></td>
-                            <td class="text-right">70,00 €</td>
-                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
-                        </tr>
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+
+                            var product = Model[i];
+                            <tr>
+                                <td><img style="max-height: 3em; max-width: 3em" src="@product.PictureUrl" /> </td>
+                                <td>
+                                    <a href="@product.ProductUrl">@string.Join("", product.Title.Take(50))</a>
+                                </td>
+                                <td>In stock</td>
+                                <td>
+                                    <input class="form-control" type="number" asp-for="@product.Quantity" />
+                                    <a asp-action="IncreaseProductQuantity" asp-controller="ShoppingCart" asp-route-id="@product.Id"></a>
+
+                                </td>
+                                <td class="text-right">@product.Price €</td>
+                                <td class="text-right"><a asp-action="ExcludeProduct" asp-controller="ShoppingCart" asp-route-id="@product.Id" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </a> </td>
+                            </tr>
+
+                        }
                         <tr>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td>Sub-Total</td>
-                            <td class="text-right">255,90 €</td>
+                            <td class="text-right">@Model.Sum(x => x.Price * x.Quantity) €</td>
                         </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Shipping</td>
-                            <td class="text-right">6,90 €</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><strong>Total</strong></td>
-                            <td class="text-right"><strong>346,90 €</strong></td>
-                        </tr>
+                        @if (Model.Sum(x => x.Price * x.Quantity) < 100)
+                        {
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Shipping</td>
+                                <td class="text-right">6,90 €</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Total</strong></td>
+                                <td class="text-right"><strong>@Model.Sum(x => x.Price * x.Quantity) + 6.90 €</strong></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Total</strong></td>
+                                <td class="text-right"><strong>@Model.Sum(x => x.Price * x.Quantity) €</strong></td>
+                            </tr>
+                        }
+
                     </tbody>
                 </table>
             </div>
@@ -88,3 +102,8 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+
+    <script type="text/javascript" src="~/js/shoppingCart.js"></script>
+}

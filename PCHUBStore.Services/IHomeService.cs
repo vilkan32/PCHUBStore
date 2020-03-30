@@ -9,5 +9,9 @@ namespace PCHUBStore.Services
     public interface IHomeService
     {
         Task<Page> LoadIndexPageComponentsAsync();
+
+        Task<List<Picture>> GetMainSliderPicturesAsync();
+
+        Task<IEnumerable<Product>> GetUserReviewedProductsAsync(string username);
     }
 }

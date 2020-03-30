@@ -104,6 +104,11 @@ namespace PCHUBStore.Services
         }
 
 
+        public async Task<bool> ProductExistsAsync(string productId)
+        {
+            return await this.context.Products.AnyAsync(x => x.Id == productId);
+        }
+
         public Task OrderByAsync(ref ProductsViewModel laptops, string args)
         {
             if (args == null)
@@ -437,6 +442,10 @@ namespace PCHUBStore.Services
             return product;
         }
 
+        public async Task<Product> GetProductAsync(string id)
+        {
+            return await this.context.Products.FirstOrDefaultAsync(x => x.Id == id );
+        }
         public async Task<IEnumerable<Product>> GetSimilarProductsAsync(decimal currentPrice, string category)
         {
             var categoryDb = await this.context.Categories.FirstAsync(x => x.Name == category && x.IsDeleted == false);

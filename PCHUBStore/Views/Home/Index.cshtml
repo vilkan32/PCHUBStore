@@ -128,7 +128,8 @@
                                     <li><a style="color: orangered">@ic.ItemCategory</a></li>
                                     @foreach (var item in ic.Items)
                                     {
-                                        <li style="font-size: 10px"><a href="@item.Href">@item.Text</a></li>   
+                                        <li style="font-size: 10px"><a href="@item.Href">@item.Text</a></li>
+
                                     }
                                 </ul>
                             </div>
@@ -147,3 +148,8 @@
 </div>
 
 
+@section Scripts {
+
+    <script src="~/js/index.js"></script>
+
+}

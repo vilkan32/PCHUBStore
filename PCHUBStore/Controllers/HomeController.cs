@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,7 +16,9 @@ using PCHUBStore.Data.Models;
 using PCHUBStore.Models;
 using PCHUBStore.Services;
 using PCHUBStore.Services.EmailSender;
+using PCHUBStore.View.Models.ApiViewModels;
 using PCHUBStore.View.Models.IndexViewModels;
+using PCHUBStore.View.Models.MainSliderApiModels;
 
 namespace PCHUBStore.Controllers
 {
@@ -23,15 +26,18 @@ namespace PCHUBStore.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHomeService service;
+        private readonly IMapper mapper;
 
         public HomeController(ILogger<HomeController> logger,
-            IHomeService service)
+            IHomeService service,
+            IMapper mapper)
         {
             _logger = logger;
             this.service = service;
+            this.mapper = mapper;
         }
 
-        public  async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             var page = await this.service.LoadIndexPageComponentsAsync();
 
@@ -39,7 +45,7 @@ namespace PCHUBStore.Controllers
 
             foreach (var item in page.ColorfulBoxes.Where(x => x.IsDeleted == false))
             {
-                viewModel.Boxes.Add(new BoxViewModel { Color = item.Color, Href = item.Href, Text = item.Text });                
+                viewModel.Boxes.Add(new BoxViewModel { Color = item.Color, Href = item.Href, Text = item.Text });
             }
 
 
@@ -79,6 +85,39 @@ namespace PCHUBStore.Controllers
 
             return View(viewModel);
         }
+
+
+        [HttpGet("/api/GetMainSliderPictures")]
+        public async Task<ActionResult<List<MainSliderPicturesViewModel>>> MainSliderPictures()
+        {
+
+            var mainSliderPictures = await this.service.GetMainSliderPicturesAsync();
+
+            var jsonModel = new List<MainSliderPicturesViewModel>();
+
+            foreach (var item in mainSliderPictures)
+            {
+                jsonModel.Add(new MainSliderPicturesViewModel { Url = item.Url, Href = item.RedirectTo });
+            }
+
+            return jsonModel;
+        }
+
+
+
+
+        [HttpGet("/api/ReviewedProducts")]
+        public async Task<ActionResult<List<ApiProductHistoryViewModel>>> ReviewedProducts()
+        {
+
+            var userReviews = await this.service.GetUserReviewedProductsAsync(this.User.Identity.Name);
+
+            var history = this.mapper.Map<List<ApiProductHistoryViewModel>>(userReviews);
+
+            return history;
+
+        }
+
 
         public IActionResult Privacy()
         {

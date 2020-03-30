@@ -16,5 +16,7 @@ namespace PCHUBStore.Services
         Task EditUserProfileOrderInformationAsync(string username, EditDeliveryInformationForm editForm);
 
         Task EditUserAccountSettingsAsync(string username, EditAccountSettingsForm editForm);
+
+        Task<bool> AddToFavoritesAsync(string username, string id);
     }
 }

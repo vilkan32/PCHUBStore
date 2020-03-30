@@ -32,7 +32,7 @@
                     <img src="~/img/shoppingCart.png" style="width: 50px; height: 50px;" alt="Alternate Text" />
                     @if (this.User.Identity.IsAuthenticated)
                     {
-                        <a class="btn btn-info" role="button" asp-controller="ShoppingCart" asp-action="BuyProduct">Add To Cart</a>
+                        <a class="btn btn-info" role="button" asp-controller="ShoppingCart" asp-action="BuyProduct" asp-route-id="@product.Id">Add To Cart</a>
                     }
                     else
                     {
