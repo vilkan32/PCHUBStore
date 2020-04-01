@@ -73,7 +73,8 @@ function setPadding() {
 
 }
 
-function showNumberOfProducts() {
+
+(function showNumberOfProducts() {
 
     fetch("/api/NumberOfProducts").then(x => x.json()).then(x => {
 
@@ -82,8 +83,9 @@ function showNumberOfProducts() {
         document.getElementById("cartNumberOfProducts").innerText = number;
     });
 
-}
+})();
 
-showNumberOfProducts();
+
 setPadding();
 navFunction();
+

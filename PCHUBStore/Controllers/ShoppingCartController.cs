@@ -22,7 +22,7 @@ namespace PCHUBStore.Controllers
         private readonly IMapper mapper;
         private readonly IProductServices productService;
 
-        public ShoppingCartController(IShopServices service,IMapper mapper, IProductServices productService)
+        public ShoppingCartController(IShopServices service, IMapper mapper, IProductServices productService)
         {
             this.service = service;
             this.mapper = mapper;
@@ -81,11 +81,11 @@ namespace PCHUBStore.Controllers
                 return this.RedirectToAction("EmptyCart");
             }
 
-            if(!(quantity < 1))
+            if (!(quantity < 1))
             {
                 await this.service.IncreaseProductQuantityAsync(this.User.Identity.Name, id, quantity);
             }
-        
+
 
             return this.RedirectToAction("ReviewCart");
         }
@@ -97,23 +97,51 @@ namespace PCHUBStore.Controllers
         public async Task<IActionResult> EmptyCart()
         {
 
-            var emptyOrNonExistingCart = await this.service.IsCartEmptyOrNonExistingAsync(this.User.Identity.Name);
-            if (emptyOrNonExistingCart)
+            if (this.User.Identity.IsAuthenticated)
             {
-                return this.View();
+                var emptyOrNonExistingCart = await this.service.IsCartEmptyOrNonExistingAsync(this.User.Identity.Name);
+
+                if (emptyOrNonExistingCart)
+                {
+                    return this.View();
+                }
             }
+            else
+            {
+                if (this.HttpContext.Session.GetString("Cart") == "empty")
+                {
+
+                    return this.View();
+                }
+                else
+                {
+                    var cookiesJson = this.HttpContext.Session.GetString("Cart");
+
+                    var model = JsonConvert.DeserializeObject<CartCookieModel>(cookiesJson);
+
+                    var quantity = model.Products.Sum(x => x.Quantity);
+
+                    if(quantity == 0)
+                    {
+                        return this.View();
+                    }
+                }
+            }
+
 
             return this.RedirectToAction("Error", "Home");
         }
 
         [AllowAnonymous]
+        [ShoppingCartFilter]
         [HttpGet]
         [Route("/api/NumberOfProducts")]
         public async Task<int> NumberOfProducts()
         {
+
             if (this.User.IsInRole("StoreUser"))
             {
-               return await this.service.GetNumberOfProductsAsync(this.User.Identity.Name);
+                return await this.service.GetNumberOfProductsAsync(this.User.Identity.Name);
             }
             else
             {
@@ -124,7 +152,9 @@ namespace PCHUBStore.Controllers
                 }
                 else
                 {
-                    var model = JsonConvert.DeserializeObject<CartCookieModel>(this.HttpContext.Session.GetString("Cart"));
+                    var cookiesJson = this.HttpContext.Session.GetString("Cart");
+
+                    var model = JsonConvert.DeserializeObject<CartCookieModel>(cookiesJson);
                     return model.Products.Sum(x => x.Quantity);
                 }
             }
@@ -148,6 +178,8 @@ namespace PCHUBStore.Controllers
 
                 var cookieProduct = this.mapper.Map<ProductCookieModel>(product);
 
+                cookieProduct.Quantity = 1;
+
                 model.Products.Add(cookieProduct);
 
                 var jsonModel = JsonConvert.SerializeObject(model);
@@ -156,29 +188,79 @@ namespace PCHUBStore.Controllers
             }
             else
             {
+
+                // maybe product exists async
                 var product = await this.productService.GetProductAsync(id);
 
                 var cookieProduct = this.mapper.Map<ProductCookieModel>(product);
 
                 var model = JsonConvert.DeserializeObject<CartCookieModel>(this.HttpContext.Session.GetString("Cart"));
 
-                model.Products.Add(cookieProduct);
+                if (model.Products.Any(x => x.ProductId == id))
+                {
+                    var productModel = model.Products.FirstOrDefault(x => x.ProductId == id);
 
+                    productModel.Quantity += 1;
+
+                }
+                else
+                {
+                    cookieProduct.Quantity = 1;
+                    model.Products.Add(cookieProduct);
+                    
+                }
                 var jsonModel = JsonConvert.SerializeObject(model);
 
                 this.HttpContext.Session.SetString("Cart", jsonModel);
             }
 
-            return StatusCode(201);
+            return this.RedirectToAction("ReviewCartAnonymous");
         }
 
 
         [AllowAnonymous]
         [HttpGet("/Cart")]
         [ShoppingCartFilter]
-        public IActionResult ReviewCartAnonymous()
+        public async Task<IActionResult> ReviewCartAnonymous()
         {
-            return this.View();
+
+
+            if (this.HttpContext.Session.GetString("Cart") == "empty")
+            {
+                return this.RedirectToAction("EmptyCart");
+            }
+
+            var cookiesJson = this.HttpContext.Session.GetString("Cart");
+
+
+            var cookieModel = JsonConvert.DeserializeObject<CartCookieModel>(cookiesJson);
+
+            var quantity = cookieModel.Products.Sum(x => x.Quantity);
+
+            if(quantity == 0)
+            {
+                return this.RedirectToAction("EmptyCart");
+            }
+
+            var model = this.mapper.Map<AnonymousCartViewModel>(cookieModel);
+
+            foreach (var product in cookieModel.Products)
+            {
+                var pr = await this.productService.GetProductAsync(product.ProductId);
+
+                model.Products.Add(new PurchaseProductsAnonymousViewModel
+                {
+
+                    Id = pr.Id,
+                    PictureUrl = pr.MainPicture.Url,
+                    Price = pr.Price,
+                    ProductUrl = "/Products/" + pr.Category + "/" + pr.Id,
+                    Title = pr.Title,
+                    Quantity = product.Quantity
+                });
+            }
+
+            return this.View(model);
         }
 
     }

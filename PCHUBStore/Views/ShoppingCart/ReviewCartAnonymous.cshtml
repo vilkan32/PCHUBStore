@@ -1,0 +1,143 @@
+﻿@model PCHUBStore.View.Models.ShoppingCartViewModels.AnonymousCartViewModel
+
+@{
+    ViewData["Title"] = "Cart ";
+}
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading" style="color: black">Shopping Cart</h1>
+    </div>
+</section>
+
+
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"> </th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Available</th>
+                            <th scope="col" class="text-center">Quantity</th>
+                            <th scope="col" class="text-right">Price</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Products.Count; i++)
+                        {
+
+                            var product = Model.Products[i];
+                            <tr>
+                                <td><img style="max-height: 3em; max-width: 3em" src="@product.PictureUrl" /> </td>
+                                <td>
+                                    <a href="@product.ProductUrl">@string.Join("", product.Title.Take(50))</a>
+                                </td>
+                                <td>In stock</td>
+                                <td>
+                                    <input class="form-control" type="number" asp-for="@product.Quantity" />
+                                    <a asp-action="IncreaseProductQuantity" asp-controller="ShoppingCart" asp-route-id="@product.Id"></a>
+
+                                </td>
+                                <td class="text-right">@product.Price €</td>
+                                <td class="text-right"><a asp-action="ExcludeProduct" asp-controller="ShoppingCart" asp-route-id="@product.Id" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </a> </td>
+                            </tr>
+
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Sub-Total</td>
+                            <td class="text-right">@Model.Products.Sum(x => x.Price * x.Quantity) €</td>
+                        </tr>
+                        @if (Model.Products.Sum(x => x.Price * x.Quantity) < 100)
+                        {
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>Shipping</td>
+                                <td class="text-right">6,90 €</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Total</strong></td>
+                                <td class="text-right"><strong>@Model.Products.Sum(x => x.Price * x.Quantity) + 6.90 €</strong></td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Total</strong></td>
+                                <td class="text-right"><strong>@Model.Products.Sum(x => x.Price * x.Quantity) €</strong></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>              
+            </div>
+        </div>
+        <div class="container">
+            <form method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group ">
+                    <label asp-for="@Model.FirstName"></label>
+                    <input asp-for="@Model.FirstName">
+                    <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group ">
+                    <label asp-for="@Model.LastName"></label>
+                    <input asp-for="@Model.LastName">
+                    <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group ">
+                    <label asp-for="@Model.Email"></label>
+                    <input asp-for="@Model.Email">
+                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group ">
+                    <label asp-for="@Model.PhoneNumber"></label>
+                    <input asp-for="@Model.PhoneNumber">
+                    <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group ">
+                    <label asp-for="@Model.City"></label>
+                    <input asp-for="@Model.City">
+                    <span asp-validation-for="@Model.City" class="text-danger"></span>
+                </div>
+                <div class="form-group ">
+                    <label asp-for="@Model.Address"></label>
+                    <textarea style="width: 30em" asp-for="@Model.Address"></textarea>
+                    <span asp-validation-for="@Model.Address" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12  col-md-6">
+                        <button class="btn btn-block btn-light" type="button">Continue Shopping</button>
+                    </div>
+                    <div class="col-sm-12 col-md-6 text-right">
+                        <button class="btn btn-lg btn-block btn-success text-uppercase" type="submit">Checkout</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript" src="~/js/shoppingCart.js"></script>
+}

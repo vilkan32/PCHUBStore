@@ -38,7 +38,6 @@ namespace PCHUBStore
 
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.Strict;
             });
@@ -57,6 +56,8 @@ namespace PCHUBStore
             var mvcBuilder = services.AddControllersWithViews(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
             mvcBuilder.AddRazorRuntimeCompilation();
             services.AddSession(options => { options.IdleTimeout = TimeSpan.FromDays(20);options.Cookie.HttpOnly = true; options.Cookie.IsEssential = true; });
+            services.AddResponseCaching();
+            services.AddResponseCompression(options => { options.EnableForHttps = true; });
             services.AddRazorPages();
 
             services.AddIdentity<User, IdentityRole>(options =>
@@ -145,9 +146,10 @@ namespace PCHUBStore
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-              
+            app.UseResponseCompression();
+            app.UseResponseCaching();
             app.UseRouting();
-
+            app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();

@@ -9,9 +9,6 @@ namespace PCHUBStore.Models
     {
         public string ProductId { get; set; }
 
-        public string ProductUrl { get; set; }
-
-        public string ProductPicture { get; set; }
         public int Quantity { get; set; }
 
     }

@@ -11,7 +11,7 @@ namespace PCHUBStore.MiddlewareFilters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            Console.WriteLine();
+
             if (!context.HttpContext.Session.Keys.Contains("Cart"))
             {
                 context.HttpContext.Session.SetString("Cart", "empty");
