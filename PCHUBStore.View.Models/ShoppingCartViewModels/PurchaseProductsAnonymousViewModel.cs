@@ -13,6 +13,7 @@ namespace PCHUBStore.View.Models.ShoppingCartViewModels
         public string PictureUrl { get; set; }
 
         public string ProductUrl { get; set; }
+
         public decimal Price { get; set; }
 
         public bool RemoveFromCart { get; set; }

@@ -170,6 +170,12 @@ namespace PCHUBStore.Controllers
         [HttpGet]
         public async Task<IActionResult> BuyProductAnonymous([Required][MaxLength(80)]string id)
         {
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return this.RedirectToAction("Error", "Home");
+            }
+
             if (this.HttpContext.Session.GetString("Cart") == "empty")
             {
                 var product = await this.productService.GetProductAsync(id);
@@ -189,7 +195,6 @@ namespace PCHUBStore.Controllers
             else
             {
 
-                // maybe product exists async
                 var product = await this.productService.GetProductAsync(id);
 
                 var cookieProduct = this.mapper.Map<ProductCookieModel>(product);
@@ -223,7 +228,10 @@ namespace PCHUBStore.Controllers
         [ShoppingCartFilter]
         public async Task<IActionResult> ReviewCartAnonymous()
         {
-
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return this.RedirectToAction("Error", "Home");
+            }
 
             if (this.HttpContext.Session.GetString("Cart") == "empty")
             {
@@ -254,13 +262,75 @@ namespace PCHUBStore.Controllers
                     Id = pr.Id,
                     PictureUrl = pr.MainPicture.Url,
                     Price = pr.Price,
-                    ProductUrl = "/Products/" + pr.Category + "/" + pr.Id,
+                    ProductUrl = "/Products/" + pr.Category.Name + "/" + pr.Id,
                     Title = pr.Title,
                     Quantity = product.Quantity
                 });
             }
 
             return this.View(model);
+        }
+
+
+        [AllowAnonymous]
+        [HttpGet]
+        [ShoppingCartFilter]
+        public IActionResult IncreaseProductQuantityAnonymous(string id, int quantity)
+        {
+
+            if (this.User.Identity.IsAuthenticated || this.HttpContext.Session.GetString("Cart") == "empty")
+            {
+                return this.RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                var userCookie = JsonConvert.DeserializeObject<CartCookieModel>(this.HttpContext.Session.GetString("Cart"));
+                if(userCookie.Products.Sum(x => x.Quantity) == 0)
+                {
+                    return this.RedirectToAction("Error", "Home");
+                }
+                else
+                {
+                    userCookie.Products.FirstOrDefault(x => x.ProductId == id).Quantity = quantity;
+
+                    var jsonModel = JsonConvert.SerializeObject(userCookie);
+
+                    this.HttpContext.Session.SetString("Cart", jsonModel);
+                }
+            }       
+
+            return this.RedirectToAction("ReviewCartAnonymous");
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [ShoppingCartFilter]
+        public IActionResult RemoveProductFromCartAnonymous(string id)
+        {
+
+            if (this.User.Identity.IsAuthenticated || this.HttpContext.Session.GetString("Cart") == "empty")
+            {
+                return this.RedirectToAction("Error", "Home");
+            }
+            else
+            {
+                var userCookie = JsonConvert.DeserializeObject<CartCookieModel>(this.HttpContext.Session.GetString("Cart"));
+                if (userCookie.Products.Sum(x => x.Quantity) == 0)
+                {
+                    return this.RedirectToAction("Error", "Home");
+                }
+                else
+                {
+                    userCookie.Products.Remove(userCookie.Products.FirstOrDefault(x => x.ProductId == id));
+
+                    var jsonModel = JsonConvert.SerializeObject(userCookie);
+
+                    this.HttpContext.Session.SetString("Cart", jsonModel);
+                }
+            }
+
+
+            return this.RedirectToAction("ReviewCartAnonymous");
         }
 
     }

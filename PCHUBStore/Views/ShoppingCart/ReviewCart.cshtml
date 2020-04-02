@@ -37,7 +37,7 @@
                                 </td>
                                 <td>In stock</td>
                                 <td>
-                                    <input class="form-control" type="number" asp-for="@product.Quantity" />
+                                    <input id="quantity" class="form-control" type="number" asp-for="@product.Quantity" />
                                     <a asp-action="IncreaseProductQuantity" asp-controller="ShoppingCart" asp-route-id="@product.Id"></a>
 
                                 </td>

@@ -1,4 +1,69 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model PCHUBStore.Areas.Administration.Models.CategoryPagesViewModels.CreateCategoryPageViewModel
+
+@{
+
+    ViewData["Title"] = "Create Category Page ";
+
+}
+
+<div class="container bg-warning">
+    <div class="col-12">
+        <h1 style="color: black" class="text-center">Create Category Page</h1>
+    </div>
+</div>
+
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.PageName"></label>
+            <input class="js-full-key" asp-for="@Model.PageName">
+            <span asp-validation-for="@Model.PageName" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.PageCategory.CategoryName"></label>
+            <input class="js-full-key" asp-for="@Model.PageCategory.CategoryName">
+            <span asp-validation-for="@Model.PageCategory.CategoryName" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.PageCategory.AllName"></label>
+            <input class="js-full-key" asp-for="@Model.PageCategory.AllName">
+            <span asp-validation-for="@Model.PageCategory.AllName" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.PageCategory.AllHref"></label>
+            <input class="js-full-key" asp-for="@Model.PageCategory.AllHref">
+            <span asp-validation-for="@Model.PageCategory.AllHref" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <input type="file" name="files" multiple>
+        </div>
+
+        @for (int i = 0; i < Model.PageCategory.ItemsCategories.Count; i++)
+        {
+            <div class="form-group text-center">
+                <label asp-for="@Model.PageCategory.ItemsCategories[i].Category"></label>
+                <input class="js-full-key" asp-for="@Model.PageCategory.ItemsCategories[i].Category">
+                <span asp-validation-for="@Model.PageCategory.ItemsCategories[i].Category" class="text-danger"></span>
+            </div>
+
+
+            @for (int z = 0; z < @Model.PageCategory.ItemsCategories[i].Items.Count; z++)
+            {
+                <div class="form-group text-center">
+                    <label asp-for="@Model.PageCategory.ItemsCategories[i].Items[z].Text"></label>
+                    <input class="js-full-key" asp-for="@Model.PageCategory.ItemsCategories[i].Items[z].Text">
+                    <span asp-validation-for="@Model.PageCategory.ItemsCategories[i].Items[z].Text" class="text-danger"></span>
+                </div>
+
+                <div class="form-group text-center">
+                    <label asp-for="@Model.PageCategory.ItemsCategories[i].Items[z].Href"></label>
+                    <input class="js-full-key" asp-for="@Model.PageCategory.ItemsCategories[i].Items[z].Href">
+                    <span asp-validation-for="@Model.PageCategory.ItemsCategories[i].Items[z].Href" class="text-danger"></span>
+                </div>
+            }
+        }
+
+        <button type="submit" class="btn btn-primary">Create Category Page</button>
+    </form>
+</div>

@@ -1,6 +1,6 @@
 ﻿function changeQuantity() {
 
-    Array.from(document.getElementsByTagName("input")).forEach(x => x.addEventListener("change", (e) => {
+    document.getElementById("quantity").addEventListener("change", (e) => {
 
         let target = e.target;
 
@@ -18,7 +18,7 @@
 
         brother[1].click();
 
-    }));
+    });
 }
 
 changeQuantity();

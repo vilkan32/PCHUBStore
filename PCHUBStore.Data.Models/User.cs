@@ -27,6 +27,7 @@ namespace PCHUBStore.Data.Models
         [StringLength(20, MinimumLength = 2)]
         public string City { get; set; }
 
+        public DateTime? LastLoginDate { get; set; }
         public virtual ICollection<Picture> Pictures { get; set; }
 
         public virtual ICollection<Shipment> Shipments { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PCHUBStore.View.Models.ShoppingCartViewModels.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -34,6 +35,8 @@ namespace PCHUBStore.View.Models.ShoppingCartViewModels
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
+        public ShippingCompany ShippingCompany { get; set; }
 
         public List<PurchaseProductsAnonymousViewModel> Products { get; set; }
     }

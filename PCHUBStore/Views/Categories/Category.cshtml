@@ -1,6 +1,45 @@
-﻿
+﻿@model PCHUBStore.View.Models.CategoriesViewModels.CategoryPageViewModel
 
 @{
-    ViewData["Title"] = "Category " + @Model.PageName;
+    ViewData["Title"] = "Category " + Model.PageName;
 
 }
+
+<div class="container mt-5 mb-5 text-center">
+    <h1 style="color: black">Category @Model.PageName</h1>
+</div>
+
+<div class="container mb-2 bg-white text-center">
+
+    <a style="font-size: 30px" href="@Model.PageCategory.AllHref">@Model.PageCategory.AllName</a>
+</div>
+<hr />
+
+<div class="row bg-white text-center" style="border-top: solid; border-top-color: forestgreen">
+    @foreach (var ic in Model.PageCategory.ItemsCategories)
+    {
+        <div class="col m-2">
+            <p style="color: blue">@ic.Category</p>
+            @foreach (var item in ic.Items)
+            {
+                <div><a style="color: black" href="@item.Href">@item.Text</a></div>
+            }
+        </div>
+    }
+
+</div>
+<div class="text-center bg-white mb-2">
+    <img src="@Model.PageCategory.Picture" alt="Alternate Text" />
+</div>
+
+
+<div class="container">
+    <div class="row" style="font-size: 25px">
+        @foreach (var item in Model.Boxes)
+        {
+            <div class="col m-1" style="background-color: @item.Color;">
+                <a href="@item.Href" style="color: white">@item.Text</a>
+            </div>
+        }
+    </div>
+</div>

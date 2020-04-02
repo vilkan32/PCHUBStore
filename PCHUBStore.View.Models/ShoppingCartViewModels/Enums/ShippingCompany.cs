@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace PCHUBStore.Data.Models.Enums
+namespace PCHUBStore.View.Models.ShoppingCartViewModels.Enums
 {
     public enum ShippingCompany
     {
         Econt,
         Speedy,
+        [Display(Name = "Bulgarian Posts")]
         BGPost
     }
 }

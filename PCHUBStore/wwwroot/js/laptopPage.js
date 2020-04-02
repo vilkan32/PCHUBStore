@@ -73,6 +73,15 @@ function addToFavorites() {
 }
 
 
-addToFavorites();
+try {
+	miniPicturesChangeBorder();
+} catch (e) {
+	console.log("Error");
+}
 
-miniPicturesChangeBorder();
+try {
+	addToFavorites();
+} catch (e) {
+	console.log("Error");
+}
+

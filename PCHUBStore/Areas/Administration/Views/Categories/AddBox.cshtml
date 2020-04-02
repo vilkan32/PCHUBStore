@@ -1,0 +1,44 @@
+﻿@model PCHUBStore.Areas.Administration.Models.CategoryPagesViewModels.AddBoxViewModel
+
+@{
+
+    ViewData["Title"] = "Add Box ";
+
+}
+
+<div class="container bg-warning">
+    <div class="col-12">
+        <h1 style="color: black" class="text-center">Add Box</h1>
+    </div>
+</div>
+
+<div class="container">
+    <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <select asp-for="@Model.PageName">
+            <option value="Default">Default</option>
+            @foreach (var item in Model.PageNames)
+            {
+                <option value="@item">@item</option>
+            }
+        </select>
+
+        <div class="form-group text-center">
+            <label asp-for="@Model.Color"></label>
+            <input class="js-full-key" asp-for="@Model.Color">
+            <span asp-validation-for="@Model.Color" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.Text"></label>
+            <input class="js-full-key" asp-for="@Model.Text">
+            <span asp-validation-for="@Model.Text" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.Href"></label>
+            <input class="js-full-key" asp-for="@Model.Href">
+            <span asp-validation-for="@Model.Href" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Box</button>
+    </form>
+</div>

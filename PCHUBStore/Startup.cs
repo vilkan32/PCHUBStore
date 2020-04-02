@@ -97,6 +97,10 @@ namespace PCHUBStore
 
             services.AddTransient<IAdminIndexPageServices, AdminIndexPageServices>();
 
+            services.AddTransient<IAdminCategoryPagesServices, AdminCategoryPagesServices>();
+
+            services.AddTransient<ICategoryServices, CategoryServices>();
+            
             services.AddTransient<IShopServices, ShopServices>();
         }
 

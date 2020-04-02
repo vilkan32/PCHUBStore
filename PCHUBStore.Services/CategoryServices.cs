@@ -21,13 +21,13 @@ namespace PCHUBStore.Services
 
         public async Task<Page> GetPageAsync(string pageName)
         {
-            var page = await this.context.Pages.FirstOrDefaultAsync(x => x.PageName == pageName);
+            var page = await this.context.Pages.Where(x => x.IsDeleted == false).FirstOrDefaultAsync(x => x.PageName == pageName);
             return page;
         }
 
         public async Task<bool> PageAlreadyExistsAsync(string pageName)
         {
-            return await this.context.Pages.AnyAsync(x => x.PageName == pageName);
+            return await this.context.Pages.Where(x => x.IsDeleted == false).AnyAsync(x => x.PageName == pageName);
         }
     }
 }

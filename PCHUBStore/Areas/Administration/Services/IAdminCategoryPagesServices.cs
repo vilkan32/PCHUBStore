@@ -1,4 +1,5 @@
 ﻿using PCHUBStore.Areas.Administration.Models.CategoryPagesViewModels;
+using PCHUBStore.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,11 @@ namespace PCHUBStore.Areas.Administration.Services
         Task CreateCategoryPageAsync(CreateCategoryPageViewModel form);
         Task<bool> PageAlreadyExistsAsync(string pageName);
 
+        Task AddBoxAsync(AddBoxViewModel form);
+        Task<List<string>> GetAllPageNamesAsync();
+
+        Task<List<ColorfulBox>> GetAllBoxesForPageAsync(string pageName);
+
+        Task EditBoxesAsync(EditBoxesViewModel form);
     }
 }

@@ -1,4 +1,6 @@
-﻿@model PCHUBStore.View.Models.ShoppingCartViewModels.AnonymousCartViewModel
+﻿@using PCHUBStore.View.Models.ShoppingCartViewModels.Enums
+
+@model PCHUBStore.View.Models.ShoppingCartViewModels.AnonymousCartViewModel
 
 @{
     ViewData["Title"] = "Cart ";
@@ -29,7 +31,6 @@
                     <tbody>
                         @for (int i = 0; i < Model.Products.Count; i++)
                         {
-
                             var product = Model.Products[i];
                             <tr>
                                 <td><img style="max-height: 3em; max-width: 3em" src="@product.PictureUrl" /> </td>
@@ -38,14 +39,13 @@
                                 </td>
                                 <td>In stock</td>
                                 <td>
-                                    <input class="form-control" type="number" asp-for="@product.Quantity" />
-                                    <a asp-action="IncreaseProductQuantity" asp-controller="ShoppingCart" asp-route-id="@product.Id"></a>
+                                    <input id="quantity" class="form-control" type="number" asp-for="@product.Quantity" />
+                                    <a asp-action="IncreaseProductQuantityAnonymous" asp-controller="ShoppingCart" asp-route-id="@product.Id"></a>
 
                                 </td>
                                 <td class="text-right">@product.Price €</td>
-                                <td class="text-right"><a asp-action="ExcludeProduct" asp-controller="ShoppingCart" asp-route-id="@product.Id" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </a> </td>
+                                <td class="text-right"><a asp-action="RemoveProductFromCartAnonymous" asp-controller="ShoppingCart" asp-route-id="@product.Id" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </a> </td>
                             </tr>
-
                         }
                         <tr>
                             <td></td>
@@ -88,7 +88,7 @@
                         }
 
                     </tbody>
-                </table>              
+                </table>
             </div>
         </div>
         <div class="container">
@@ -124,9 +124,19 @@
                     <textarea style="width: 30em" asp-for="@Model.Address"></textarea>
                     <span asp-validation-for="@Model.Address" class="text-danger"></span>
                 </div>
+                <div class="form-group">
+                    <label asp-for="@Model.ShippingCompany" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <select asp-for="@Model.ShippingCompany" asp-items="Html.GetEnumSelectList<ShippingCompany>()">
+                            <option selected="selected" value="">Please select</option>
+                        </select>
+                        <span asp-validation-for="@Model.ShippingCompany" class="text-danger" />
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-sm-12  col-md-6">
-                        <button class="btn btn-block btn-light" type="button">Continue Shopping</button>
+                        <a class="btn btn-block btn-light" asp-action="Index" asp-controller="Home" asp-area="">Continue Shopping</a>
                     </div>
                     <div class="col-sm-12 col-md-6 text-right">
                         <button class="btn btn-lg btn-block btn-success text-uppercase" type="submit">Checkout</button>

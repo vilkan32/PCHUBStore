@@ -1,0 +1,61 @@
+﻿@model PCHUBStore.Areas.Administration.Models.CategoryPagesViewModels.EditBoxesViewModel
+
+@{
+
+    ViewData["Title"] = "Edit Boxes ";
+
+}
+
+<div class="container bg-warning">
+    <div class="col-12">
+        <h1 style="color: black" class="text-center">Edit Boxes</h1>
+    </div>
+</div>
+
+<div class="container">
+
+    @if (string.IsNullOrEmpty(Model.PageName))
+    {
+        <form method="get">
+            <select name="pageName">
+                <option value="Default">Default</option>
+                @foreach (var item in Model.Pages)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-primary">Edit Boxes</button>
+        </form>
+    }
+    else
+    {
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @for (int i = 0; i < Model.Boxes.Count; i++)
+            {
+                <div class="form-group text-center">
+                    <label asp-for="@Model.Boxes[i].Color"></label>
+                    <input class="js-full-key" asp-for="@Model.Boxes[i].Color">
+                    <span asp-validation-for="@Model.Boxes[i].Color" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    <label asp-for="@Model.Boxes[i].Text"></label>
+                    <input class="js-full-key" asp-for="@Model.Boxes[i].Text">
+                    <span asp-validation-for="@Model.Boxes[i].Text" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    <label asp-for="@Model.Boxes[i].Href"></label>
+                    <input class="js-full-key" asp-for="@Model.Boxes[i].Href">
+                    <span asp-validation-for="@Model.Boxes[i].Href" class="text-danger"></span>
+                </div>
+                <div class="form-group text-center">
+                    <label asp-for="@Model.Boxes[i].IsDeleted"></label>
+                    <input type="checkbox" class="js-full-key" asp-for="@Model.Boxes[i].IsDeleted">
+                    <span asp-validation-for="@Model.Boxes[i].IsDeleted" class="text-danger"></span>
+                </div>
+            }
+            <button type="submit" class="btn btn-primary">Edit Boxes</button>
+        </form>
+    }
+
+</div>
