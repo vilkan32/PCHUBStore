@@ -127,7 +127,6 @@ namespace PCHUBStore.Controllers
             return this.RedirectToAction("Profile", "User");
         }
 
-        [Authorize(Roles = "StoreUser")]
         [HttpGet("/api/Favorites")]
         public async Task<bool> AddToFavorites(string id)
         {

@@ -1,0 +1,97 @@
+﻿@model PCHUBStore.Areas.Administration.Models.CategoryPagesViewModels.CreateCategoryPageViewModel
+
+@{
+
+    ViewData["Title"] = "Edit Category Page ";
+
+}
+
+<div class="container bg-warning">
+    <div class="col-12">
+        <h1 style="color: black" class="text-center">Edit Category Page</h1>
+    </div>
+</div>
+
+<div class="container">
+
+    @if (string.IsNullOrEmpty(Model.PageName))
+    {
+        <form method="get">
+            <select name="pageName">
+                <option value="Default">Default</option>
+                @foreach (var item in Model.Pages)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-primary">Edit Category Page</button>
+        </form>
+    }
+    else
+    {
+
+    <div class="container text-center">
+        <img style="max-height: 20em; max-width: 20em" src="@Model.PageCategory.Pictures[0]" alt="Alternate Text" />
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.IsDeleted"></label>
+            <input type="checkbox" asp-for="@Model.IsDeleted">
+            <span asp-validation-for="@Model.IsDeleted" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.PageName"></label>
+            <input asp-for="@Model.PageName">
+            <span asp-validation-for="@Model.PageName" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.PageCategory.CategoryName"></label>
+            <input asp-for="@Model.PageCategory.CategoryName">
+            <span asp-validation-for="@Model.PageCategory.CategoryName" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.PageCategory.AllName"></label>
+            <input asp-for="@Model.PageCategory.AllName">
+            <span asp-validation-for="@Model.PageCategory.AllName" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <label asp-for="@Model.PageCategory.AllHref"></label>
+            <input asp-for="@Model.PageCategory.AllHref">
+            <span asp-validation-for="@Model.PageCategory.AllHref" class="text-danger"></span>
+        </div>
+        <div class="form-group text-center">
+            <input type="file" name="files" multiple>
+        </div>
+
+        @for (int i = 0; i < Model.PageCategory.ItemsCategories.Count; i++)
+        {
+            <div class="form-group text-center">
+                <label asp-for="@Model.PageCategory.ItemsCategories[i].Category"></label>
+                <input asp-for="@Model.PageCategory.ItemsCategories[i].Category">
+                <span asp-validation-for="@Model.PageCategory.ItemsCategories[i].Category" class="text-danger"></span>
+            </div>
+
+
+            @for (int z = 0; z < @Model.PageCategory.ItemsCategories[i].Items.Count; z++)
+            {
+                <div class="form-group text-center">
+                    <label asp-for="@Model.PageCategory.ItemsCategories[i].Items[z].Text"></label>
+                    <input asp-for="@Model.PageCategory.ItemsCategories[i].Items[z].Text">
+                    <span asp-validation-for="@Model.PageCategory.ItemsCategories[i].Items[z].Text" class="text-danger"></span>
+                </div>
+
+                <div class="form-group text-center">
+                    <label asp-for="@Model.PageCategory.ItemsCategories[i].Items[z].Href"></label>
+                    <input asp-for="@Model.PageCategory.ItemsCategories[i].Items[z].Href">
+                    <span asp-validation-for="@Model.PageCategory.ItemsCategories[i].Items[z].Href" class="text-danger"></span>
+                </div>
+                <input type="hidden" asp-for="@Model.PreviousPageName" value="@Model.PageName">
+            }
+        }
+
+        <button type="submit" class="btn btn-primary">Edit Page</button>
+    </form>
+    }
+
+</div>

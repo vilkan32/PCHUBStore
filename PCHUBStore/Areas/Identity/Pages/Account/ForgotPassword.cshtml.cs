@@ -38,6 +38,12 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return this.Forbid();
+            }
+
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(Input.Email);

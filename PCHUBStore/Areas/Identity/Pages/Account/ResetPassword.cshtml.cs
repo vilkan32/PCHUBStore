@@ -48,6 +48,11 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
 
         public IActionResult OnGet(string code = null)
         {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return this.Forbid();
+            }
+
             if (code == null)
             {
                 return BadRequest("A code must be supplied for password reset.");
@@ -64,6 +69,12 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
+
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return this.Forbid();
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();

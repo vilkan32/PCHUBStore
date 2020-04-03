@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PCHUBStore.Areas.Administration.Models.CategoryPagesViewModels
 {
@@ -12,7 +13,10 @@ namespace PCHUBStore.Areas.Administration.Models.CategoryPagesViewModels
         [Display(Name = "Page Name")]
         [Required]
         public string PageName { get; set; }
-
+        public string PreviousPageName { get; set; }
+        public List<string> Pages { get; set; }
+        [Display(Name = "Is Page Deleted")]
+        public bool IsDeleted { get; set; }
         public PageCategoryViewModel PageCategory { get; set; }
 
     }

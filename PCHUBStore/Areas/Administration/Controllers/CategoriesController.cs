@@ -108,13 +108,87 @@ namespace PCHUBStore.Areas.Administration.Controllers
 
             if (this.ModelState.IsValid && await this.service.PageAlreadyExistsAsync(form.PageName))
             {
-                    await this.service.EditBoxesAsync(form);
+                await this.service.EditBoxesAsync(form);
 
                 return this.RedirectToAction("Success", "Blacksmith", new { message = "Successfully Edited Box" });
             }
 
             return this.View(form);
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditCategoryPage(string pageName)
+        {
+            var model = new CreateCategoryPageViewModel();
+
+            model.Pages = await this.service.GetAllPageNamesAsync();
+
+            if (!string.IsNullOrEmpty(pageName) && await this.service.PageAlreadyExistsAsync(pageName))
+            {
+                model.PageName = pageName;
+
+                var page = await this.service.GetPageAsync(pageName);
+
+                model.IsDeleted = page.IsDeleted;
+
+                var pageCategory = page.Categories.FirstOrDefault();
+
+                model.PageCategory.AllHref = pageCategory.AllHref;
+
+                model.PageCategory.AllName = pageCategory.AllName;
+                model.PageCategory.CategoryName = pageCategory.CategoryName;
+                model.PageCategory.Pictures.Add(pageCategory.Pictures.FirstOrDefault().Url);
+
+                var itemCategories = pageCategory.ItemsCategories;
+                var index = 0;
+                foreach (var ic in itemCategories)
+                {
+                    
+                    var items = new List<PageCategoryItemsViewModel>();
+
+                    foreach (var item in ic.Items)
+                    {
+                        items.Add(new PageCategoryItemsViewModel
+                        {
+                            Href = item.Href,
+                            Text = item.Text
+                        });
+                    }
+
+                    model.PageCategory.ItemsCategories[index] = new CategoryPageItemsCategoryViewModel
+                    {
+                        Category = ic.Category,
+                        Items = items
+                    };
+
+                    index++;
+                }
+
+            }
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditCategoryPage(CreateCategoryPageViewModel form, List<IFormFile> files)
+        {
+            Console.WriteLine();
+            if(!string.IsNullOrEmpty(form.PageName) && this.ModelState.IsValid)
+            {
+                bool filesIncluded = false;
+                if(files.Count > 0)
+                {
+                    filesIncluded = true;
+                    form.PageCategory.Pictures.Add(await this.cloudinary.UploadPictureAsync(files[0], files[0].FileName + "CategoryPicture"));
+                }
+
+                await this.service.EditPageAsync(form, filesIncluded);
+
+                return this.RedirectToAction("Success", "Blacksmith", new { message = "Successfully Edited Page" });
+            }
+
+            return this.View(form);
         }
     }
 }

@@ -1,24 +1,26 @@
-﻿function loadMainSliderPictures() {
+﻿(function loadMainSliderPictures() {
 
+    fetch("/api/GetMainSliderPictures").then(res => res.json()).then(x => {
+        let pictures = x;
+        let index = randomInteger(0, pictures.length - 1);
+        document.getElementById('mainSlidePic').src = pictures[index].url;
+        document.getElementById('mainSlidePic').setAttribute("value", index);
 
-
-    let regex = /option\d/;
-
-    fetch("api/MainSlider").then(res => res.json()).then(x => {
-        let obj = JSON.parse(x);
-        let pictures = obj["Pictures"].filter(x => regex.exec(x.Name) && x.IsDeleted === false);
-        document.getElementById('mainSlidePic').src = pictures[randomInteger(0, 3)].Url;
         setInterval(function () {
-
-            document.getElementById('mainSlidePic').src = pictures[randomInteger(0, 3)].Url;
-
+            index = randomInteger(0, pictures.length - 1);
+            if (Number(document.getElementById('mainSlidePic').getAttribute("value")) === index) {
+                index = randomInteger(0, pictures.length - 1);
+                document.getElementById('mainSlidePic').setAttribute("value", index);
+                document.getElementById('mainSlidePic').src = pictures[index].url;
+            } else {
+                document.getElementById('mainSlidePic').setAttribute("value", index);
+                document.getElementById('mainSlidePic').src = pictures[index].url;
+            }
         }, 4000);
- 
+
 
     });
-
-
-}
+})();
 
 
 function onMouseInMainSlider() {
@@ -46,17 +48,61 @@ function onMouseInMainSlider() {
     });
 
     mainSlider.addEventListener('mouseleave', function (e) {
-
-
-        document.getElementById('leftArrow').style.display = 'none';
-     
+        document.getElementById('leftArrow').style.display = 'none';    
         document.getElementById('rightArrow').style.display = 'none';
-
-
-
     });
 
 }
+
+(function mainSliderArrows() {
+
+    document.getElementById('leftArrow').addEventListener("click", () => {
+        fetch("/api/GetMainSliderPictures").then(res => res.json()).then(x => {
+
+            let pictures = x;
+            for (var i = 0; i < 4; i++) {
+                clearInterval(i);
+            }
+            let index = Number(document.getElementById('mainSlidePic').getAttribute("value"));
+            index -= 1;
+            if (index === -1) {
+                index = pictures.length - 1;
+                document.getElementById('mainSlidePic').src = pictures[index].url;
+                document.getElementById('mainSlidePic').setAttribute("value", index);
+                return;
+            }
+
+            document.getElementById('mainSlidePic').src = pictures[index].url;
+            document.getElementById('mainSlidePic').setAttribute("value", index);
+               
+        });
+    });
+
+    document.getElementById('rightArrow').addEventListener("click", () => {
+        fetch("/api/GetMainSliderPictures").then(res => res.json()).then(x => {
+
+            let pictures = x;
+            for (var i = 0; i < 4; i++) {
+                clearInterval(i);
+            }
+
+            let index = Number(document.getElementById('mainSlidePic').getAttribute("value"));
+            index += 1;
+            if (index === pictures.length) {
+                index = 0;
+                document.getElementById('mainSlidePic').src = pictures[index].url;
+                document.getElementById('mainSlidePic').setAttribute("value", index);
+                return;
+            }
+
+            document.getElementById('mainSlidePic').src = pictures[index].url;
+            document.getElementById('mainSlidePic').setAttribute("value", index);
+
+        });
+    });
+
+})();
+
 
 function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -65,8 +111,10 @@ function randomInteger(min, max) {
 function setSliderHeight() {
 
     let cpHeight = document.getElementById("controlPanel").offsetHeight;
+
     document.getElementById("controlPanelAndSlider").style.minHeight = cpHeight + "px";
     document.getElementById("mainSlidePic").style.minHeight = cpHeight + "px";
+
 }
 
 setSliderHeight();

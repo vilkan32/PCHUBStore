@@ -102,6 +102,8 @@ namespace PCHUBStore
             services.AddTransient<ICategoryServices, CategoryServices>();
             
             services.AddTransient<IShopServices, ShopServices>();
+
+            services.AddTransient<IAdminLayoutServices, AdminLayoutServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

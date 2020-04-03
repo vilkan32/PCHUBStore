@@ -60,8 +60,12 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
             public bool RememberMe { get; set; }
         }
 
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task<IActionResult> OnGetAsync(string returnUrl = null)
         {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return this.Forbid();
+            }
 
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
@@ -76,10 +80,17 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             ReturnUrl = returnUrl;
+
+            return this.Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return this.Forbid();
+            }
+
             returnUrl = returnUrl ?? Url.Content("~/");
        
             if (ModelState.IsValid)

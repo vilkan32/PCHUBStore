@@ -18,5 +18,9 @@ namespace PCHUBStore.Areas.Administration.Services
         Task<List<ColorfulBox>> GetAllBoxesForPageAsync(string pageName);
 
         Task EditBoxesAsync(EditBoxesViewModel form);
+
+        Task<Page> GetPageAsync(string pageName);
+
+        Task EditPageAsync(CreateCategoryPageViewModel form, bool filesIncluded);
     }
 }

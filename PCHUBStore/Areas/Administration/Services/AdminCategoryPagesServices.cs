@@ -134,5 +134,51 @@ namespace PCHUBStore.Areas.Administration.Services
 
 
         }
+
+        public async Task<Page> GetPageAsync(string pageName)
+        {
+            return await this.context.Pages.FirstOrDefaultAsync(x => x.PageName == pageName);
+        }
+
+        public async Task EditPageAsync(CreateCategoryPageViewModel form, bool filesIncluded)
+        {
+            var page = await this.context.Pages.FirstOrDefaultAsync(x => x.PageName == form.PreviousPageName);
+
+            page.PageName = form.PageName;
+            page.IsDeleted = form.IsDeleted;
+            page.ModificationDate = DateTime.UtcNow;
+            var pageCategory = page.Categories.FirstOrDefault();
+
+            pageCategory.AllHref = form.PageCategory.AllHref;
+            pageCategory.AllName = form.PageCategory.AllName;
+            pageCategory.ModificationDate = DateTime.UtcNow;
+            pageCategory.CategoryName = form.PageCategory.CategoryName;
+            if (filesIncluded)
+            {
+                pageCategory.Pictures.FirstOrDefault().ModificationDate = DateTime.UtcNow;
+                pageCategory.Pictures.FirstOrDefault().Url = form.PageCategory.Pictures[0];
+
+            }
+            for (int i = 0; i < pageCategory.ItemsCategories.Count; i++)
+            {
+                var cat = pageCategory.ItemsCategories.ToList()[i];
+                var formCat = form.PageCategory.ItemsCategories[i];
+                cat.Category = formCat.Category;
+                cat.ModificationDate = DateTime.UtcNow;
+
+                for (int z = 0; z < cat.Items.Count; z++)
+                {
+                    var item = cat.Items.ToList()[z];
+
+                    var formItem = formCat.Items[z];
+
+                    item.Href = formItem.Href;
+                    item.Text = formItem.Text;
+                    item.ModificationDate = DateTime.UtcNow;
+                }
+            }
+
+            await this.context.SaveChangesAsync();
+        }
     }
 }
