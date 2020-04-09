@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Support";
+
+}
+
+<div class="container">
+    <div class="row justify-content-between" style="font-size: 25px">
+        <div class="col-3 bg-gradient-primary border-left">
+            <a asp-area="Support" asp-controller="Forum" asp-action="CreateForumPost" style="color: white">Forum</a>
+        </div>
+        <div class="col-3 bg-gradient-primary border-left">
+            <a asp-area="Support" asp-controller="Chat" asp-action="ChatRoom" style="color: white">Chat Room</a>
+        </div>
+        <div class="col-3 bg-gradient-primary border-left">
+            <a asp-area="Support" asp-controller="TicketManager" asp-action="EditUserCategoryPage" style="color: white">Ticket Manager</a>
+        </div>
+    </div>
+</div>

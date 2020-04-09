@@ -20,6 +20,8 @@ using PCHUBStore.MiddlewareFilters;
 using Microsoft.AspNetCore.Mvc;
 using PCHUBStore.Services.EmailSender;
 using PCHUBStore.Areas.Administration.Services;
+using PCHUBStore.Hubs;
+using PCHUBStore.Areas.Support.Services;
 
 namespace PCHUBStore
 {
@@ -41,10 +43,8 @@ namespace PCHUBStore
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.Strict;
             });
-          
-            services.AddAutoMapper(typeof(Startup));
 
-       
+            services.AddAutoMapper(typeof(Startup));       
 
             services.AddDbContext<PCHUBDbContext>(options =>
 
@@ -52,7 +52,10 @@ namespace PCHUBStore
              b => b.MigrationsAssembly("PCHUBStore"))
                                                      .UseLazyLoadingProxies()
                                                   );
+            services.AddSignalR(options => {
 
+                options.ClientTimeoutInterval = TimeSpan.FromMinutes(2);
+            });
             var mvcBuilder = services.AddControllersWithViews(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
             mvcBuilder.AddRazorRuntimeCompilation();
             services.AddSession(options => { options.IdleTimeout = TimeSpan.FromDays(20);options.Cookie.HttpOnly = true; options.Cookie.IsEssential = true; });
@@ -104,6 +107,8 @@ namespace PCHUBStore
             services.AddTransient<IShopServices, ShopServices>();
 
             services.AddTransient<IAdminLayoutServices, AdminLayoutServices>();
+
+            services.AddTransient<IRequestChatServices, RequestChatServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -161,6 +166,10 @@ namespace PCHUBStore
             app.UseSession();
             app.UseEndpoints(endpoints =>
             {
+
+                endpoints.MapHub<RequestChatHub>("/requestChat");
+
+
                 endpoints.MapControllerRoute(
                     "areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 

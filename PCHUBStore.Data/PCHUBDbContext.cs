@@ -46,6 +46,8 @@ namespace PCHUBStore.Data
         public virtual DbSet<AdminCharacteristic> AdminCharacteristics { get; set; }
         public virtual DbSet<ItemsCategory> ItemsCategories { get; set; }
         public virtual DbSet<MainSlider> MainSliders { get; set; }
+        public virtual DbSet<ChatRequest> ChatRequests { get; set; }
+        public virtual DbSet<Chat> Chats { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

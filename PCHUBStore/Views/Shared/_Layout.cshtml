@@ -53,7 +53,7 @@
             </div>
             <!-- Chat -->
             <div style="height:60px;" class="col-sm-6 col-lg-2">
-                <a style="display: inline-block" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                <a style="display: inline-block" class="nav-link text-white" onclick="triggerChatWindow()">
                     <img src="~/img/chat.png" style="width: 50px; height: 50px; " alt="Alternate Text" />
                 </a>
             </div>
@@ -73,7 +73,28 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
+        <div id="chat" class="row">
+            <div id="chatContentHolder" class="bg-white col" style="width: 20em; height: 20em; position: fixed; bottom: 0; right: 5em; border: solid; border-color: orangered; display: none">
+                <!-- when chat is confirmed add overflow overflow-y: scroll;-->
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <div id="chatContent" style="max-height: 17em;">
+                        <input id="subject" type="text" name="Subject" placeholder="Enter Subject" />
 
+                    </div>
+                    <button onclick="chatWithTechnician(this)" type="button" style="position: absolute; bottom: 0" class="btn btn-success">Request Chat With Technician</button>
+                }
+                else
+                {
+                    <p style="color: red">In order to contact us via chat, please register or logn</p>
+                    <partial name="_LoginPartial" />
+                }
+            </div>
+            <div onclick="triggerChatWindow()" class="col">
+                <img  style="position: fixed; bottom: 0; right: 0" src="~/img/chat.png" alt="Alternate Text" />
+            </div>
+
+        </div>
     </div>
 
     <!-- Last Checked Products-->
@@ -269,6 +290,172 @@
 
     <!-- Page level custom scripts -->
     <script src="~/js/_layout.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script>
+
+        let isAuthenticated = @this.User.Identity.IsAuthenticated.ToString().ToLower();
+
+        var connection =
+            new signalR.HubConnectionBuilder()
+                .withUrl("/requestChat")
+                .withAutomaticReconnect([0, 1000, 5000, null])
+                .build();
+
+        let user = "@this.User.Identity.Name";
+
+        function triggerChatWindow () {
+
+            if (document.getElementById("chatContentHolder").style.display == "none") {
+                document.getElementById("chatContentHolder").style.display = "block";
+            } else {
+                document.getElementById("chatContentHolder").style.display = "none";
+            }
+
+
+        };
+
+        function chatWithTechnician(event) {
+
+            let target = event;
+            $(target).remove();
+
+
+
+            let subject = $("#subject").val();
+            let email = "";
+            if (!isAuthenticated) {
+
+                email = $("#anonymousEmail").val();
+            }
+
+            connection.invoke("RequestChat", escapeHtml(subject));
+            document.getElementById("chatContent").innerHTML = '<p style="color: red">Awaiting response from technicians! Please do not reaload the page before we accept ur request!!</p>';
+        };
+
+        connection.on("ChatAccepted", function (technicianId) {
+
+            document.getElementById("chatContentHolder").innerHTML =
+                `<div technicianId="${technicianId}" id="chatContent" style="max-height: 17em; overflow-y: scroll;">
+                 <button onclick="disconnectFromChat()" class="btn btn-danger">Disconnect</button>
+        </div>
+        <div class="row" style="position: fixed; bottom: 10px;">
+            <input id="message" type="text" style="width: 15em" placeholder="Type..." />
+            <img onclick="sendMessage()" style="width: 32px; height: 32px;" src="/img/sendBtn.png" alt="Alternate Text" />
+        </div>`
+
+        });
+
+        connection.on("Message", function message(message, technicianName) {
+
+            document.getElementById("chatContent").innerHTML += `
+             <div>
+                <img style="height: 16px; width: 16px" src="/img/defaultProfilePicture.png" alt="Alternate Text" />
+                <span>${technicianName}</span>
+                <p style="color: white" class="bg-gradient-primary">${message}</p>
+            </div>`
+
+        });
+
+       function sendMessage() {
+
+        let message = document.getElementById("message").value;
+
+        if (message == "") {
+
+            return;
+        }
+
+           let technician = document.getElementById("chatContent").getAttribute("technicianId");
+
+        connection.invoke("Chat", technician, message, user);
+
+         document.getElementById("chatContent").innerHTML += `
+             <div>
+                <img style="height: 16px; width: 16px" src="/img/defaultProfilePicture.png" alt="Alternate Text" />
+                <span>${user}</span>
+                <p style="color: white" class="bg-gradient-primary">${message}</p>
+            </div>`
+
+        document.getElementById("message").value = "";
+       }
+
+        connection.on("RetrieveChatUser", function (technicianId, messages) {
+
+            let arrMessages = JSON.parse(messages);
+
+            let messagesString = "";
+
+            arrMessages.forEach(x =>
+
+                messagesString += `<div>
+                <img style="height: 16px; width: 16px" src="/img/defaultProfilePicture.png" alt="Alternate Text" />
+                <span>${x.Sender}</span>
+                <p style="color: white" class="bg-gradient-primary">${x.Message}</p>
+            </div>`
+            )
+
+            document.getElementById("chatContentHolder").innerHTML =
+                `<div technicianId="${technicianId}" id="chatContent" style="max-height: 17em; overflow-y: scroll;">
+                 <button onclick="disconnectFromChat()" class="btn btn-danger">Disconnect</button>
+                ${messagesString}
+                </div>
+                <div class="row" style="position: fixed; bottom: 10px;">
+                    <input id="message" type="text" style="width: 15em" placeholder="Type..." />
+                    <img onclick="sendMessage()" style="width: 32px; height: 32px;" src="/img/sendBtn.png" alt="Alternate Text" />
+                </div>`
+
+        });
+
+        connection.on("RequestRejected", function () {
+            document.getElementById("chatContent").firstElementChild.innerText = "Your request has been rejected!!!";
+
+            setTimeout(() => {
+
+                document.getElementById("chatContentHolder").innerHTML = `<div id="chatContent" style="max-height: 17em;">
+                    <input id="subject" type="text" name="Subject" placeholder="Enter Subject" />
+
+                </div>
+                <button id="chatWithTechnician" onclick="chatWithTechnician(this)" type="button" style="position: absolute; bottom: 0" class="btn btn-success">Request Chat With Technician</button>`
+            }, 5000);
+
+        });
+
+        connection.on("Disconnect", function () {
+
+            document.getElementById("chat").innerHTML = ` <div id="chatContentHolder" class="bg-white col" style="width: 20em; height: 20em; position: fixed; bottom: 0; right: 5em; border: solid; border-color: orangered; display: none">
+                <!-- when chat is confirmed add overflow overflow-y: scroll;-->
+                <div id="chatContent" style="max-height: 17em;">
+                    <input id="subject" type="text" name="Subject" placeholder="Enter Subject" />
+
+                </div>
+                <button onclick="chatWithTechnician(this)" type="button" style="position: absolute; bottom: 0" class="btn btn-success">Request Chat With Technician</button>
+            </div>
+            <div onclick="triggerChatWindow()" class="col">
+                <img style="position: fixed; bottom: 0; right: 0" src="/img/chat.png" alt="Alternate Text" />
+            </div>`;
+
+        });
+
+        function disconnectFromChat() {
+
+            let technician = document.getElementById("chatContent").getAttribute("technicianId");
+
+            connection.invoke("DisconnectFromChat", technician, user);
+        }
+
+        connection.start().catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
 
     @if (this.User.Identity.IsAuthenticated)
     {

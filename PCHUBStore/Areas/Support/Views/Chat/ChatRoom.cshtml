@@ -1,0 +1,216 @@
+﻿@model List<PCHUBStore.Areas.Support.Models.PendingRequestsViewModel>
+@{
+    ViewData["Title"] = "Chat Room";
+
+}
+
+<div class="container text-center">
+    <p class="text-black-50">Pending Requests</p>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Accept</th>
+                <th scope="col">Decline</th>
+            </tr>
+        </thead>
+        <tbody id="reqestedChats">
+            @foreach (var request in Model)
+            {
+                <tr id="@request.Username">
+                    <td email="@request.Username">
+                        @request.Username
+                    </td>
+                    <td subject="@request.Subject">
+                        @request.Subject
+                    </td>
+                    <td>
+                        <button type="button" onclick="acceptChat(this)" class="btn btn-success">Accept</button>
+                    </td>
+                    <td>
+                        <button type="button" onclick="removeRequest(this)" class="btn btn-danger">Decline</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="chat" style="display: none" class="row">
+    <div id="chatContentHolder" class="bg-white col" style="width: 20em; height: 20em; position: fixed; bottom: 0; right: 5em; border: solid; border-color: orangered;">
+        <button onclick="disconnectFromChat()" class="btn btn-danger">Disconnect</button>
+        <div class="row" id="heading">
+
+        </div>
+        <div id="chatContent" style="max-height: 13em; overflow-y: scroll;">
+
+        </div>
+        <div class="row" style="position: fixed; bottom: 10px;">
+            <input id="message" type="text" style="width: 15em" placeholder="Type..." />
+            <img onclick="sendMessage()" id="sendMessage" style="width: 32px; height: 32px;" src="~/img/sendBtn.png" alt="Alternate Text" />
+        </div>
+    </div>
+
+</div>
+
+
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+
+<script>
+    var connection =
+        new signalR.HubConnectionBuilder()
+            .withUrl("/requestChat")
+            .withAutomaticReconnect([0, 1000, 5000, null])
+            .build();
+
+    let technician = "@this.User.Identity.Name.ToString()";
+
+    connection.on("RequestChat",
+        function (details) {
+            let chatInfo = `<tr id="${details.connectionId}">
+            <td email="${details.email}">
+            ${details.email}
+            </td>
+            <td subject="${details.subject}">
+            ${details.subject}
+            </td>
+            <td>
+            <button type="button" onclick="acceptChat(this)" class="btn btn-success">Accept</button>
+            </td>
+            <td>
+            <button type="button" onclick="removeRequest(this)" class="btn btn-danger">Decline</button>
+            </td>
+            </tr>`;
+            document.getElementById("reqestedChats").innerHTML += chatInfo;
+        });
+
+    connection.on("RemoveRequest",
+        function (connectionId) {
+            $(`#${connectionId}`).remove();
+        });
+
+
+
+    function acceptChat(event) {
+
+        if (document.getElementById("chatContent").innerHTML !== "") {
+            return;
+        }
+
+        let target = event;
+
+        let subject = target.parentElement.parentElement.querySelector("[subject]").getAttribute("subject");
+
+        let email = target.parentElement.parentElement.querySelector("[email]").getAttribute("email");
+
+        let connectionId = target.parentElement.parentElement.id;
+
+
+
+        connection.invoke("AcceptChat", connectionId, subject, email, technician);
+
+        let chat = document.getElementById("chat");
+
+        chat.style.display = "block";
+
+        document.getElementById("heading").innerHTML = `
+            <div class="col">
+                <span>${subject}</span>
+            </div>
+            <div class="col">
+                <span id="username">${email}</span>
+            </div>`
+
+        connection.invoke("RemoveRequest", connectionId);
+
+    }
+
+    function sendMessage() {
+
+        let message = document.getElementById("message").value;
+        let user = document.getElementById("username").innerText;
+        console.log(message);
+
+        if (message == "") {
+
+            return;
+        }
+
+        connection.invoke("Chat", user, message, technician);
+
+         document.getElementById("chatContent").innerHTML += `
+             <div>
+                <img style="height: 16px; width: 16px" src="/img/defaultProfilePicture.png" alt="Alternate Text" />
+                <span>${technician}</span>
+                <p style="color: white" class="bg-gradient-primary">${message}</p>
+            </div>`
+
+        document.getElementById("message").value = "";
+    }
+
+
+    function removeRequest(event) {
+
+        let target = event;
+        let connectionId = target.parentElement.parentElement.id;
+
+        connection.invoke("RemoveRequest", connectionId);
+
+        connection.invoke("CancelRequest", connectionId);
+    }
+
+           connection.on("Message", function (message, username) {
+
+            document.getElementById("chatContent").innerHTML += `
+             <div>
+                <img style="height: 16px; width: 16px" src="/img/defaultProfilePicture.png" alt="Alternate Text" />
+                <span>${username}</span>
+                <p style="color: white" class="bg-gradient-primary">${message}</p>
+            </div>`
+
+           });
+
+
+    connection.on("Disconnect", function () {
+
+        document.getElementById("chat").innerHTML = `<div id="chatContentHolder" class="bg-white col" style="width: 20em; height: 20em; position: fixed; bottom: 0; right: 5em; border: solid; border-color: orangered;">
+        <button onclick="disconnectFromChat()" class="btn btn-danger">Disconnect</button>
+        <div class="row" id="heading">
+
+        </div>
+        <div id="chatContent" style="max-height: 13em; overflow-y: scroll;">
+
+        </div>
+        <div class="row" style="position: fixed; bottom: 10px;">
+            <input id="message" type="text" style="width: 15em" placeholder="Type..." />
+            <img onclick="sendMessage()" id="sendMessage" style="width: 32px; height: 32px;" src="/img/sendBtn.png" alt="Alternate Text" />
+        </div>
+    </div>`;
+
+        document.getElementById("chat").style.display = 'none';
+
+    });
+
+    function disconnectFromChat() {
+        console.log(technician);
+        let user = document.getElementById("username").innerText;
+            connection.invoke("DisconnectFromChat", technician, user);
+    };
+
+    connection.start().catch(function (err) {
+        return console.error(err.toString());
+    });
+
+
+    function escapeHtml(unsafe) {
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+</script>
