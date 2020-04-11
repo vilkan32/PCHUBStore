@@ -1,6 +1,19 @@
 ﻿@model PCHUBStore.View.Models.ProductsViewModel
 
-    <form action="/Products/@Model.Category" class="productsViewStyle" style="border-style: solid; background-color: white; border-color:white" method="get">
+@{ 
+    var formAction = string.Empty;
+
+    if (Model.Search)
+    {
+        formAction = "/Products/Search";
+    }
+    else
+    {
+        formAction = "/Products/" + @Model.Category;
+    }
+
+}
+    <form action="@formAction" class="productsViewStyle" style="border-style: solid; background-color: white; border-color:white" method="get">
         <div class="container text-center border-bottom-info" style="background-color: #f6f6f6">
             <img src="~/img/icons8-filter-64.png" alt="Filters" />
         </div>
@@ -132,12 +145,12 @@
 
         </div>
         <div class="row" style="visibility: hidden">
-
             <div class="col-12">
-                <label for="Page">Page</label>
                 <input id="page" checked type="checkbox" name="Page" value="1" />
             </div>
-
+            <div class="col-12">
+                <input checked type="text" name="searchInput" value="@Model.SearchInput" />
+            </div>
             <button id="btn" type="submit">Click Me</button>
         </div>
 

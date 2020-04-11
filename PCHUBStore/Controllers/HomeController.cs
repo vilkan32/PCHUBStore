@@ -103,7 +103,17 @@ namespace PCHUBStore.Controllers
             return jsonModel;
         }
 
+        [HttpGet("Service")]
+        public IActionResult Service()
+        {
+            return this.View();
+        }
 
+        [HttpGet("Store")]
+        public IActionResult Store()
+        {
+            return this.View();
+        }
 
 
         [HttpGet("/api/ReviewedProducts")]

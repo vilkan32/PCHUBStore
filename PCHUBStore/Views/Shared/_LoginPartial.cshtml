@@ -17,10 +17,18 @@
                     </a>
                 </li>
             }
-            else
+            else if (this.User.IsInRole("StoreUser"))
             {
                 <li style="height:60px;" class="col">
                     <a style="display: inline-block" class="nav-link text-white" asp-controller="User" asp-action="Profile">
+                        <img src="~/img/profile.png" style="width: 50px; height: 50px; " alt="Alternate Text" />
+                    </a>
+                </li>
+            }
+            else if (this.User.IsInRole("Support"))
+            {
+                <li style="height:60px;" class="col">
+                    <a style="display: inline-block" class="nav-link text-white" asp-area="Support" asp-controller="Home" asp-action="Index">
                         <img src="~/img/profile.png" style="width: 50px; height: 50px; " alt="Alternate Text" />
                     </a>
                 </li>

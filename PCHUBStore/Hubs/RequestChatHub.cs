@@ -56,11 +56,10 @@ namespace PCHUBStore.Hubs
 
         public async Task DisconnectFromChat(string technician, string user)
         {
-            Console.WriteLine();
             var userInfo = await this.userProfileService.GetUserProfileInformationAsync(user);
 
             var technicianInfo = await this.userProfileService.GetUserProfileInformationAsync(technician);
-            Console.WriteLine();
+      
             await this.service.DisconnectFromChat(technician, user);
 
             await this.Clients.User(userInfo.Id).SendAsync("Disconnect");

@@ -22,16 +22,16 @@
         <div class="row text-center" style="display: contents">
             <!-- Home -->
             <div style="height:80px;" class="col-sm-6 col-lg-2">
-                <a style="display: inline-block" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                <a style="display: inline-block; height: inherit" class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/img/FinalLogo.png" style="width: 200px; height: 50px;" alt="Alternate Text" />
                     <p>Electronics Hub</p>
                 </a>
             </div>
             <!-- Search -->
             <div class="col-sm-6 col-lg-4">
-                <form class="form-inline m-4 justify-content-center">
-                    <input class="form-control mr-sm-4" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+                <form method="get" asp-controller="Products" asp-action="Search" class="form-inline m-4 justify-content-center">
+                    <input class="form-control mr-sm-4" type="search" name="searchInput" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
             <!-- Shopping Cart -->
@@ -80,7 +80,6 @@
                 {
                     <div id="chatContent" style="max-height: 17em;">
                         <input id="subject" type="text" name="Subject" placeholder="Enter Subject" />
-
                     </div>
                     <button onclick="chatWithTechnician(this)" type="button" style="position: absolute; bottom: 0" class="btn btn-success">Request Chat With Technician</button>
                 }
@@ -91,7 +90,7 @@
                 }
             </div>
             <div onclick="triggerChatWindow()" class="col">
-                <img  style="position: fixed; bottom: 0; right: 0" src="~/img/chat.png" alt="Alternate Text" />
+                <img style="position: fixed; bottom: 0; right: 0" src="~/img/chat.png" alt="Alternate Text" />
             </div>
 
         </div>
@@ -106,8 +105,6 @@
 
             </div>
         </div>
-
-
     }
 
     <!-- Footer -->
@@ -115,14 +112,14 @@
 
         <div class="container bg-white">
             <div class="row">
-                <div class="col-6">
-                    <img src="~/img/tools-solid.svg" style="width: 3em; height: 3em" alt="Alternate Text" />
+                <div class="col-6 text-center">
+                    <a href="/Service"> <img src="~/img/tools-solid.svg" style="width: 3em; height: 3em" alt="Alternate Text" /></a>
                     <p>
                         Специализираният компютърен сервиз във София на PC HUB Superstore ще откриете на адрес Люлин 3 бл. 261dsaВ / Бул. Андрей Адсасд, Телефон: +309 2 234 2323
                     </p>
                 </div>
-                <div class="col-6">
-                    <img src="~/img/store-solid.svg" style="width: 3em; height: 3em" alt="Alternate Text" />
+                <div class="col-6 text-center">
+                    <a href="/Store"><img src="~/img/store-solid.svg" style="width: 3em; height: 3em" alt="Alternate Text" /></a>
                     <p>Магазин за компютри и лаптопи София, Люлин 2 Блок 21261В , Телефон: +3539 325 0808</p>
                 </div>
             </div>
@@ -217,31 +214,14 @@
                     <!-- Links -->
                     <h6 class="text-uppercase font-weight-bold">Useful links</h6>
                     <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
-
-
-                    @if (this.User.Identity.IsAuthenticated)
-                    {
-                        <p>
-                            <a href="/User/Profile">Account</a>
-                        </p>
-                    }
-                    else
-                    {
-                        <p>
-                            <a asp-area="Identity" asp-page="/Account/Register">Register</a>
-                        </p>
-                        <p>
-                            <a asp-area="Identity" asp-page="/Account/Login">Login</a>
-                        </p>
-                    }
                     <p>
-                        <a href="#!">Shopping Cart</a>
+                        <a href="/Store">Store</a>
                     </p>
                     <p>
-                        <a href="#!">Chat</a>
+                        <a href="/Service">Service</a>
                     </p>
                     <p>
-                        <a href="#!">FAQ</a>
+                        <a href="/FAQ">FAQ</a>
                     </p>
                 </div>
                 <!-- Grid column -->

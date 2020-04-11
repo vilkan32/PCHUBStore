@@ -14,7 +14,7 @@ namespace PCHUBStore.Data.Models
         public ShipmentDetails ShipmentDetails { get; set; }
 
         // many to many shipmentProducts
-        public virtual List<Product> ShippedProducts { get; set; }
+        public virtual List<ShipmentProduct> ShipmentProducts { get; set; }
 
         public decimal TotalProductsPrice { get; set; }
         public ShipmentStatus ShipmentStatus { get; set; }

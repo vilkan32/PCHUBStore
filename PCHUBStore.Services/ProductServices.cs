@@ -460,6 +460,15 @@ namespace PCHUBStore.Services
             return await this.context.Categories.AnyAsync(x => x.Name.ToLower() == category.ToLower());
         }
 
+        public async Task<IEnumerable<Product>> SearchForResultsAsync(string searchInput, string minPrice, string maxPrice)
+        {
+            decimal minPriceDecimal = 0;
+            decimal.TryParse(minPrice, out minPriceDecimal);
+            decimal maxPriceDecimal = 0;
+            decimal.TryParse(maxPrice, out maxPriceDecimal);
+            return await this.context.Products.Where(x => x.Title.ToLower().Contains(searchInput.ToLower()) && x.Price >= minPriceDecimal && x.Price <= maxPriceDecimal).ToListAsync();
+        }
+
         private object GetPropertyValue(ProductFiltersUrlModel urlData, string propName)
         {
             var prop = urlData.GetType().GetProperty(propName);

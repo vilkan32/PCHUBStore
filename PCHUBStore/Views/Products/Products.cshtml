@@ -8,17 +8,31 @@
 <div class="row" style="margin-left: 50px; margin-right:50px; margin-top: 75px">
     <div class="col-2"></div>
     <div class="col-4">
-        <h1 style="color: black">
-            @Model.Category Category
-        </h1>
+
+        @if (Model.Search)
+        {
+            <h1 style="color: black">
+                Search Results For - @Model.SearchInput
+            </h1>
+        }
+        else
+        {
+            <h1 style="color: black">
+                @Model.Category Category
+            </h1>
+        }
+
     </div>
     <div class="col-6"></div>
 
     <div class="col-2"></div>
     <div class="col-10">
-        <p style="color: black">
-            Here you can review all of the @Model.Category that are available on our website. By applying the filters you would be able to select the best choice for you. We combine both quality and low prices.
-        </p>
+        @if (!Model.Search)
+        {
+            <p style="color: black">
+                Here you can review all of the @Model.Category that are available on our website. By applying the filters you would be able to select the best choice for you. We combine both quality and low prices.
+            </p>
+        }
     </div>
 </div>
 

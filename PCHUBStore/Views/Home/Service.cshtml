@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "Service";
+
+}
+
+
+    <div class="container text-center mt-5 bg-white">
+        <h3 style="color: black">Service Details</h3>
+    </div>
+
+<div class="row m-5">
+    <div class="col-lg-6 col-sm-12">
+        <div id="map" style="width: inherit; height: 50em"></div>
+    </div>
+
+    <div class="col-lg-6 col-sm-12 bg-white" style="color: black">
+        <div class="row">
+            <div class="col-12">
+                <p>ЗА КОНТАКТ СЪС СЕРВИЗ ЗА ЛАПТОПИ И КОМПЮТРИ</p>
+                <hr />
+            </div>
+            <div class="col-12">
+                <p>София, улица „Сладост“ 82</p>                
+
+                <p>Телефон: +359 123 2379</p>
+
+                <p>Работно Време: от 9.30 до 18.30 ч.</p>
+
+                <p>Събота - Почивен ден</p>
+
+                <p>Неделя - Почивен ден</p>
+                <hr />
+            </div>
+            <div class="col-12 text-center">
+                <p>Уважаеми клиенти,</p>
+
+                <p>
+                    Във връзка с разпространението на Covid-19,
+                    грижата за здравето на нашите служители и социалната отговорност, която носим със себе си.
+                </p>
+
+
+                <p>От 13.3.2020 всички поръчки и запитвания и гаранции към PCHUBStore ще се обработват само онлайн.</p>
+
+
+                <p>Магазините на PCHUBStore в София няма да обслужват крайни клиенти за неопределено време.</p>
+
+
+                <p> Телефон м-н София : 012 42345 2 308 ; 07320 20 12810 работим с клиенти</p>
+
+                <p>Телефон м-н Варна : 0522 823291; 07230 230 8112301 работим с клиенти</p>
+
+
+                <p>Работното ни време, качеството на обслужване и страстта ни към технологиите остават непроменени</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initialize and add the map
+    function initMap() {
+
+        var uluru = { lat: -25.344, lng: 131.036 };
+
+        var map = new google.maps.Map(
+            document.getElementById('map'), { zoom: 4, center: uluru });
+
+        var marker = new google.maps.Marker({ position: uluru, map: map });
+    }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuoQ6nmgNmfMjhKCrjLiBFrN_2Gas9DZk&callback=initMap">
+</script>

@@ -19,7 +19,9 @@ namespace PCHUBStore.View.Models
         public Pager Pager { get; set; }
         public string Category { get; set; }
         public ICollection<ProductViewModel> Products { get; set; }
+        public bool Search { get; set; }
 
+        public string SearchInput { get; set; }
         public ICollection<string> ProductMakeUrls { get; set; }
 
         public ICollection<FilterCategoryViewModel> FilterCategory { get; set; }

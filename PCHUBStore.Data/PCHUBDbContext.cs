@@ -48,6 +48,8 @@ namespace PCHUBStore.Data
         public virtual DbSet<MainSlider> MainSliders { get; set; }
         public virtual DbSet<ChatRequest> ChatRequests { get; set; }
         public virtual DbSet<Chat> Chats { get; set; }
+        public virtual DbSet<ForumPost> ForumPosts { get; set; }
+        public virtual DbSet<ShipmentProduct> ShipmentProducts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -90,6 +92,17 @@ namespace PCHUBStore.Data
             modelBuilder.Entity<ProductCart>()
                 .HasOne(bc => bc.Product)
                 .WithMany(c => c.ProductCarts)
+                .HasForeignKey(bc => bc.ProductId);
+
+            modelBuilder.Entity<ShipmentProduct>()
+       .HasKey(bc => new { bc.ProductId, bc.ShipmentId });
+            modelBuilder.Entity<ShipmentProduct>()
+                .HasOne(bc => bc.Shipment)
+                .WithMany(b => b.ShipmentProducts)
+                .HasForeignKey(bc => bc.ShipmentId);
+            modelBuilder.Entity<ShipmentProduct>()
+                .HasOne(bc => bc.Product)
+                .WithMany(c => c.ShipmentProducts)
                 .HasForeignKey(bc => bc.ProductId);
         }
     }

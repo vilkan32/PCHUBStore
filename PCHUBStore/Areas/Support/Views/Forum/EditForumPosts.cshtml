@@ -1,0 +1,35 @@
+﻿@model List<PCHUBStore.Areas.Support.Models.EditForumPostsViewModel>
+
+@{
+    this.ViewData["Title"] = "Edit Forum Posts";
+}
+
+<div class="container mt-5">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Picture</th>
+                <th scope="col">Title</th>
+                <th scope="col">Creation Date</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var post = Model[i];
+                var index = i + 1;
+            <tr>
+                <td>@index</td>
+                <td><img src="@post.PostPicture" style="width: 64px; height: 64px" alt="Alternate Text" /></td>
+                <td>@post.Title</td>
+                <td>@post.CreationDate</td>
+                <td><a asp-area="Support" asp-controller="Forum" asp-action="EditForumPost" asp-route-postId="@post.Id" class="btn btn-info">Edit</a></td>
+                <td><a asp-area="Support" asp-controller="Forum" asp-action="DeleteForumPost" asp-route-postId="@post.Id" class="btn btn-danger">Delete</a></td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -13,6 +13,7 @@ namespace PCHUBStore.Services
     {
         Task<Product> GetProductAsync(string id, string userId, bool isAuthenticated, string category);
         Task<List<FilterCategory>> GetFiltersAsync(string category);
+        Task<IEnumerable<Product>> SearchForResultsAsync(string searchInput, string minPrice, string maxPrice);
         Task<IEnumerable<Product>> QueryProductsAsync(ProductFiltersUrlModel productFilters, string category);
         Task OrderByAsync(ref ProductsViewModel products, string args);
         Task ApplyFiltersFromUrlAsync(ICollection<FilterCategoryViewModel> filterCategory, ProductFiltersUrlModel urlData);

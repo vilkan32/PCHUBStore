@@ -18,6 +18,5 @@ namespace PCHUBStore.Areas.Administration.Services
 
         Task UpdateCategoryAsync(string category);
 
-
     }
 }

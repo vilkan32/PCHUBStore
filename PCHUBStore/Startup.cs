@@ -44,7 +44,7 @@ namespace PCHUBStore
                 options.MinimumSameSitePolicy = SameSiteMode.Strict;
             });
 
-            services.AddAutoMapper(typeof(Startup));       
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddDbContext<PCHUBDbContext>(options =>
 
@@ -52,13 +52,14 @@ namespace PCHUBStore
              b => b.MigrationsAssembly("PCHUBStore"))
                                                      .UseLazyLoadingProxies()
                                                   );
-            services.AddSignalR(options => {
+            services.AddSignalR(options =>
+            {
 
                 options.ClientTimeoutInterval = TimeSpan.FromMinutes(2);
             });
             var mvcBuilder = services.AddControllersWithViews(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
             mvcBuilder.AddRazorRuntimeCompilation();
-            services.AddSession(options => { options.IdleTimeout = TimeSpan.FromDays(20);options.Cookie.HttpOnly = true; options.Cookie.IsEssential = true; });
+            services.AddSession(options => { options.IdleTimeout = TimeSpan.FromDays(20); options.Cookie.HttpOnly = true; options.Cookie.IsEssential = true; });
             services.AddResponseCaching();
             services.AddResponseCompression(options => { options.EnableForHttps = true; });
             services.AddRazorPages();
@@ -69,7 +70,7 @@ namespace PCHUBStore
                 .AddEntityFrameworkStores<PCHUBDbContext>()
                 .AddDefaultTokenProviders();
 
-           
+
 
             Account cloudinaryCredentials = new Account(
               this.Configuration["Cloudinary:CloudName"],
@@ -103,12 +104,16 @@ namespace PCHUBStore
             services.AddTransient<IAdminCategoryPagesServices, AdminCategoryPagesServices>();
 
             services.AddTransient<ICategoryServices, CategoryServices>();
-            
+
             services.AddTransient<IShopServices, ShopServices>();
 
             services.AddTransient<IAdminLayoutServices, AdminLayoutServices>();
 
             services.AddTransient<IRequestChatServices, RequestChatServices>();
+
+            services.AddTransient<ISupportForumServices, SupportForumServices>();
+
+            services.AddTransient<IForumServices, ForumServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -124,21 +129,34 @@ namespace PCHUBStore
 
             var userRole = roleManager.FindByNameAsync("StoreUser").GetAwaiter().GetResult();
 
+            var supportRole = roleManager.FindByNameAsync("Support").GetAwaiter().GetResult();
 
-            if(adminRole == null)
+            if (adminRole == null)
             {
                 roleManager.CreateAsync(new IdentityRole
                 {
+
                     Name = "Admin"
+
                 }).GetAwaiter().GetResult();
             }
 
-            if(userRole == null)
+            if (userRole == null)
             {
                 roleManager.CreateAsync(new IdentityRole
                 {
 
                     Name = "StoreUser"
+
+                }).GetAwaiter().GetResult();
+            }
+
+            if (supportRole == null)
+            {
+                roleManager.CreateAsync(new IdentityRole
+                {
+
+                    Name = "Support"
 
                 }).GetAwaiter().GetResult();
             }
@@ -150,7 +168,6 @@ namespace PCHUBStore
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -177,7 +194,7 @@ namespace PCHUBStore
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-                
+
                 endpoints.MapRazorPages();
             });
 

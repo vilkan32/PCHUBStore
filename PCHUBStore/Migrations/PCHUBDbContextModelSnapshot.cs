@@ -507,6 +507,40 @@ namespace PCHUBStore.Migrations
                     b.ToTable("FilterCategories");
                 });
 
+            modelBuilder.Entity("PCHUBStore.Data.Models.ForumPost", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PictureUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ForumPosts");
+                });
+
             modelBuilder.Entity("PCHUBStore.Data.Models.FullCharacteristic", b =>
                 {
                     b.Property<int>("Id")
@@ -823,9 +857,6 @@ namespace PCHUBStore.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShipmentId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -839,8 +870,6 @@ namespace PCHUBStore.Migrations
                     b.HasIndex("MainPictureId")
                         .IsUnique()
                         .HasFilter("[MainPictureId] IS NOT NULL");
-
-                    b.HasIndex("ShipmentId");
 
                     b.ToTable("Products");
                 });
@@ -968,6 +997,24 @@ namespace PCHUBStore.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Shipments");
+                });
+
+            modelBuilder.Entity("PCHUBStore.Data.Models.ShipmentProduct", b =>
+                {
+                    b.Property<string>("ProductId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ShipmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId", "ShipmentId");
+
+                    b.HasIndex("ShipmentId");
+
+                    b.ToTable("ShipmentProducts");
                 });
 
             modelBuilder.Entity("PCHUBStore.Data.Models.ShoppingCart", b =>
@@ -1301,10 +1348,6 @@ namespace PCHUBStore.Migrations
                     b.HasOne("PCHUBStore.Data.Models.Picture", "MainPicture")
                         .WithOne("MainPicForProduct")
                         .HasForeignKey("PCHUBStore.Data.Models.Product", "MainPictureId");
-
-                    b.HasOne("PCHUBStore.Data.Models.Shipment", null)
-                        .WithMany("ShippedProducts")
-                        .HasForeignKey("ShipmentId");
                 });
 
             modelBuilder.Entity("PCHUBStore.Data.Models.ProductCart", b =>
@@ -1357,6 +1400,21 @@ namespace PCHUBStore.Migrations
                     b.HasOne("PCHUBStore.Data.Models.User", "User")
                         .WithMany("Shipments")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("PCHUBStore.Data.Models.ShipmentProduct", b =>
+                {
+                    b.HasOne("PCHUBStore.Data.Models.Product", "Product")
+                        .WithMany("ShipmentProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PCHUBStore.Data.Models.Shipment", "Shipment")
+                        .WithMany("ShipmentProducts")
+                        .HasForeignKey("ShipmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PCHUBStore.Data.Models.ShoppingCart", b =>

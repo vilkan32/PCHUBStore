@@ -10,6 +10,7 @@ using PCHUBStore.View.Models.FilterViewModels;
 using PCHUBStore.View.Models;
 using PCHUBStore.View.Models.Pagination;
 using PCHUBStore.Services;
+using System.ComponentModel.DataAnnotations;
 
 namespace PCHUBStore.Controllers
 {
@@ -68,6 +69,10 @@ namespace PCHUBStore.Controllers
         {
             var categoryExists = await this.service.CategoryExistsAsync(category);
 
+            if(!await this.service.ProductExistsAsync(productId))
+            {
+                return this.RedirectToAction("Error", "Home");
+            }
 
             var product = await this.service.GetProductAsync(productId, this.User.Identity.Name, this.User.Identity.IsAuthenticated, category);
 
@@ -85,5 +90,47 @@ namespace PCHUBStore.Controllers
             return this.View(productViewModel);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Search([Required][MinLength(1)]string searchInput, [FromQuery]ProductFiltersUrlModel productFilters)
+        {
+            if (productFilters.OrderBy == null)
+            {
+                productFilters.OrderBy = "Default";
+            }
+            if(productFilters.MinPrice == null)
+            {
+                productFilters.MinPrice = "0";
+            }
+            if(productFilters.MaxPrice == null)
+            {
+                productFilters.MaxPrice = "9999";
+            }
+ 
+            var model = new ProductsViewModel();
+
+            var products = await this.service.SearchForResultsAsync(searchInput, productFilters.MinPrice, productFilters.MaxPrice);
+
+            var filters = await this.service.GetFiltersAsync("Search");
+
+            model.FilterCategory = mapper.Map<List<FilterCategoryViewModel>>(filters);
+
+            model.Products = mapper.Map<List<ProductViewModel>>(products);
+
+            model.Pager = new Pager(model.Products.Count, productFilters.Page, 20);
+
+            model.Products = model.Products.Skip((productFilters.Page - 1) * 20).Take(20).ToList();
+
+            await this.service.OrderByAsync(ref model, productFilters.OrderBy);
+
+            model.Category = "Search";
+
+            model.Search = true;
+
+            model.SearchInput = searchInput;
+
+            await this.service.ApplyFiltersFromUrlAsync(model.FilterCategory, productFilters);
+
+            return this.View("Products",model);
+        }
     }
 }

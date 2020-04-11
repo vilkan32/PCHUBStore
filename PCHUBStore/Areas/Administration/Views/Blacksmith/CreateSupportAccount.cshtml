@@ -1,0 +1,41 @@
+﻿@model PCHUBStore.Areas.Administration.Models.CreateAdminViewModels.RegisterNewSupportViewModel
+
+@{
+    ViewData["Title"] = "Create New Support Account";
+}
+
+
+<div class="container text-center">
+    <div class="text-center">
+        <h1 class="h4 text-gray-900 mb-4">@ViewData["Title"]!</h1>
+    </div>
+    <form method="post" class="text-center">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="@Model.Username"></label>
+            <input asp-for="@Model.Username" class="form-control" />
+            <span asp-validation-for="@Model.Username" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Email"></label>
+            <input asp-for="@Model.Email" class="form-control" />
+            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Password"></label>
+            <input asp-for="@Model.Password" class="form-control" />
+            <span asp-validation-for="@Model.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.ConfirmPassword"></label>
+            <input asp-for="@Model.ConfirmPassword" class="form-control" />
+            <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Create New Support Account</button>
+    </form>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

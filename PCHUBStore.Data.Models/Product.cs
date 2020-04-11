@@ -63,7 +63,7 @@ namespace PCHUBStore.Data.Models
         public virtual ICollection<ProductUserReview> ProductUserReviews { get; set; }
 
         public virtual ICollection<ProductUserFavorite> FavoriteUserProducts { get; set; }
-
+        public virtual List<ShipmentProduct> ShipmentProducts { get; set; }
         public virtual ICollection<ProductCart> ProductCarts { get; set; }
     }
 }

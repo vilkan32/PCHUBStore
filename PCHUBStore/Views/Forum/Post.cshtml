@@ -1,0 +1,20 @@
+﻿@model PCHUBStore.View.Models.ForumViewModels.ForumPostViewModel
+
+@{
+    this.ViewData["Title"] = "FAQ PCHUB " + Model.Title;
+}
+
+
+    <div style="border: solid; border-color: orangered;" class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h1>@Model.Title</h1>
+                <span>@Model.CreationDate</span>
+            </div>
+            <div class="col-12 text-center"><img style="width: 20em; height: 20em" src="@Model.PictureUrl" alt="Alternate Text" /></div>
+            <div class="col-12">
+                <p>@Html.Raw(Model.Content)</p>
+            </div>
+        </div>
+       
+    </div>
