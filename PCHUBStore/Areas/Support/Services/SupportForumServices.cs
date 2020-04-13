@@ -31,8 +31,10 @@ namespace PCHUBStore.Areas.Support.Services
         public async Task EditForumPostAsync(EditForumPostViewModel form)
         {
             var post = await this.context.ForumPosts.FirstOrDefaultAsync(x => x.Id == form.Id);
-
-            post.PictureUrl = form.CurrentPictureUrl;
+            if(form.CurrentPictureUrl != null)
+            {
+                post.PictureUrl = form.CurrentPictureUrl;
+            }
             post.Title = form.Title;
             post.Content = form.Content;
             post.ModificationDate = DateTime.UtcNow;

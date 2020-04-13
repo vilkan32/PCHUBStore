@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace PCHUBStore.Data.Models.Enums
@@ -8,8 +9,11 @@ namespace PCHUBStore.Data.Models.Enums
     {
         Confirmed,
         Rejected,
+        [Display(Name = "Awaiting Response")]
         AwaitingResponse,
+        [Display(Name = "Un Answered")]
         Unanswered,
+        [Display(Name = "Not Confirmed")]
         NotConfirmed
     }
 }

@@ -1,0 +1,146 @@
+﻿@using PCHUBStore.Data.Models.Enums
+@model PCHUBStore.Areas.Support.Models.ShipmentManagerIndexModel
+@{
+    Layout = "_ShipmentManagerLayout";
+
+    this.ViewData["Title"] = "Shipment Manager";
+
+}
+
+
+<div class="container text-center bg-gradient-success" style="color: black">
+    <h1>@this.ViewData["Title"]</h1>
+</div>
+
+
+
+<div class="container text-center" style="color: black">
+    <h1>Query Shipments</h1>
+</div>
+
+<div id="queryShipmentsHolder">
+
+    <table class="table table-bordered table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Confirmation Status</th>
+                <th scope="col">Shipping Company</th>
+                <th scope="col">Purchase Date</th>
+                <th scope="col">Query</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <form method="post">
+                    <td>
+
+                        <input class="form-control" />
+                        <span class="text-danger"></span>
+                    </td>
+                    <td>
+
+                        <input class="form-control" />
+                        <span class="text-danger"></span>
+                    </td>
+                    <td>
+                        <input class="form-control" />
+                        <span class="text-danger"></span>
+                    </td>
+                    <td>
+
+                        <input class="form-control" />
+                        <span class="text-danger"></span>
+                    </td>
+                    <td>
+                        <select asp-for="ConfirmationStatus" asp-items="Html.GetEnumSelectList<ConfirmationStatus>()" class="form-control">
+                            <option selected="selected" value="">Please select</option>
+                        </select>
+                        <span asp-validation-for="ConfirmationStatus" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <select asp-for="ShippingCompany" asp-items="Html.GetEnumSelectList<ShippingCompany>()" class="form-control">
+                            <option selected="selected" value="">Please select</option>
+                        </select>
+                        <span asp-validation-for="ShippingCompany" class="text-danger"></span>
+                    </td>
+                    <td>
+
+                        <input type="date" class="form-control" />
+                        <span class="text-danger"></span>
+                    </td>
+                    <td>
+                        <input type="submit" class="btn btn-primary" />
+                    </td>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="container text-center" style="color: black">
+    <h1>All Shipments</h1>
+</div>
+
+<div id="tableHolder">
+
+    <table class="table table-bordered table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Products Count</th>
+                <th scope="col">Shipment Total Price</th>
+                <th scope="col">Confirmation Status</th>
+                <th scope="col">Shipping Company</th>
+                <th scope="col">Purchase Date</th>
+                <th scope="col">Shipment Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>Washington Street 12 adsdasd asd ads asda sdasd asda sdasd asd asda sd</td>
+                <td>3</td>
+                <td>2400 lv</td>
+                <td>Awaiting Response</td>
+                <td>Econt</td>
+                <td>2.3.2012 3:30</td>
+                <td>Send</td>
+            </tr>
+            <tr>
+                <th>2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>Washington Street 12 adsdasd asd ads asda sdasd asda sdasd asd asda sd</td>
+                <td>3</td>
+                <td>2400 lv</td>
+                <td>Awaiting Response</td>
+                <td>Econt</td>
+                <td>2.3.2012 3:30</td>
+                <td>Send</td>
+            </tr>
+            <tr>
+                <th>2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>Washington Street 12 adsdasd asd ads asda sdasd asda sdasd asd asda sd</td>
+                <td>3</td>
+                <td>2400 lv</td>
+                <td>Awaiting Response</td>
+                <td>Econt</td>
+                <td>2.3.2012 3:30</td>
+                <td>Send</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

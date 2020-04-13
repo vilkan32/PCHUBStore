@@ -57,8 +57,8 @@ namespace PCHUBStore
 
                 options.ClientTimeoutInterval = TimeSpan.FromMinutes(2);
             });
-            var mvcBuilder = services.AddControllersWithViews(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
-            mvcBuilder.AddRazorRuntimeCompilation();
+            services.AddControllersWithViews(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
+            
             services.AddSession(options => { options.IdleTimeout = TimeSpan.FromDays(20); options.Cookie.HttpOnly = true; options.Cookie.IsEssential = true; });
             services.AddResponseCaching();
             services.AddResponseCompression(options => { options.EnableForHttps = true; });

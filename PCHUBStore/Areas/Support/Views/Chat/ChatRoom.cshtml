@@ -95,10 +95,6 @@
 
     function acceptChat(event) {
 
-        if (document.getElementById("chatContent").innerHTML !== "") {
-            return;
-        }
-
         let target = event;
 
         let subject = target.parentElement.parentElement.querySelector("[subject]").getAttribute("subject");

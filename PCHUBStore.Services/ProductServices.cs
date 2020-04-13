@@ -419,7 +419,7 @@ namespace PCHUBStore.Services
             var category = await this.context.Categories.FirstAsync(x => x.Name == cat && x.IsDeleted == false);
 
             var product = category.Products.FirstOrDefault(x => x.Id == id && x.IsDeleted == false);
-
+          
             product.Views += 1;
 
             if (isAuthenticated)
@@ -435,9 +435,10 @@ namespace PCHUBStore.Services
 
                     });
                 }
+                await this.context.SaveChangesAsync();
             }
 
-            await this.context.SaveChangesAsync();
+            
 
             return product;
         }

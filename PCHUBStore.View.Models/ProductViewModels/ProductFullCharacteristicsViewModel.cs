@@ -25,12 +25,13 @@ namespace PCHUBStore.View.Models
 
         public string Make { get; set; }
 
+        public string HtmlDescription { get; set; }
+
         public string Price { get; set; }
 
         public ICollection<ProductAdvancedDetailsViewModel> AdvancedDetails { get; set; }
 
         public ICollection<string> Pictures { get; set; }
-
         
         public string MainPicture { get; set; }
         public ICollection<SimilarProduct> SimilarProducts { get; set; }

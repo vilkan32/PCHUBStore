@@ -1,4 +1,5 @@
 ﻿using PCHUBStore.Areas.Administration.Models.ProductViewModel;
+using PCHUBStore.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +24,9 @@ namespace PCHUBStore.Areas.Administration.Services
         Task CreateMouseFromJSONAsync(InsertJsonProductViewModel form);
 
         Task CreateComputerFromJSONAsync(InsertJsonProductViewModel form);
+
+        Task<Product> GetProductAsync(string productId);
+
+        Task UpdateHtmlDescriptionAsync(InserHtmlInProductViewModel form);
     }
 }

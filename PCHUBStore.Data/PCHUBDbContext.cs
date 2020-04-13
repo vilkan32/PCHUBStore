@@ -20,7 +20,7 @@ namespace PCHUBStore.Data
             {
                 optionsBuilder
                     .UseLazyLoadingProxies()
-                    .UseSqlServer("Server=DESKTOP-SLBT47B\\SQLEXPRESS;Database=PCHUB;Trusted_Connection=True");
+                    .UseSqlServer("");
             }
         }
         public PCHUBDbContext() { }

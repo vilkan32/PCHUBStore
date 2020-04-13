@@ -8,12 +8,11 @@ namespace PCHUBStore.Data.Models
 {
     public class Shipment : BaseModel<int>
     {
-
+        // iskam
         public DateTime? PurchaseDate { get; set; }
-
+        // iskam
         public ShipmentDetails ShipmentDetails { get; set; }
 
-        // many to many shipmentProducts
         public virtual List<ShipmentProduct> ShipmentProducts { get; set; }
 
         public decimal TotalProductsPrice { get; set; }
@@ -36,6 +35,7 @@ namespace PCHUBStore.Data.Models
         public string DeliveryDetails { get; set; }
         public DateTime? ReceivedOn { get; set; }
 
+        // iskam
         public ShippingCompany ShippingCompany { get; set; }
 
         public string ShippingCompanyDetails { get; set; }
@@ -45,7 +45,7 @@ namespace PCHUBStore.Data.Models
         public ClientResponse ClientResponse { get; set; }
 
         public decimal Expenses { get; set; }
-
+        // iskam
         public ConfirmationStatus ConfirmationStatus { get; set; }
     }
 }

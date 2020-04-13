@@ -90,8 +90,6 @@ namespace PCHUBStore.Areas.Support.Controllers
             {
                 return this.View(form);
             }
-
-
             return this.RedirectToAction("EditForumPosts");
         }
 

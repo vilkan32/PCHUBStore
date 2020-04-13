@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,9 @@ using PCHUBStore.Services;
 
 namespace PCHUBStore.Areas.Administration.Controllers
 {
-    public class AccountController : AdministrationController
+    [Authorize(Roles = "Support, Admin")]
+    [Area("Administration")]
+    public class AccountController : Controller
     {
         
         private readonly IMapper mapper;
@@ -45,6 +48,12 @@ namespace PCHUBStore.Areas.Administration.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadProfilePicture(List<IFormFile> files)
         {
+            if(files.Count == 0)
+            {
+
+                return this.RedirectToAction("Profile");
+
+            }
             var imgUrl = await this.cloudinary.UploadPictureAsync(files[0], this.User.Identity.Name + "profilePicture");
 
             await this.userProfileServices.AddProfilePictureToUserAsync(imgUrl, this.User.Identity.Name);

@@ -11,6 +11,7 @@ using PCHUBStore.View.Models;
 using PCHUBStore.View.Models.Pagination;
 using PCHUBStore.Services;
 using System.ComponentModel.DataAnnotations;
+using Ganss.XSS;
 
 namespace PCHUBStore.Controllers
 {
@@ -35,7 +36,7 @@ namespace PCHUBStore.Controllers
         public async Task<IActionResult> Products([FromQuery]ProductFiltersUrlModel productFilters, string category)
         {
             var categoryExists = await this.service.CategoryExistsAsync(category);
-
+            
             if (!categoryExists)
             {
                 return this.RedirectToAction("Error", "Home");
@@ -80,7 +81,7 @@ namespace PCHUBStore.Controllers
             {
                 return this.Redirect("Home/Error");
             }
-
+   
             var productViewModel = mapper.Map<ProductFullCharacteristicsViewModel>(product);
 
             var similarProducts = await this.service.GetSimilarProductsAsync(product.Price, category);

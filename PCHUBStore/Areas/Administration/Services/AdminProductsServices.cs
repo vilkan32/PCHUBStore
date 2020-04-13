@@ -1782,5 +1782,16 @@ namespace PCHUBStore.Areas.Administration.Services
             return await this.context.Categories.Select(x => x.Name).ToListAsync();
         }
 
+        public async Task<Product> GetProductAsync(string productId)
+        {
+            return await this.context.Products.FirstOrDefaultAsync(x => x.Id == productId); 
+        }
+
+        public async Task UpdateHtmlDescriptionAsync(InserHtmlInProductViewModel form)
+        {
+            var product = await this.context.Products.FirstOrDefaultAsync(x => x.Id == form.ProductId);
+            product.HtmlDescription = form.HtmlContent;
+            await this.context.SaveChangesAsync();
+        }
     }
 }

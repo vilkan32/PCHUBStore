@@ -1,0 +1,46 @@
+﻿@model PCHUBStore.Areas.Administration.Models.ProductViewModel.InserHtmlInProductViewModel
+
+@{
+    this.ViewData["Title"] = "Edit Html Description For Product";
+}
+
+    <div class="container text-center">
+        <h1>@this.ViewData["Title"]</h1>
+    </div>
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-12">
+            <p>@Model.ProductId</p>
+        </div>
+        <div class="col-12">
+            <p>@Model.Title</p>
+        </div>
+        <div class="col-12">
+            <img style="width: 30em; height: 20em" src="@Model.PictureUrl" alt="Alternate Text" />
+        </div>
+    </div>
+    
+</div>
+
+
+<form method="post">
+
+    <div>
+        <label asp-for="HtmlContent"></label>
+        <textarea asp-for="HtmlContent" class="form-control"></textarea>
+        <span asp-validation-for="HtmlContent" class="text-danger"></span>
+    </div>
+    <div style="visibility: hidden">
+        <label asp-for="Category"></label>
+        <textarea asp-for="Category" class="form-control"></textarea>
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+    <div style="visibility: hidden">
+        <label asp-for="Title"></label>
+        <textarea asp-for="Title" class="form-control"></textarea>
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <input type="submit" class="btn btn-primary" />
+</form>

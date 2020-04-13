@@ -87,11 +87,32 @@
         </div>
     </div>
 </div>
+
+@if (this.User.Identity.IsAuthenticated)
+{
+    @if (this.User.IsInRole("Support") || this.User.IsInRole("Admin"))
+    {
+        <div id="adminAndSupport" class="container text-center">
+            <a class="btn btn-info" asp-area="Administration" asp-controller="Products" asp-action="InsertHtmlDescrtionIntoProduct" asp-route-productId="@Model.Id">Edit Html Description</a>
+        </div>
+
+    }
+}
 <div style="margin-left: 3em; margin-right:3em; margin-top: 75px; border-top: solid; border-top-width: 1px; border-top-color: darkslateblue">
     <h1 style="color: black">Advanced Details</h1>
     <p>@Model.Title</p>
 </div>
-<!-- Advanced Details for the laptop or product depends what will happen with the generic templates will they fit and shit -->
+
+@if (Model.HtmlDescription != null)
+{
+    <div style="margin-left: 3em; margin-right:3em; margin-top: 75px; border-top: solid; border-top-width: 1px; border-top-color: darkslateblue">
+        <h1 style="color: black">Review</h1>
+        <div id="holder">
+            @Html.Raw(Model.HtmlDescription)
+        </div>
+    </div>
+}
+
 
 <div class="row" style="background-color: white; margin-left: 3em; margin-right: 3em;">
     @foreach (var advancedDetails in Model.AdvancedDetails)

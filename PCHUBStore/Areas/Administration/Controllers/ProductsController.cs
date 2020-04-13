@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PCHUBStore.Areas.Administration.Models.CategoryViewModels;
 using PCHUBStore.Areas.Administration.Models.ProductViewModel;
 using PCHUBStore.Areas.Administration.Services;
+using PCHUBStore.Services;
 
 namespace PCHUBStore.Areas.Administration.Controllers
 {
@@ -13,11 +15,15 @@ namespace PCHUBStore.Areas.Administration.Controllers
     {
         private readonly IAdminProductsServices service;
         private readonly IAdminCharacteristicsServices adminCharacteristicsServices;
+        private readonly IProductServices productService;
 
-        public ProductsController(IAdminProductsServices service, IAdminCharacteristicsServices adminCharacteristicsServices)
+        public ProductsController(IAdminProductsServices service, 
+            IAdminCharacteristicsServices adminCharacteristicsServices,
+            IProductServices productService)
         {
             this.service = service;
             this.adminCharacteristicsServices = adminCharacteristicsServices;
+            this.productService = productService;
         }
 
         [HttpGet]
@@ -133,6 +139,53 @@ namespace PCHUBStore.Areas.Administration.Controllers
                 return this.RedirectToAction("Success", "Blacksmith", new { message = "Successfully added Product" });
             }
             return this.View(form);
+        }
+
+        [Authorize(Roles = "Admin, Support")]
+        [HttpGet]
+        public async Task<IActionResult> InsertHtmlDescrtionIntoProduct(string productId)
+        {
+            if(!await this.productService.ProductExistsAsync(productId))
+            {
+                return this.NotFound();
+            }
+            else
+            {
+                var product = await this.service.GetProductAsync(productId);
+
+                var model = new InserHtmlInProductViewModel();
+
+                model.Title = product.Title;
+                model.ProductId = product.Id;
+                model.PictureUrl = product.MainPicture.Url;
+                model.HtmlContent = product.HtmlDescription;
+                model.Category = product.Category.Name;
+                return this.View(model);
+            }
+        }
+
+        [Authorize(Roles = "Admin, Support")]
+        [HttpPost]
+        public async Task<IActionResult> InsertHtmlDescrtionIntoProduct(InserHtmlInProductViewModel form)
+        {
+
+            if (!await this.productService.ProductExistsAsync(form.ProductId))
+            {
+                return this.NotFound();
+            }
+            else
+            {
+                if (this.ModelState.IsValid)
+                {
+                   await this.service.UpdateHtmlDescriptionAsync(form);
+                }
+                else
+                {
+                    return this.View(form);
+                }           
+            }
+
+            return this.Redirect("/Products/" + form.Category + "/" + form.ProductId);
         }
     }
 }

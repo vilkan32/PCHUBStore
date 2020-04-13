@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -46,11 +47,6 @@ namespace PCHUBStore.Areas.Administration.Controllers
             return this.View();
         }
 
-        [HttpGet("/api/AdminLayout")]
-        public async Task<ActionResult<AdminLayoutViewModel>> GetUserInformationForLayout()
-        {
-            return await this.adminLayoutServices.GetAdminLayoutInformationAsync(this.User.Identity.Name);
-        }
 
         [HttpGet]
         public IActionResult CreateAdminAccount()

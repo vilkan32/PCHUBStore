@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PCHUBStore.Areas.Support.Controllers
 {
-    public class TicketManagerController : SupportController
+    public class ShipmentManagerController : SupportController
     {
+
         public IActionResult Index()
         {
             return View();
         }
+
     }
 }

@@ -25,6 +25,7 @@ namespace PCHUBStore.MiddlewareFilters
         {
 
             var canContinue = true;
+            Console.WriteLine();
             if (context.ModelState.IsValid)
             {
                 var cat = context.HttpContext.Request.RouteValues.FirstOrDefault(x => x.Key == "category");
@@ -109,6 +110,10 @@ namespace PCHUBStore.MiddlewareFilters
                             }
                         }
                         else if (key == "Category" || key == "category")
+                        {
+                            continue;
+                        }
+                        else if(key == "searchInput" || key == "SearchInput")
                         {
                             continue;
                         }

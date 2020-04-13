@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace PCHUBStore.Data.Models.Enums
@@ -8,6 +9,7 @@ namespace PCHUBStore.Data.Models.Enums
     {
         Econt,
         Speedy,
+        [Display(Name = "BG Post")]
         BGPost
     }
 }

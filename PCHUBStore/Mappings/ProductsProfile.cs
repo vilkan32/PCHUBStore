@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PCHUBStore.Data.Models;
 using PCHUBStore.View.Models;
+using Ganss.XSS;
 
 namespace PCHUBStore.Mappings
 {
@@ -39,6 +40,7 @@ namespace PCHUBStore.Mappings
                  .ForMember(x => x.AdvancedDetails, y => y.MapFrom(z => z.FullCharacteristics))
                  .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
                  .ForMember(x => x.Category, y => y.MapFrom(z => z.Category.Name))
+                 .ForMember(x => x.HtmlDescription, y => y.MapFrom(z => z.HtmlDescription))
                  .ForMember(x => x.BasicDetails, y => y.MapFrom(z => z.BasicCharacteristics.Select(x => x.Value)));
 
             //          from          to

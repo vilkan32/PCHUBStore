@@ -24,7 +24,7 @@
 
             <!-- Sidebar - Brand -->
             <li class="nav-item">
-                <a style="display: inline-block" class="nav-link text-white" asp-area="Administration" asp-controller="Blacksmith" asp-action="Index">
+                <a style="display: inline-block" class="nav-link text-white" asp-area="Support" asp-controller="Home" asp-action="Index">
                     <img src="~/img/FinalLogo.png" style="width: inherit; height: inherit;" alt="Alternate Text" />
                     <p class="text-center">Electronics Hub</p>
                 </a>
@@ -32,7 +32,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
@@ -70,18 +70,20 @@
                         <a class="collapse-item" href="/Category/Laptops">Category Laptops</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="">Forum</a>
-                        <a class="collapse-item" href="">Chat Room</a>
+                        <a class="collapse-item" asp-area="Support" asp-controller="Home" asp-action="Index">Support Index</a>
+                        <a class="collapse-item" asp-area="Support" asp-controller="Forum" asp-action="CreateForumPost">Forum</a>
+                        <a class="collapse-item" asp-area="Support" asp-controller="Chat" asp-action="ChatRoom">Chat Room</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Tickets</span>
+            <li class="nav-item">           
+                <a class="nav-link" asp-area="Support" asp-controller="ShipmentManager" asp-action="Index">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span>Shipments</span>
                 </a>
+              
             </li>
 
             <!-- Divider -->
@@ -96,27 +98,15 @@
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <div id="content">
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
 
                     <!-- Topbar Search -->
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
 
                     <div class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

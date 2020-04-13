@@ -21,7 +21,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="m-3">
-                                Role: Admin
+                                Role: @if (this.User.IsInRole("Admin"))
+                                {
+                                    <span>Admin</span>
+                                }
+                                else if (this.User.IsInRole("Support"))
+                                {
+                                <span>Support</span>
+                                }
                             </div>
                             <div class="m-3">
                                 Username: @Model.Username
