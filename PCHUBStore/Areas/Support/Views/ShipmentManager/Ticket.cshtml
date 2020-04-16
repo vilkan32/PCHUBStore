@@ -1,0 +1,368 @@
+﻿@using PCHUBStore.Data.Models.Enums
+@model PCHUBStore.Areas.Support.Models.ShipmentViewModel
+@{
+    Layout = "_ShipmentManagerLayout";
+
+    this.ViewData["Title"] = "Shipment " + Model.ShipmentId;
+
+}
+<script src="~/lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="~/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.min.js"></script>
+<div id="userInformationHolder" style="overflow-x: scroll">
+    <div class="container text-center">
+        <h1 style="color: black">User Information</h1>
+    </div>
+    <table class="table table-bordered table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone</th>
+                <th scope="col">City</th>
+                <th scope="col">Shipment Price</th>
+                <th scope="col">Confirmation Status</th>
+                <th scope="col">Shipping Company</th>
+                <th scope="col">Purchase Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <p>@Model.ShipmentId</p>
+                </td>
+                <td>
+                    <p>@Model.FirstName</p>
+                </td>
+                <td>
+                    <p>@Model.LastName</p>
+                </td>
+                <td>
+                    <p>@Model.Address</p>
+                </td>
+                <td>
+                    <p>@Model.Phone</p>
+                </td>
+                <td>
+                    <p>@Model.City</p>
+                </td>
+                <td>
+                    <p>@Model.ShipmentPrice</p>
+                </td>
+                <td>
+                    <p>@Model.ConfirmationStatus</p>
+                </td>
+                <td>
+                    <p>@Model.ShippingCompany.ToString()</p>
+                </td>
+                <td>
+                    <p>@Model.PurchaseDate</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div id="ShipmentInformationHolder" style="overflow-x: scroll">
+    <div class="container text-center">
+        <h1 style="color: black">Shipment Details</h1>
+    </div>
+    <table class="table table-bordered table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Received On</th>
+                <th scope="col">Shipment Covered By</th>
+                <th scope="col">Shipment Details</th>
+                <th scope="col">Shipment Importancy</th>
+                <th scope="col">Shipment Status</th>
+                <th scope="col">Shipping Company Details</th>
+                <th scope="col">Confirmation Status</th>
+                <th scope="col">Client Response</th>
+                <th scope="col">Delivery Confirmation Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <form method="post" asp-area="Support" asp-controller="ShipmentManager" asp-action="EditShipment" asp-route-shipmentId="@Model.ShipmentId">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <td>
+
+                        <input type="date" asp-for="ReceivedOn" class="form-control" />
+                        <span asp-validation-for="ReceivedOn" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <input asp-for="ShipmentCoveredBy" class="form-control" />
+                        <span asp-validation-for="ShipmentCoveredBy" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <select asp-for="ShipmentDetails" asp-items="Html.GetEnumSelectList<ShipmentDetails>()" class="form-control">
+                            <option selected="selected" value="">Please select</option>
+                        </select>
+                        <span asp-validation-for="ShipmentDetails" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <select asp-for="ShipmentImportancy" asp-items="Html.GetEnumSelectList<ShipmentImportancy>()" class="form-control">
+                            <option selected="selected" value="">Please select</option>
+                        </select>
+                        <span asp-validation-for="ShipmentImportancy" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <select asp-for="ShipmentStatus" asp-items="Html.GetEnumSelectList<ShipmentStatus>()" class="form-control">
+                            <option selected="selected" value="">Please select</option>
+                        </select>
+                        <span asp-validation-for="ShipmentStatus" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <textarea style="height: 15em; width: 20em" asp-for="ShippingCompanyDetails" class="form-control" >
+                        </textarea>
+                        <span asp-validation-for="ShippingCompanyDetails" class="text-danger"></span>
+                    </td>
+                    <td>
+
+                        <select asp-for="ConfirmationStatus" asp-items="Html.GetEnumSelectList<ConfirmationStatus>()" class="form-control">
+                            <option selected="selected" value="">Please select</option>
+                        </select>
+                        <span asp-validation-for="ConfirmationStatus" class="text-danger"></span>
+                    </td>
+                    <td>
+
+                        <select asp-for="ClientResponse" asp-items="Html.GetEnumSelectList<ClientResponse>()" class="form-control">
+                            <option selected="selected" value="">Please select</option>
+                        </select>
+                        <span asp-validation-for="ClientResponse" class="text-danger"></span>
+                    </td>
+                    <td>
+
+                        <input type="date" asp-for="DeliveryConfirmationDate" class="form-control" />
+                        <span asp-validation-for="DeliveryConfirmationDate" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </td>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="activitiesHolder" style="overflow-x: scroll">
+    <div class="container text-center">
+        <h1 style="color: black">Activities</h1>
+    </div>
+    <img id="addActivity" src="~/img/addActivity.png" style="width: 32px; height: 32px; cursor:pointer" alt="Alternate Text" />
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Activity Id</th>
+                <th>Activity Type</th>
+                <th>Description</th>
+                <th>Creation Date</th>
+                <th>Owner Name</th>
+                <th>Activity Closed</th>
+                <th>Save / Edit</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var activity in Model.Activities)
+            {
+                <form data-ajax="true" method="post" data-ajax-method="post" data-ajax-url="/api/EditActivity/@activity.Id" data-ajax-complete="editCompleted">
+                    <tr>
+                        <td>
+                            <input type="text" disabled name="Id" value="@activity.Id" class="form-control" />
+                        </td>
+                        <td>
+                            <select name="ActivityType" value="@activity.ActivityType" asp-items="Html.GetEnumSelectList<ActivityType>()" class="form-control">
+                                <option selected="selected" value="@activity.ActivityType">@activity.ActivityType</option>
+                            </select>                   
+                        </td>
+                        <td> <textarea style="height: 15em; width: 20em" type="text" value="@activity.Description" name="Description" class="form-control">@activity.Description</textarea></td>
+                        <td> <input type="date" name="CreationDate" value="@activity.CreationDate.Value.ToString("yyyy-MM-dd")" class="form-control" /></td>
+                        <td><input type="text" name="OwnerName" value="@activity.OwnerName" class="form-control" /></td>
+                        <td>
+                            @if (activity.ActivityClosed)
+                            {
+                                <input type="checkbox" name="ActivityClosed" checked />
+                            }
+                            else
+                            {
+                                <input type="checkbox" name="ActivityClosed" />
+                            }
+
+                        </td>
+                        <td>
+                            @if (this.User.Identity.Name == activity.OwnerName)
+                            {
+                            <button type="submit" class="btn btn-success">Edit</button>
+                            }
+                    
+                        </td>
+                    </tr>
+                </form>
+            }
+            <form data-ajax="true" method="post" data-ajax-method="post" data-ajax-url="/api/CreateActivity/@Model.ShipmentId" data-ajax-complete="completed" data-ajax-failure="failed">
+                <tr id="formSendActivity" style="display: none">
+                    <td>
+                        <input type="text" disabled name="Id" class="form-control" />
+                    </td>
+                    <td>
+                        <select name="ActivityType" class="form-control">
+                            <option selected value="">Please select</option>
+                            <option value="0">Email Inbound</option>
+                            <option value="1">Chat</option>
+                            <option value="2">Web</option>
+                            <option value="3">Issue</option>
+                            <option value="4">Shipment</option>
+                            <option value="5">Service</option>
+                            <option value="6">Call Inbound</option>
+                            <option value="7">Call Outbound</option>
+                            <option value="8">Open In Error</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <textarea type="text" name="Description" class="form-control" >
+                        </textarea>
+                    </td>
+
+                    <td>
+                        <input type="date" name="CreationDate" class="form-control" />
+                    </td>
+
+                    <td>
+                        <input type="text" style="display: none" name="OwnerName" value="@this.User.Identity.Name" class="form-control" />
+                        <input type="text" disabled name="OwnerName" value="@this.User.Identity.Name" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="checkbox" name="ActivityClosed" value="true" />
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="button" onclick="remove()" class="btn btn-danger">Remove</button>
+                    </td>
+                </tr>
+            </form>
+
+        </tbody>
+    </table>
+</div>
+
+<div div="">
+    <div class="container text-center">
+        <h1 style="color: black">Currently Inserted Activities</h1>
+    </div>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Activity Id</th>
+                <th>Activity Type</th>
+                <th>Description</th>
+                <th>Creation Date</th>
+                <th>Owner Name</th>
+                <th>Activity Closed</th>
+            </tr>
+        </thead>
+
+        <tbody id="tableBody">
+
+        </tbody>
+    </table>
+
+</div>
+
+<div id="ProductHolder" style="overflow-x: scroll">
+    <div class="container text-center">
+        <h1 style="color: black">Products Section</h1>
+    </div>
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Product Id</th>
+                <th>IMG</th>
+                <th>Price</th>
+                <th>Title</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.ShipmentProducts)
+            {
+                <tr>
+
+                    <td>@product.Id</td>
+                    <td><img src="@product.PictureUrl" style="width: 10em; height: 10em" alt="Alternate Text" /></td>
+                    <td>@product.Price</td>
+                    <td>@product.Title</td>
+                    <td>@product.Quantity</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+    // owner username da e na
+
+    document.getElementById("addActivity").addEventListener("click", () => {
+        $("#formSendActivity").show();
+    });
+
+    completed = function (data) {
+        $("#formSendActivity").hide();
+        let responseJson = data.responseJSON;
+        document.getElementById("tableBody").innerHTML += `
+
+
+                <tr id="recentlyAdded">
+                    <td>
+                        <input type="text" disabled name="Id" value="${responseJson.id}" class="form-control" />
+                    </td>
+                    <td>
+                    <input type="text" disabled name="activityType" value="${responseJson.activityType}" class="form-control" />
+                    </td>
+
+                    <td>
+                        <input type="text" disabled name="description" value="${responseJson.description}" class="form-control" />
+                    </td>
+
+                    <td>
+                        <input type="date" disabled name="creationDate" value="${responseJson.creationDate}" class="form-control" />
+                    </td>
+
+                    <td>
+
+                        <input type="text" disabled name="ownerName" value="${responseJson.ownerName}" class="form-control" />
+                    </td>
+                    <td>
+                        <input type="text" disabled name="activityClosed" value="${responseJson.activityClosed}" />
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+
+        `;
+    };
+
+    editCompleted = function (data) {
+
+        console.log(data);
+
+    };
+
+    function remove() {
+        $("#formSendActivity").hide();
+    }
+
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

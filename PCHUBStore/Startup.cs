@@ -113,6 +113,8 @@ namespace PCHUBStore
 
             services.AddTransient<ISupportForumServices, SupportForumServices>();
 
+            services.AddTransient<IShipmentManagerServices, ShipmentManagerServices>();
+
             services.AddTransient<IForumServices, ForumServices>();
         }
 

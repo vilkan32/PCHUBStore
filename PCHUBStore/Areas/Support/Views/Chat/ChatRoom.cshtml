@@ -97,21 +97,25 @@
 
         let target = event;
 
-        let subject = target.parentElement.parentElement.querySelector("[subject]").getAttribute("subject");
-
-        let email = target.parentElement.parentElement.querySelector("[email]").getAttribute("email");
-
-        let connectionId = target.parentElement.parentElement.id;
+        if (document.getElementById("chat").style.display == "none") {
 
 
 
-        connection.invoke("AcceptChat", connectionId, subject, email, technician);
+            let subject = target.parentElement.parentElement.querySelector("[subject]").getAttribute("subject");
 
-        let chat = document.getElementById("chat");
+            let email = target.parentElement.parentElement.querySelector("[email]").getAttribute("email");
 
-        chat.style.display = "block";
+            let connectionId = target.parentElement.parentElement.id;
 
-        document.getElementById("heading").innerHTML = `
+
+
+            connection.invoke("AcceptChat", connectionId, subject, email, technician);
+
+            let chat = document.getElementById("chat");
+
+            chat.style.display = "block";
+
+            document.getElementById("heading").innerHTML = `
             <div class="col">
                 <span>${subject}</span>
             </div>
@@ -119,9 +123,11 @@
                 <span id="username">${email}</span>
             </div>`
 
-        connection.invoke("RemoveRequest", connectionId);
-
+            connection.invoke("RemoveRequest", connectionId);
+        }
     }
+
+  
 
     function sendMessage() {
 

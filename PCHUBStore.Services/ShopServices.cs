@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PCHUBStore.Data;
 using PCHUBStore.Data.Models;
+using PCHUBStore.Data.Models.Enums;
+using PCHUBStore.View.Models.ShoppingCartViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,13 +84,13 @@ namespace PCHUBStore.Services
         {
             var user = await this.context.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
-            if(user.Cart == null)
+            if (user.Cart == null)
             {
                 return true;
             }
             else
             {
-                if(user.Cart.ProductCarts.Count == 0)
+                if (user.Cart.ProductCarts.Count == 0)
                 {
                     return true;
                 }
@@ -101,12 +103,20 @@ namespace PCHUBStore.Services
         {
             var user = await this.context.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
-            return user.Cart.ProductCarts.Sum(x => x.Quantity);
+            if(user.Cart == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return user.Cart.ProductCarts.Sum(x => x.Quantity);
+            }
+            
         }
 
         public async Task RemoveProductFromCartAsync(string username, string productId)
         {
-            if(await this.productService.ProductExistsAsync(productId))
+            if (await this.productService.ProductExistsAsync(productId))
             {
                 var user = await this.context.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
@@ -117,5 +127,131 @@ namespace PCHUBStore.Services
                 await this.context.SaveChangesAsync();
             }
         }
+
+        public async Task<bool> CheckoutSignedInUserAsync(string username, ShippingCompany shippingCompany)
+        {
+            var user = await this.context.Users.FirstOrDefaultAsync(x => x.UserName == username);
+
+            if(user.FirstName == null || user.LastName == null || user.PhoneNumber == null || user.Address == null)
+            {
+                return false;
+            }
+
+            var userCartProducts = user.Cart.ProductCarts;
+
+            var shipmentProducts = new List<ShipmentProduct>();
+
+            foreach (var cartProduct in userCartProducts)
+            {
+                shipmentProducts.Add(new ShipmentProduct { Product = cartProduct.Product, Quantity = cartProduct.Quantity});
+            }
+            
+            var shipment = new Shipment
+            {
+
+                ClientResponse = Data.Models.Enums.ClientResponse.AwaitingResponse,
+                ConfirmationStatus = Data.Models.Enums.ConfirmationStatus.AwaitingResponse,
+                PurchaseDate = DateTime.UtcNow,
+                ShipmentProducts = shipmentProducts,
+                ShippingCompany = shippingCompany,
+                ShipmentDetails = ShipmentDetails.Send,                
+            };
+
+            user.Shipments.Add(shipment);
+
+            await this.context.SaveChangesAsync();
+
+            var userNext = await this.context.Users.FirstOrDefaultAsync(x => x.UserName == username);
+
+            userNext.Cart = new ShoppingCart();
+
+            await this.context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task ChechoutAnonymousAsync(AnonymousCartViewModel form)
+        {
+            var user = new User { 
+
+                FirstName = form.FirstName, 
+                            
+                LastName = form.LastName,
+
+                Email = form.Email,
+
+                City = form.City,
+
+                PhoneNumber = form.PhoneNumber,
+
+                Address = form.Address
+            
+            };
+
+
+            var userCartProducts = form.Products;
+
+            var shipmentProducts = new List<ShipmentProduct>();
+
+            foreach (var cartProduct in userCartProducts)
+            {
+                shipmentProducts.Add(new ShipmentProduct { ProductId = cartProduct.Id, Quantity = cartProduct.Quantity });
+            }
+
+            var shipment = new Shipment
+            {
+
+                ClientResponse = Data.Models.Enums.ClientResponse.AwaitingResponse,
+                ConfirmationStatus = Data.Models.Enums.ConfirmationStatus.AwaitingResponse,
+                PurchaseDate = DateTime.UtcNow,
+                ShipmentProducts = shipmentProducts,
+                ShippingCompany = (ShippingCompany)Enum.Parse(typeof(ShippingCompany), form.ShippingCompany.ToString("g")),
+                ShipmentDetails = ShipmentDetails.Send,
+            };
+
+            user.Shipments.Add(shipment);
+
+            await this.context.Users.AddAsync(user);
+
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task<AnonymousCartViewModel> GetLastCheckoutDetailsAsync(string username)
+        {
+
+            var result = new AnonymousCartViewModel();
+            result.Products = new List<PurchaseProductsAnonymousViewModel>();
+
+            var user = await this.context.Users.FirstOrDefaultAsync(x => x.UserName == username);
+
+            var lastShipment = user.Shipments.OrderByDescending(x => x.PurchaseDate).ToList().Take(1);
+
+            foreach (var shipment in lastShipment)
+            {
+                foreach (var productShipment in shipment.ShipmentProducts)
+                {
+                    var product = productShipment.Product;
+                    result.Products.Add(new PurchaseProductsAnonymousViewModel
+                    {
+                        Id = shipment.Id.ToString(),
+                        PictureUrl = product.MainPicture.Url,
+                        Price = product.Price * productShipment.Quantity,
+                        Title = product.Title,
+                        Quantity = productShipment.Quantity,
+                    });
+                }
+            }
+
+            result.FirstName = user.FirstName;
+            result.LastName = user.LastName;
+            result.PhoneNumber = user.PhoneNumber;
+            result.Address = user.Address;
+            result.Email = user.Email;
+            result.City = user.City;
+
+            return result;
+
+        }
     }
+     
 }

@@ -467,7 +467,7 @@ namespace PCHUBStore.Services
             decimal.TryParse(minPrice, out minPriceDecimal);
             decimal maxPriceDecimal = 0;
             decimal.TryParse(maxPrice, out maxPriceDecimal);
-            return await this.context.Products.Where(x => x.Title.ToLower().Contains(searchInput.ToLower()) && x.Price >= minPriceDecimal && x.Price <= maxPriceDecimal).ToListAsync();
+            return await this.context.Products.Where(x => (x.Title.ToLower().Contains(searchInput.ToLower()) || x.ArticleNumber.ToLower().Contains(searchInput.ToLower())) && x.Price >= minPriceDecimal && x.Price <= maxPriceDecimal).ToListAsync();
         }
 
         private object GetPropertyValue(ProductFiltersUrlModel urlData, string propName)

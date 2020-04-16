@@ -1,34 +1,43 @@
 ﻿using PCHUBStore.Data.Models.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace PCHUBStore.Data.Models
+namespace PCHUBStore.Areas.Support.Models
 {
-    public class Shipment : BaseModel<int>
+    public class ShipmentViewModel
     {
+        public int ShipmentId { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Address { get; set; }
+
+        public string City { get; set; }
+
+        public string Phone { get; set; }
+
         public DateTime? PurchaseDate { get; set; }
 
         public ShipmentDetails ShipmentDetails { get; set; }
 
-        public virtual List<ShipmentProduct> ShipmentProducts { get; set; }
+        public List<ShipmentProductViewModel> ShipmentProducts { get; set; }
 
         public decimal TotalProductsPrice { get; set; }
+
         public ShipmentStatus ShipmentStatus { get; set; }
 
         public DateTime? DeliveryConfirmationDate { get; set; }
 
-        public string UserId { get; set; }
-
-        public virtual User User { get; set; }
         public ShipmentImportancy ShipmentImportancy { get; set; }
 
-        public virtual List<Activity> Activities { get; set; }
+        public virtual List<ActivityViewModel> Activities { get; set; }
 
         public decimal ShipmentPrice { get; set; }
 
-        public string DeliveryDetails { get; set; }
         public DateTime? ReceivedOn { get; set; }
 
         public ShippingCompany ShippingCompany { get; set; }
@@ -40,7 +49,8 @@ namespace PCHUBStore.Data.Models
         public ClientResponse ClientResponse { get; set; }
 
         public decimal Expenses { get; set; }
-
+   
         public ConfirmationStatus ConfirmationStatus { get; set; }
+
     }
 }

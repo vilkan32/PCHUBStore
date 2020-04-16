@@ -8,6 +8,10 @@ namespace PCHUBStore.Data.Models
 {
     public class Activity : BaseModel<string>
     {
+        public Activity()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
 
         public string OwnerId { get; set; }
         public virtual User Owner { get; set; }
@@ -21,7 +25,5 @@ namespace PCHUBStore.Data.Models
 
         public virtual Shipment Shipment { get; set; }
 
-        public int? TicketId { get; set; }
-        public virtual Ticket Ticket { get; set; }
     }
 }

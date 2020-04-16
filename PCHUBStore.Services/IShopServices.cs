@@ -1,4 +1,6 @@
 ﻿using PCHUBStore.Data.Models;
+using PCHUBStore.Data.Models.Enums;
+using PCHUBStore.View.Models.ShoppingCartViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,5 +22,10 @@ namespace PCHUBStore.Services
 
         Task<int> GetNumberOfProductsAsync(string username);
 
+        Task<bool> CheckoutSignedInUserAsync(string username, ShippingCompany shippingCompany);
+
+        Task ChechoutAnonymousAsync(AnonymousCartViewModel form);
+
+        Task<AnonymousCartViewModel> GetLastCheckoutDetailsAsync(string username);
     }
 }

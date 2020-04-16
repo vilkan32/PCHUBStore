@@ -41,6 +41,20 @@ namespace PCHUBStore.Mappings
                    .ForMember(x => x.Price, y => y.MapFrom(z => z.Price))
                    .ForMember(x => x.LinkToProduct, y => y.MapFrom(z => "/Products/" + z.Category.Name + "/" + z.Id))
                    .ForMember(x => x.PictureUrl, y => y.MapFrom(z => z.MainPicture.Url));
+
+            // ShipmentProduct to UserOrdersViewModel
+
+            CreateMap<ShipmentProduct, UserOrdersViewModel>()
+                   .ForMember(x => x.ShipmentId, y => y.MapFrom(z => z.ShipmentId))
+                    .ForMember(x => x.ProductId, y => y.MapFrom(z => z.ProductId))
+                    .ForMember(x => x.Category, y => y.MapFrom(z => z.Product.Category.Name))
+                    .ForMember(x => x.Make, y => y.MapFrom(z => z.Product.Make))
+                     .ForMember(x => x.Model, y => y.MapFrom(z => z.Product.Model))
+                      .ForMember(x => x.Price, y => y.MapFrom(z => z.Product.Price * z.Quantity))
+                       .ForMember(x => x.PictureUrl, y => y.MapFrom(z => z.Product.MainPicture.Url))
+                        .ForMember(x => x.Title, y => y.MapFrom(z => z.Product.Title))
+                       .ForMember(x => x.PurchaseDate, y => y.MapFrom(z => z.Shipment.PurchaseDate));
+
         }
     }
 }

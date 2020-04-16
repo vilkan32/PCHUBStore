@@ -7,7 +7,8 @@
 
 }
 
-
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.min.js"></script>
 <div class="container text-center bg-gradient-success" style="color: black">
     <h1>@this.ViewData["Title"]</h1>
 </div>
@@ -35,25 +36,24 @@
         </thead>
         <tbody>
             <tr>
-                <form method="post">
+                <form data-ajax="true" data-ajax-method="get" method="get" data-ajax-url="/api/SearchSipments" data-ajax-complete="completed" data-ajax-loading="#spinner">
                     <td>
 
-                        <input class="form-control" />
-                        <span class="text-danger"></span>
+                        <input asp-for="Id" class="form-control" />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </td>
+                    <td>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </td>
                     <td>
 
-                        <input class="form-control" />
-                        <span class="text-danger"></span>
-                    </td>
-                    <td>
-                        <input class="form-control" />
-                        <span class="text-danger"></span>
-                    </td>
-                    <td>
-
-                        <input class="form-control" />
-                        <span class="text-danger"></span>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
                     </td>
                     <td>
                         <select asp-for="ConfirmationStatus" asp-items="Html.GetEnumSelectList<ConfirmationStatus>()" class="form-control">
@@ -69,11 +69,11 @@
                     </td>
                     <td>
 
-                        <input type="date" class="form-control" />
-                        <span class="text-danger"></span>
+                        <input asp-for="PurchaseDate" type="date" class="form-control" />
+                        <span asp-validation-for="PurchaseDate" class="text-danger"></span>
                     </td>
                     <td>
-                        <input type="submit" class="btn btn-primary" />
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </td>
                 </form>
             </tr>
@@ -84,10 +84,11 @@
 
 
 <div class="container text-center" style="color: black">
-    <h1>All Shipments</h1>
+    <h1 id="searchResult">All Shipments</h1>
 </div>
 
 <div id="tableHolder">
+
 
     <table class="table table-bordered table-dark">
         <thead>
@@ -104,43 +105,94 @@
                 <th scope="col">Shipment Details</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <th>2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>Washington Street 12 adsdasd asd ads asda sdasd asda sdasd asd asda sd</td>
-                <td>3</td>
-                <td>2400 lv</td>
-                <td>Awaiting Response</td>
-                <td>Econt</td>
-                <td>2.3.2012 3:30</td>
-                <td>Send</td>
-            </tr>
-            <tr>
-                <th>2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>Washington Street 12 adsdasd asd ads asda sdasd asda sdasd asd asda sd</td>
-                <td>3</td>
-                <td>2400 lv</td>
-                <td>Awaiting Response</td>
-                <td>Econt</td>
-                <td>2.3.2012 3:30</td>
-                <td>Send</td>
-            </tr>
-            <tr>
-                <th>2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>Washington Street 12 adsdasd asd ads asda sdasd asda sdasd asd asda sd</td>
-                <td>3</td>
-                <td>2400 lv</td>
-                <td>Awaiting Response</td>
-                <td>Econt</td>
-                <td>2.3.2012 3:30</td>
-                <td>Send</td>
-            </tr>
+        <tbody id="tableBody">
+
+            @foreach (var item in Model.AllShipments)
+            {
+                <tr>
+                    <th><a asp-area="Support" asp-controller="ShipmentManager" asp-action="Ticket" asp-route-Id="@item.Id">@item.Id</a></th>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Address</td>
+                    <td>@item.ProductsCount</td>
+                    <td>@item.ShipmentTotalPrice lv</td>
+                    <td>@item.ConfirmationStatus</td>
+                    <td>@item.ShippingCompany</td>
+                    <td>@item.PurchaseDate</td>
+                    <td>@item.ShipmentDetails</td>
+                </tr>
+            }
+           
         </tbody>
     </table>
 </div>
+
+@if (Model.Pager.EndPage > 1)
+{
+
+    <div class="container">
+        <div class="row">
+            @for (var pg = Model.Pager.StartPage; pg <= Model.Pager.EndPage; pg++)
+            {
+
+                <div class="@(pg == Model.Pager.CurrentPage ? "active" : "") page-item">
+                    <a asp-area="Support" asp-controller="ShipmentManager" asp-action="Index" asp-route-pageId="@pg" class="page-link">@pg</a>
+                </div>
+
+            }
+        </div>
+    </div>
+}
+    <script>
+
+        completed = function (data) {
+
+            let jsonResult = data.responseJSON;
+            $("#searchResult").text("Search Results");
+            $("#tableBody").html(`<span id="spinner"><i class="fas fa-spinner fa-spin"></i></span>`);
+            setTimeout(() => {
+
+                $("#spinner").remove();
+
+            }, 2000);
+
+            console.log(jsonResult);
+
+            if (jsonResult.length > 0) {
+
+                jsonResult.forEach(x => {
+                    console.log(x);
+                    document.getElementById("tableBody").innerHTML += `
+                
+                 <tr>
+                    <td><a href="/Support/ShipmentManager/Ticket?id=${x.id}">${x.id}</a></td>
+                    <td>${x.firstName}</td>
+                    <td>${x.lastName}</td>
+                    <td>${x.address}</td>
+                    <td>${x.productsCount}</td>
+                    <td>${x.shipmentTotalPrice} lv</td>
+                    <td>${x.confirmationStatus}</td>
+                    <td>${x.shippingCompany}</td>
+                    <td>${x.purchaseDate}</td>
+                    <td>${x.shipmentDetails}</td>
+                </tr>
+                
+                
+                `
+                });
+
+            }
+            else {
+
+                document.getElementById("tableBody").innerHTML = `               
+                 <h1>No Results Found</h1>                                
+                `;
+             
+            }
+             
+
+        } 
+
+    </script>
+
+

@@ -20,7 +20,7 @@ namespace PCHUBStore.Data
             {
                 optionsBuilder
                     .UseLazyLoadingProxies()
-                    .UseSqlServer("");
+                    .UseSqlServer("Server=DESKTOP-SLBT47B\\SQLEXPRESS;Database=PCHUB;Trusted_Connection=True");
             }
         }
         public PCHUBDbContext() { }
@@ -38,7 +38,6 @@ namespace PCHUBStore.Data
         public virtual DbSet<Picture> Pictures { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<Shipment> Shipments { get; set; }
         public virtual DbSet<ProductCart> ProductCarts { get; set; }
         public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }

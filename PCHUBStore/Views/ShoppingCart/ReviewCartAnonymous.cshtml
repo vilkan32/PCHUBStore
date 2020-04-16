@@ -92,7 +92,7 @@
             </div>
         </div>
         <div class="container">
-            <form method="post">
+            <form method="post" asp-controller="ShoppingCart" asp-action="CheckoutAnonymous">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group ">
                     <label asp-for="@Model.FirstName"></label>

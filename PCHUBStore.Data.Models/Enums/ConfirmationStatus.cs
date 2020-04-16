@@ -13,7 +13,5 @@ namespace PCHUBStore.Data.Models.Enums
         AwaitingResponse,
         [Display(Name = "Un Answered")]
         Unanswered,
-        [Display(Name = "Not Confirmed")]
-        NotConfirmed
     }
 }

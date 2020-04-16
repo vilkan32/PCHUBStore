@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using PCHUBStore.Data.Models.Enums;
 using PCHUBStore.MiddlewareFilters;
 using PCHUBStore.Models;
 using PCHUBStore.Services;
@@ -63,6 +64,8 @@ namespace PCHUBStore.Controllers
             return this.RedirectToAction("ReviewCart");
         }
 
+
+
         [HttpGet]
         public async Task<IActionResult> BuyProduct([Required][MaxLength(80)]string id)
         {
@@ -88,6 +91,24 @@ namespace PCHUBStore.Controllers
 
 
             return this.RedirectToAction("ReviewCart");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Checkout(ShippingCompany shippingCompany)
+        {
+
+
+            if(await this.service.CheckoutSignedInUserAsync(this.User.Identity.Name, shippingCompany))
+            {
+                return this.RedirectToAction("CheckoutDetails");
+            }
+            else
+            {
+                return this.Redirect("/User/Profile");
+            }
+
+
+           
         }
 
         // SharedPart
@@ -252,6 +273,10 @@ namespace PCHUBStore.Controllers
 
             var model = this.mapper.Map<AnonymousCartViewModel>(cookieModel);
 
+            if(model.Products == null)
+            {
+                model.Products = new List<PurchaseProductsAnonymousViewModel>();
+            }
             foreach (var product in cookieModel.Products)
             {
                 var pr = await this.productService.GetProductAsync(product.ProductId);
@@ -331,6 +356,110 @@ namespace PCHUBStore.Controllers
 
 
             return this.RedirectToAction("ReviewCartAnonymous");
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> CheckoutAnonymous(AnonymousCartViewModel form)
+        {
+
+            if (this.ModelState.IsValid)
+            {
+                if (this.User.Identity.IsAuthenticated)
+                {
+                    return this.RedirectToAction("Error", "Home");
+                }
+
+                if (this.HttpContext.Session.GetString("Cart") == "empty")
+                {
+                    return this.RedirectToAction("EmptyCart");
+                }
+
+                var cookiesJson = this.HttpContext.Session.GetString("Cart");
+
+
+                var cookieModel = JsonConvert.DeserializeObject<CartCookieModel>(cookiesJson);
+
+                var quantity = cookieModel.Products.Sum(x => x.Quantity);
+
+                if (quantity == 0)
+                {
+                    return this.RedirectToAction("EmptyCart");
+                }
+
+                if(form.Products == null)
+                {
+                    form.Products = new List<PurchaseProductsAnonymousViewModel>();
+                }
+
+                foreach (var product in cookieModel.Products)
+                {
+                    var pr = await this.productService.GetProductAsync(product.ProductId);
+
+                    form.Products.Add(new PurchaseProductsAnonymousViewModel
+                    {
+
+                        Id = pr.Id,
+                        PictureUrl = pr.MainPicture.Url,
+                        Price = pr.Price,
+                        ProductUrl = "/Products/" + pr.Category.Name + "/" + pr.Id,
+                        Title = pr.Title,
+                        Quantity = product.Quantity
+                    });
+                }
+         
+                await this.service.ChechoutAnonymousAsync(form);
+
+                return this.RedirectToAction("CheckoutDetailsAnonymous", form);
+            }
+            else
+            {
+                return this.View("ReviewCartAnonymous", form);
+            }
+              
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> CheckoutDetailsAnonymous(AnonymousCartViewModel form)
+        {
+
+
+            var cookiesJson = this.HttpContext.Session.GetString("Cart");
+
+
+            var cookieModel = JsonConvert.DeserializeObject<CartCookieModel>(cookiesJson);
+
+
+            if (form.Products == null)
+            {
+                form.Products = new List<PurchaseProductsAnonymousViewModel>();
+            }
+
+            foreach (var product in cookieModel.Products)
+            {
+                var pr = await this.productService.GetProductAsync(product.ProductId);
+
+                form.Products.Add(new PurchaseProductsAnonymousViewModel
+                {
+
+                    Id = pr.Id,
+                    PictureUrl = pr.MainPicture.Url,
+                    Price = pr.Price,
+                    ProductUrl = "/Products/" + pr.Category.Name + "/" + pr.Id,
+                    Title = pr.Title,
+                    Quantity = product.Quantity
+                });
+            }
+
+            this.HttpContext.Session.SetString("Cart", "empty");
+
+            return this.View("CheckoutDetails", form);
+        }
+
+        public async Task<IActionResult> CheckoutDetails()
+        {            
+            return this.View("CheckoutDetails", await this.service.GetLastCheckoutDetailsAsync(this.User.Identity.Name));
         }
 
     }

@@ -92,6 +92,13 @@ namespace PCHUBStore.Services
             return user;
         }
 
+        public async Task<IEnumerable<ShipmentProduct>> GetAllShipmentsAsync(string username)
+        {
+            var user = await this.context.Users.FirstOrDefaultAsync(x => x.UserName == username);
 
+            var shipments = user.Shipments.SelectMany(x => x.ShipmentProducts);
+
+            return shipments;
+        }
     }
 }

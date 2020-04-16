@@ -73,8 +73,8 @@
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
-        <div id="chat" class="row">
-            <div id="chatContentHolder" class="bg-white col" style="width: 20em; height: 20em; position: fixed; bottom: 0; right: 5em; border: solid; border-color: orangered; display: none">
+        <div id="chat" style="z-index: 1000" class="row">
+            <div id="chatContentHolder" class="bg-white col" style="width: 20em; height: 20em; position: fixed; bottom: 0; right: 5em; border: solid; border-color: orangered; z-index: 1000 ;display: none">
                 <!-- when chat is confirmed add overflow overflow-y: scroll;-->
                 @if (this.User.Identity.IsAuthenticated)
                 {
@@ -92,7 +92,6 @@
             <div onclick="triggerChatWindow()" class="col">
                 <img style="position: fixed; bottom: 0; right: 0" src="~/img/chat.png" alt="Alternate Text" />
             </div>
-
         </div>
     </div>
 

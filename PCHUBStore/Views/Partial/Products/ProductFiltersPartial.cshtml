@@ -41,11 +41,12 @@
         </div>
 
 
-        <div class="container border-bottom-danger text-center" style="margin-top: 20px">
-            <a href="/Products/@Model.Category" style="color: cadetblue; font-size: 2em">Remove All Filters</a>
-           
-        </div>
-
+        @if (Model.Category != "Search")
+        {
+            <div class="container border-bottom-danger text-center" style="margin-top: 20px">
+                <a href="/Products/@Model.Category" style="color: cadetblue; font-size: 2em">Remove All Filters</a>
+            </div>
+        }
         <div class="container border-bottom-danger text-center" style="margin-top: 20px;">
             <div class="col-12 text-center" style="margin-bottom: 10px">
                 <p class="border-bottom-success" style="font-family: sans-serif; color: black; font-size: 20px">Price</p>
@@ -148,9 +149,13 @@
             <div class="col-12">
                 <input id="page" checked type="checkbox" name="Page" value="1" />
             </div>
-            <div class="col-12">
-                <input checked type="text" name="searchInput" value="@Model.SearchInput" />
-            </div>
+            @if (Model.Category == "Search")
+            {
+                <div class="col-12">
+                    <input checked type="text" name="searchInput" value="@Model.SearchInput" />
+                </div>
+            }
+
             <button id="btn" type="submit">Click Me</button>
         </div>
 

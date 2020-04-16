@@ -4,222 +4,275 @@
 
 @model PCHUBStore.View.Models.UserProfileViewModels.UserProfileViewModel
 
-<div class="container" style="margin-top: 4em">
+    <div class="container" style="margin-top: 4em">
 
-    <div class="row text-center">
-        <div>
-            @if (Model.FirstName == null || Model.LastName == null || Model.Phone == null || Model.Address == null)
-            {
-                <h2 style="color: red">Please complete your profile in order to be able to purchase products from us.</h2>
-            }
+        <div class="row text-center">
+            <div>
+                @if (Model.FirstName == null || Model.LastName == null || Model.Phone == null || Model.Address == null)
+                {
+                    <h2 style="color: red">Please complete your profile in order to be able to purchase products from us.</h2>
+                }
+            </div>
+
+
         </div>
-    </div>
-    <div class="row my-2">
-        <div class="col-lg-8 order-lg-2">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a href="" data-target="#profile" data-toggle="tab" class="nav-link @Model.ProfileActive">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a href="" data-target="#orders" data-toggle="tab" class="nav-link @Model.OrdersActive">Orders</a>
-                </li>
-                <li class="nav-item">
-                    <a href="" data-target="#edit" data-toggle="tab" class="nav-link @Model.DeliveryInformationActive">Edit Delivery Information</a>
-                </li>
-                <li class="nav-item">
-                    <a href="" data-target="#editSettings" data-toggle="tab" class="nav-link @Model.AccountSettingsActive">Edit Account Settings</a>
-                </li>
-                <li class="nav-item">
-                    <a href="" data-target="#favoriteProducts" data-toggle="tab" class="nav-link">Favorite Products</a>
-                </li>
-                <li class="nav-item">
-                    <a href="" data-target="#productsHistory" data-toggle="tab" class="nav-link">Products History</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-action="LogOut" asp-controller="User">Log Out</a>
-                </li>
-            </ul>
-            <div class="tab-content py-4">
-                <div class="tab-pane @Model.ProfileActive" id="profile">
-                    <h5 class="mb-3">User Profile</h5>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="m-3">
-                                Username: @Model.Username
+        <div class="row my-2">
+            <div class="col-lg-8 order-lg-2">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a href="" data-target="#profile" data-toggle="tab" class="nav-link @Model.ProfileActive">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" data-target="#orders" data-toggle="tab" class="nav-link @Model.OrdersActive">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" data-target="#edit" data-toggle="tab" class="nav-link @Model.DeliveryInformationActive">Edit Delivery Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" data-target="#editSettings" data-toggle="tab" class="nav-link @Model.AccountSettingsActive">Edit Account Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" data-target="#favoriteProducts" data-toggle="tab" class="nav-link">Favorite Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" data-target="#productsHistory" data-toggle="tab" class="nav-link">Products History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="LogOut" asp-controller="User">Log Out</a>
+                    </li>
+                </ul>
+                <div class="tab-content py-4">
+                    <div class="tab-pane @Model.ProfileActive" id="profile">
+                        <h5 class="mb-3">User Profile</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="m-3">
+                                    Username: @Model.Username
+                                </div>
+                                <div class="m-3">
+                                    First Name: @Model.FirstName
+                                </div>
+                                <div class="m-3">
+                                    Last Name: @Model.LastName
+                                </div>
+                                <div class="m-3">
+                                    Address: @Model.Address
+                                </div>
+                                <div class="m-3">
+                                    Email: @Model.Email
+                                </div>
+                                <div class="m-3">
+                                    Phone: @Model.Phone
+                                </div>
+                                <div class="m-3">
+                                    City: @Model.City
+                                </div>
                             </div>
-                            <div class="m-3">
-                                First Name: @Model.FirstName
-                            </div>
-                            <div class="m-3">
-                                Last Name: @Model.LastName
-                            </div>
-                            <div class="m-3">
-                                Address: @Model.Address
-                            </div>
-                            <div class="m-3">
-                                Email: @Model.Email
-                            </div>
-                            <div class="m-3">
-                                Phone: @Model.Phone
-                            </div>
-                            <div class="m-3">
-                                City: @Model.City
+                            <div class="col-md-12">
+
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-lg-4 order-lg-1 text-center">
 
+                                @if (string.IsNullOrWhiteSpace(Model.ProfilePictureUrl))
+                                {
+                                    <img src="~/img/defaultProfilePicture.png" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+                                }
+                                else
+                                {
+                                    <img src="@Model.ProfilePictureUrl" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+                                }
+
+                                <h6 class="mt-2">Upload a different photo</h6>
+                                <form method="post" enctype="multipart/form-data"
+                                      asp-controller="User"
+                                      asp-action="UploadProfilePicture">
+
+                                    <input type="file" name="files" multiple>
+                                    <button class="btn btn-success" type="submit" value="Upload">
+                                        Upload
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    <!--/row-->
-                </div>
-                <div class="tab-pane @Model.DeliveryInformationActive" id="edit">
-                    <form asp-controller="User" asp-action="EditDeliveryInformation" method="post">
-                        <h4>Edit Delivery Information</h4>
-                        <hr />
-                        <div class="form-group">
-                            <label asp-for="OrderInformation.FirstName"></label>
-                            <input asp-for="OrderInformation.FirstName" class="form-control" />
-                            <span asp-validation-for="OrderInformation.FirstName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="OrderInformation.LastName"></label>
-                            <input asp-for="OrderInformation.LastName" class="form-control" />
-                            <span asp-validation-for="OrderInformation.LastName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="OrderInformation.Address"></label>
-                            <input asp-for="OrderInformation.Address" class="form-control" />
-                            <span asp-validation-for="OrderInformation.Address" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="OrderInformation.City"></label>
-                            <input asp-for="OrderInformation.City" class="form-control" />
-                            <span asp-validation-for="OrderInformation.City" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="OrderInformation.Phone"></label>
-                            <input asp-for="OrderInformation.Phone" class="form-control" />
-                            <span asp-validation-for="OrderInformation.Phone" class="text-danger"></span>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Edit</button>
-                    </form>
-                </div>
+                    <div class="tab-pane @Model.DeliveryInformationActive" id="edit">
+                        <form asp-controller="User" asp-action="EditDeliveryInformation" method="post">
+                            <h4>Edit Delivery Information</h4>
+                            <hr />
+                            <div class="form-group">
+                                <label asp-for="OrderInformation.FirstName"></label>
+                                <input asp-for="OrderInformation.FirstName" class="form-control" />
+                                <span asp-validation-for="OrderInformation.FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="OrderInformation.LastName"></label>
+                                <input asp-for="OrderInformation.LastName" class="form-control" />
+                                <span asp-validation-for="OrderInformation.LastName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="OrderInformation.Address"></label>
+                                <input asp-for="OrderInformation.Address" class="form-control" />
+                                <span asp-validation-for="OrderInformation.Address" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="OrderInformation.City"></label>
+                                <input asp-for="OrderInformation.City" class="form-control" />
+                                <span asp-validation-for="OrderInformation.City" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="OrderInformation.Phone"></label>
+                                <input asp-for="OrderInformation.Phone" class="form-control" />
+                                <span asp-validation-for="OrderInformation.Phone" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </form>
+                    </div>
 
 
-                <div class="tab-pane @Model.AccountSettingsActive" id="editSettings">
-                    <form asp-controller="User" asp-action="EditAccountSettings" method="post">
-                        <h4>Edit Account Settings</h4>
-                        <hr />
-                        <div class="form-group">
-                            <label asp-for="AccountSettings.Username"></label>
-                            <input asp-for="AccountSettings.Username" class="form-control" />
-                            <span asp-validation-for="AccountSettings.Username" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="AccountSettings.Email"></label>
-                            <input asp-for="AccountSettings.Email" class="form-control" />
-                            <span asp-validation-for="AccountSettings.Email" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="AccountSettings.CurrentPassword"></label>
-                            <input asp-for="AccountSettings.CurrentPassword" class="form-control" />
-                            <span asp-validation-for="AccountSettings.CurrentPassword" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="AccountSettings.Password"></label>
-                            <input asp-for="AccountSettings.Password" class="form-control" />
-                            <span asp-validation-for="AccountSettings.Password" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="AccountSettings.ConfirmPassword"></label>
-                            <input asp-for="AccountSettings.ConfirmPassword" class="form-control" />
-                            <span asp-validation-for="AccountSettings.ConfirmPassword" class="text-danger"></span>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Edit</button>
-                    </form>
+                    <div class="tab-pane @Model.AccountSettingsActive" id="editSettings">
+                        <form asp-controller="User" asp-action="EditAccountSettings" method="post">
+                            <h4>Edit Account Settings</h4>
+                            <hr />
+                            <div class="form-group">
+                                <label asp-for="AccountSettings.Username"></label>
+                                <input asp-for="AccountSettings.Username" class="form-control" />
+                                <span asp-validation-for="AccountSettings.Username" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AccountSettings.Email"></label>
+                                <input asp-for="AccountSettings.Email" class="form-control" />
+                                <span asp-validation-for="AccountSettings.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AccountSettings.CurrentPassword"></label>
+                                <input asp-for="AccountSettings.CurrentPassword" class="form-control" />
+                                <span asp-validation-for="AccountSettings.CurrentPassword" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AccountSettings.Password"></label>
+                                <input asp-for="AccountSettings.Password" class="form-control" />
+                                <span asp-validation-for="AccountSettings.Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AccountSettings.ConfirmPassword"></label>
+                                <input asp-for="AccountSettings.ConfirmPassword" class="form-control" />
+                                <span asp-validation-for="AccountSettings.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </form>
 
-                </div>
+                    </div>
 
 
-                <div class="tab-pane" id="productsHistory">
+                    <div class="tab-pane" id="productsHistory">
 
-                    @if (Model.History.Count == 0)
-                    {
-                        <p>You have not reviewed any products yet.</p>
-                    }
-                    else
-                    {
+                        @if (Model.History.Count == 0)
+                        {
+                            <p>You have not reviewed any products yet.</p>
+                        }
+                        else
+                        {
 
-                        <div class="row">
-                            @foreach (var item in Model.History)
-                            {
-                                <div class="col-3">
-                                    <div class="card text-center">
-                                        <img style="width: inherit; height: 10em" class="card-img-top" src="@item.PictureUrl" alt="Card image cap">
-                                        <div class="card-body">
-                                            <h5 style="font-size: 12px" class="card-title">@item.Title</h5>
-                                            <a href="@item.LinkToProduct" class="btn btn-primary">Visit Product</a>
+                            <div class="row">
+                                @foreach (var item in Model.History)
+                                {
+                                    <div class="col-3">
+                                        <div class="card text-center">
+                                            <img style="width: inherit; height: 10em" class="card-img-top" src="@item.PictureUrl" alt="Card image cap">
+                                            <div class="card-body">
+                                                <h5 style="font-size: 12px" class="card-title">@item.Title</h5>
+                                                <a href="@item.LinkToProduct" class="btn btn-primary">Visit Product</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
-                        </div>
-                    }
+                                }
+                            </div>
+                        }
 
-                </div>
+                    </div>
 
+                    <div class="tab-pane" id="orders">
 
-                <div class="tab-pane" id="favoriteProducts">
+                        @if (Model.Orders.Count == 0)
+                        {
+                            <p>There are no orders yet.</p>
+                        }
+                        else
+                        {
 
-                    @if (Model.History.Count == 0)
-                    {
-                        <p>There are not favorite products yet.</p>
-                    }
-                    else
-                    {
+                            <div class="row">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Shipment Id</th>
+                                            <th scope="col">Go To Product</th>
+                                            <th scope="col">Purchase Date</th>
+                                            <th scope="col">Make</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">IMG</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Orders)
+                                        {
+                                            <tr>
+                                                <td>@item.ShipmentId</td>
+                                                <td><a href="/Products/@item.Category/@item.ProductId">@item.Title</a></td>
+                                                <td>@item.PurchaseDate</td>
+                                                <td>@item.Make</td>
+                                                <td>@item.Price</td>
+                                                <td>@item.Quantity</td>
+                                                <td>
+                                                    <img src="@item.PictureUrl" style="width: 10em; height: 10em" alt="Alternate Text" />
+                                                </td>
+                                            </tr>
+                                        }
 
-                        <div class="row">
-                            @foreach (var item in Model.Favorites)
-                            {
-                                <div class="col-3">
-                                    <div class="card">
-                                        <img style="width: inherit; height: 10em" class="card-img-top" src="@item.PictureUrl" alt="Card image cap">
-                                        <div class="card-body text-center">
-                                            <h5 style="font-size: 12px" class="card-title">@item.Title</h5>
-                                            <a href="@item.LinkToProduct" class="btn btn-primary">Visit Product</a>
-                                            <img src="~/img/favorite.png" alt="Add To Favorite" />
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        }
+
+                    </div>
+
+                    <div class="tab-pane" id="favoriteProducts">
+
+                        @if (Model.History.Count == 0)
+                        {
+                            <p>There are not favorite products yet.</p>
+                        }
+                        else
+                        {
+
+                            <div class="row">
+                                @foreach (var item in Model.Favorites)
+                                {
+                                    <div class="col-3">
+                                        <div class="card">
+                                            <img style="width: inherit; height: 10em" class="card-img-top" src="@item.PictureUrl" alt="Card image cap">
+                                            <div class="card-body text-center">
+                                                <h5 style="font-size: 12px" class="card-title">@item.Title</h5>
+                                                <a href="@item.LinkToProduct" class="btn btn-primary">Visit Product</a>
+                                                <img src="~/img/favorite.png" alt="Add To Favorite" />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            }
-                        </div>
-                    }
+                                }
+                            </div>
+                        }
+
+                    </div>
 
                 </div>
-
             </div>
+
+          
         </div>
-        <div class="col-lg-4 order-lg-1 text-center">
+    
 
-            @if (string.IsNullOrWhiteSpace(Model.ProfilePictureUrl))
-            {
-                <img src="~/img/defaultProfilePicture.png" class="mx-auto img-fluid img-circle d-block" alt="avatar">
-            }
-            else
-            {
-                <img src="@Model.ProfilePictureUrl" class="mx-auto img-fluid img-circle d-block" alt="avatar">
-            }
-
-            <h6 class="mt-2">Upload a different photo</h6>
-            <form method="post" enctype="multipart/form-data"
-                  asp-controller="User"
-                  asp-action="UploadProfilePicture">
-
-                <input type="file" name="files" multiple>
-                <button class="btn btn-success" type="submit" value="Upload">
-                    Upload
-                </button>
-            </form>
-        </div>
     </div>
-</div>

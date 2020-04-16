@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Checkout Details";
+}
+
+@model PCHUBStore.View.Models.ShoppingCartViewModels.AnonymousCartViewModel
+
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading" style="color: black">@ViewData["Title"]</h1>
+    </div>
+</section>
+
+
+<div class="container">
+    <h2>Personal Information</h2>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>Phone Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.FirstName</td>
+                <td>@Model.LastName</td>
+                <td>@Model.Email</td>
+                <td>@Model.Address</td>
+                <td>@Model.City</td>
+                <td>@Model.PhoneNumber</td>
+            </tr>
+            
+            
+        </tbody>
+    </table>
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Shipment Id</th>
+                <th>IMG</th>
+                <th>Price</th>
+                <th>Title</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+
+                    <td>@product.Id</td>
+                    <td><img src="@product.PictureUrl" style="width: 10em; height: 10em" alt="Alternate Text" /></td>
+                    <td>@product.Price</td>
+                    <td>@product.Title</td>
+                    <td>@product.Quantity</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

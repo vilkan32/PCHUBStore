@@ -1,5 +1,7 @@
 ﻿@model List<PCHUBStore.View.Models.ShoppingCartViewModels.ReviewCartViewModel>
 
+@using PCHUBStore.Data.Models.Enums
+
 @{
     ViewData["Title"] = "Cart ";
 }
@@ -92,12 +94,26 @@
         </div>
         <div class="col mb-2">
             <div class="row">
-                <div class="col-sm-12  col-md-6">
-                    <a href="/Home/Index" class="btn btn-block btn-light">Continue Shopping</a>
-                </div>
-                <div class="col-sm-12 col-md-6 text-right">
-                    <button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>
-                </div>
+                <!-- make this shit form and send Econt or Speedy or some shit with this checkout make it a form -->
+                <form method="post" asp-area="" asp-controller="ShoppingCart" asp-action="Checkout">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <span>Shipping Company</span>
+                        <div class="col-md-10">
+                            <select name="shippingCompany" asp-items="Html.GetEnumSelectList<ShippingCompany>()">                               
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12  col-md-6">
+                            <a class="btn btn-block btn-light" asp-action="Index" asp-controller="Home" asp-area="">Continue Shopping</a>
+                        </div>
+                        <div class="col-sm-12 col-md-6 text-right">
+                            <button class="btn btn-lg btn-block btn-success text-uppercase" type="submit">Checkout</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

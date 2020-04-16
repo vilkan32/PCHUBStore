@@ -46,7 +46,7 @@ namespace PCHUBStore.Controllers
             var userViewModel = this.mapper.Map<UserProfileViewModel>(user);
             userViewModel.History = this.mapper.Map<List<ProductHistoryViewModel>>(user.ProductUserReviews.Select(x => x.Product));
             userViewModel.Favorites = this.mapper.Map<List<ProductFavoriteViewModel>>(user.FavoriteUserProducts.Select(x => x.Product));
-
+            userViewModel.Orders = this.mapper.Map<List<UserOrdersViewModel>>(await this.userProfileServices.GetAllShipmentsAsync(this.User.Identity.Name));
 
             userViewModel.ProfileActive = "active";
 
@@ -86,7 +86,7 @@ namespace PCHUBStore.Controllers
             var userViewModel = this.mapper.Map<UserProfileViewModel>(user);
             userViewModel.History = this.mapper.Map<List<ProductHistoryViewModel>>(user.ProductUserReviews.Select(x => x.Product));
             userViewModel.Favorites = this.mapper.Map<List<ProductFavoriteViewModel>>(user.FavoriteUserProducts.Select(x => x.Product));
-
+            userViewModel.Orders = this.mapper.Map<List<UserOrdersViewModel>>(await this.userProfileServices.GetAllShipmentsAsync(this.User.Identity.Name));
 
             userViewModel.OrderInformation = editForm.OrderInformation;
             userViewModel.DeliveryInformationActive = "active";
@@ -109,7 +109,7 @@ namespace PCHUBStore.Controllers
             var userViewModel = this.mapper.Map<UserProfileViewModel>(user);
             userViewModel.History = this.mapper.Map<List<ProductHistoryViewModel>>(user.ProductUserReviews.Select(x => x.Product));
             userViewModel.Favorites = this.mapper.Map<List<ProductFavoriteViewModel>>(user.FavoriteUserProducts.Select(x => x.Product));
-
+            userViewModel.Orders = this.mapper.Map<List<UserOrdersViewModel>>(await this.userProfileServices.GetAllShipmentsAsync(this.User.Identity.Name));
 
             userViewModel.AccountSettings = editForm.AccountSettings;
             userViewModel.AccountSettingsActive = "active";
@@ -119,7 +119,6 @@ namespace PCHUBStore.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadProfilePicture(List<IFormFile> files)
         {
-
             var imgUrl = await cloudinaryService.UploadPictureAsync(files[0], this.User.Identity.Name + "profilePicture");
 
             await this.userProfileServices.AddProfilePictureToUserAsync(imgUrl, this.User.Identity.Name);

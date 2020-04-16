@@ -8,11 +8,7 @@ namespace PCHUBStore.View.Models.ShoppingCartViewModels
 {
     public class AnonymousCartViewModel
     {
-        public AnonymousCartViewModel()
-        {
-            this.Products = new List<PurchaseProductsAnonymousViewModel>();
-        }
-
+ 
         [Required]
         public string Address { get; set; }
 

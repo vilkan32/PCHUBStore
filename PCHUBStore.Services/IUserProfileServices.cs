@@ -18,5 +18,7 @@ namespace PCHUBStore.Services
         Task EditUserAccountSettingsAsync(string username, EditAccountSettingsForm editForm);
 
         Task<bool> AddToFavoritesAsync(string username, string id);
+
+        Task<IEnumerable<ShipmentProduct>> GetAllShipmentsAsync(string username);
     }
 }
