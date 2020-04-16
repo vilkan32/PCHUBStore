@@ -116,6 +116,8 @@ namespace PCHUBStore
             services.AddTransient<IShipmentManagerServices, ShipmentManagerServices>();
 
             services.AddTransient<IForumServices, ForumServices>();
+
+            services.AddTransient<ISupportChartsService, SupportChartsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

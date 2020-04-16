@@ -181,8 +181,8 @@
                             </select>                   
                         </td>
                         <td> <textarea style="height: 15em; width: 20em" type="text" value="@activity.Description" name="Description" class="form-control">@activity.Description</textarea></td>
-                        <td> <input type="date" name="CreationDate" value="@activity.CreationDate.Value.ToString("yyyy-MM-dd")" class="form-control" /></td>
-                        <td><input type="text" name="OwnerName" value="@activity.OwnerName" class="form-control" /></td>
+                        <td> <input type="date" disabled name="CreationDate" value="@activity.CreationDate.Value.ToString("yyyy-MM-dd")" class="form-control" /></td>
+                        <td><input type="text" disabled name="OwnerName" value="@activity.OwnerName" class="form-control" /></td>
                         <td>
                             @if (activity.ActivityClosed)
                             {
