@@ -28,7 +28,10 @@ namespace PCHUBStore.Services
                 var user = await this.context.Users.FirstOrDefaultAsync(x => x.UserName == userName);
 
                 var product = await this.context.Products.FirstOrDefaultAsync(x => x.Id == productId && x.IsDeleted == false);
-
+                if (user == null)
+                {
+                    throw new NullReferenceException();
+                }
                 if (user.Cart == null)
                 {
                     user.Cart = new Data.Models.ShoppingCart { CreatedOn = DateTime.UtcNow, ModificationDate = DateTime.UtcNow };
@@ -154,7 +157,9 @@ namespace PCHUBStore.Services
                 PurchaseDate = DateTime.UtcNow,
                 ShipmentProducts = shipmentProducts,
                 ShippingCompany = shippingCompany,
-                ShipmentDetails = ShipmentDetails.Send,                
+                ShipmentDetails = ShipmentDetails.Send,
+                ShipmentImportancy = ShipmentImportancy.Normal,
+                ShipmentStatus = ShipmentStatus.Confirmed,
             };
 
             user.Shipments.Add(shipment);

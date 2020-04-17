@@ -24,6 +24,7 @@ namespace PCHUBStore.Data
             }
         }
         public PCHUBDbContext() { }
+
         public virtual DbSet<Activity> Activities { get; set; }
         public virtual DbSet<BasicCharacteristic> BasicCharacteristics { get; set; }
         public virtual DbSet<Filter> Filters { get; set; }

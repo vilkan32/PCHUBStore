@@ -54,9 +54,9 @@ namespace PCHUBStore
                                                   );
             services.AddSignalR(options =>
             {
-
                 options.ClientTimeoutInterval = TimeSpan.FromMinutes(2);
             });
+
             services.AddControllersWithViews(options => options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
             
             services.AddSession(options => { options.IdleTimeout = TimeSpan.FromDays(20); options.Cookie.HttpOnly = true; options.Cookie.IsEssential = true; });
