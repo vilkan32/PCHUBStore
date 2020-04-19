@@ -1,0 +1,17 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=DESKTOP-SLBT47B\\SQLEXPRESS;Database=PCHUB;Trusted_Connection=True"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "Cloudinary": {
+    "CloudName": "dfj10j9ke",
+    "ApiKey": "344738316922676",
+    "ApiSecret": "9asZlgoLSrs0dcKiG9JOCltMxv0"
+  },
+
+  "AllowedHosts": "*"
+}

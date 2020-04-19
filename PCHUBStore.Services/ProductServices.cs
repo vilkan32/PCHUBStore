@@ -245,6 +245,7 @@ namespace PCHUBStore.Services
 
         public async Task<List<Product>> QueryLaptopsAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
         {
+
             var productCategory = await this.context.Categories
                .FirstAsync(x => x.Name.ToLower() == "laptops");
 
