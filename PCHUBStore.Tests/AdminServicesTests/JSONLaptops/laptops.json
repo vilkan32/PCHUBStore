@@ -1,0 +1,351 @@
+﻿[
+  {
+    "advancedChars": [
+      {
+        "key": "ДИСПЛЕЙ",
+        "value": "15.6\" (39.62 cm) Матов LED Full HD (1920 x 1080)",
+        "hasArray": false
+      },
+      {
+        "key": "ПРОЦЕСОР",
+        "value": "Intel Core i3-7020U | Kaby Lake | Dual-Core (2.30 GHz, 3 MB Cache, 14 nm, 15 W)",
+        "hasArray": false
+      },
+      {
+        "key": "RAM ПАМЕТ",
+        "value": "4 GB DDR4 / Вградена (1 свободен слот)",
+        "hasArray": false
+      },
+      {
+        "key": "SSD ДИСК",
+        "value": "Поддържа: M.2 | SATA III (2280)",
+        "hasArray": false
+      },
+      {
+        "key": "ХАРД ДИСК",
+        "value": "1 TB HDD SATA 5400 оборота/м",
+        "hasArray": false
+      },
+      {
+        "key": "ВИДЕО КАРТА",
+        "value": "Intel HD Graphics 620",
+        "hasArray": false
+      },
+      {
+        "hasArray": true,
+        "key": "ОПЕРАЦИОННА СИСТЕМА",
+        "value": "Без операционна система: 0.00 лв.,+ Windows 10: 239.00 лв.,+ Windows 10 Professional: 299.00 лв."
+      },
+      {
+        "hasArray": true,
+        "key": "ПРИЛОЖЕН СОФТУЕР",
+        "value": "Без софтуер: 0.00 лв.,+ Microsoft Office Home and Student 2019: 259.00 лв.,+ Microsoft Office Home and Business 2019: 479.00 лв."
+      },
+      {
+        "hasArray": true,
+        "key": "АНТИВИРУСНА",
+        "value": "Без антивирусна: 0.00 лв.,+ ESET NOD32 Antivirus (лиценз за една година): 33.00 лв.,+ ESET NOD32 Internet Security (лиценз за една година): 56.00 лв."
+      },
+      {
+        "hasArray": true,
+        "key": "ОПТИЧНО УСТРОЙСТВО",
+        "value": "Без оптично устройство: 0.00 лв.,+ Външно оптично устройство DVD+/-RW: 49.00 лв."
+      },
+      {
+        "key": "БЕЗЖИЧНА ВРЪЗКА WI-FI",
+        "value": "802.11 ac/a/b/g/n Wlan",
+        "hasArray": false
+      },
+      {
+        "key": "МРЕЖОВА КАРТА LAN",
+        "value": "Gigabit Ethernet 10/100/1000",
+        "hasArray": false
+      },
+      {
+        "key": "3G/4G ИНТЕРНЕТ",
+        "value": "НЕ",
+        "hasArray": false
+      },
+      {
+        "key": "BLUETOOTH",
+        "value": "ДА",
+        "hasArray": false
+      },
+      {
+        "key": "КАМЕРА",
+        "value": "0.3 Mpixel",
+        "hasArray": false
+      },
+      {
+        "key": "МИКРОФОН",
+        "value": "ДА",
+        "hasArray": false
+      },
+      {
+        "key": "АУДИО",
+        "value": "Вграденo Stereo 2.0",
+        "hasArray": false
+      },
+      {
+        "key": "ЧЕТЕЦ ЗА КАРТИ ПАМЕТ",
+        "value": "ДА",
+        "hasArray": false
+      },
+      {
+        "hasArray": true,
+        "key": "ПОРТОВЕ",
+        "value": "HDMI,2 x USB 2.0 / 1 x USB 3.0,3.5 mm комбиниран аудио жак (слушалки и микрофон)"
+      },
+      {
+        "key": "ЦВЯТ",
+        "value": "Черен",
+        "hasArray": false
+      },
+      {
+        "key": "ТЕГЛО",
+        "value": "2.10 кг.",
+        "hasArray": false
+      },
+      {
+        "key": "БАТЕРИЯ",
+        "value": "2-клетъчна Li-Polymer",
+        "hasArray": false
+      },
+      {
+        "key": "КОМПЛЕКТА ВКЛЮЧВА",
+        "value": "Лаптоп, зарядно за лаптоп, батерия за лаптоп, гаранционна карта",
+        "hasArray": false
+      },
+      {
+        "key": "LED СВЕТЕЩА КЛАВИАТУРА",
+        "value": "НЕ",
+        "hasArray": false
+      },
+      {
+        "key": "MULTI-TOUCH ДИСПЛЕЙ",
+        "value": "НЕ",
+        "hasArray": false
+      },
+      {
+        "key": "СЕРИЯ",
+        "value": "Aspire 3",
+        "hasArray": false
+      },
+      {
+        "key": "OЕM КОД",
+        "value": "NX.H9EEX.016",
+        "hasArray": false
+      },
+      {
+        "key": "ГАРАНЦИЯ",
+        "value": "2 години",
+        "hasArray": false
+      },
+      {
+        "key": "Price",
+        "value": "749.00 лв.",
+        "hasArray": false
+      },
+      {
+        "key": "ArticleId",
+        "value": "Арт.№: 83366",
+        "hasArray": false
+      },
+      {
+        "key": "Title",
+        "value": "Acer Aspire 3 A315-51-35Y6 | NX.H9EEX.016 | 15.6\" FHD, i3-7020U, 4GB, 1TB, Черен",
+        "hasArray": false
+      },
+      {
+        "key": "Pictures",
+        "value": "https://static.plasico.bg/thumbs/12/190418105716a315-21front.jpg,https://static.plasico.bg/thumbs/12/190418105716a315-21bottom.png,https://static.plasico.bg/thumbs/12/190418105716a315-21cover.png,https://static.plasico.bg/thumbs/12/190418105716a315-21halfback.png,https://static.plasico.bg/thumbs/12/190418105716a315-21keyboard.png,https://static.plasico.bg/thumbs/12/190418105716a315-21left.png,https://static.plasico.bg/thumbs/12/190418105716a315-21right.png,https://static.plasico.bg/thumbs/12/190418105716a315-21side.png",
+        "hasArray": false
+      }
+    ],
+
+    "basicChars": [
+      "Intel Core i3-7020U | Kaby Lake | Dual-Core (2.30 GHz, 3 MB Cache, 14 nm, 15 W)",
+      "4 GB DDR4 / Вградена (1 свободен слот)",
+      "Поддържа: M.2 | SATA III (2280)",
+      "1 TB HDD SATA 5400 оборота/м",
+      "Intel HD Graphics 620",
+      "Производител: Acer",
+      "OEM код: NX.H9EEX.016"
+    ]
+  },
+  {
+
+    "advancedChars": [
+      {
+        "key": "ДИСПЛЕЙ",
+        "value": "15.6\" (39.62 cm) Матов LED Full HD (1920 x 1080)",
+        "hasArray": false
+      },
+      {
+        "key": "ПРОЦЕСОР",
+        "value": "Intel Core i3-7020U | Kaby Lake | Dual-Core (2.30 GHz, 3 MB Cache, 14 nm, 15 W)",
+        "hasArray": false
+      },
+      {
+        "key": "RAM ПАМЕТ",
+        "value": "4 GB DDR4 / Вградена (1 свободен слот)",
+        "hasArray": false
+      },
+      {
+        "key": "SSD ДИСК",
+        "value": "256 GB SSD | М.2 PCIe NVMe (2280)",
+        "hasArray": false
+      },
+      {
+        "key": "ВИДЕО КАРТА",
+        "value": "Intel HD Graphics 620",
+        "hasArray": false
+      },
+      {
+        "key": "ОПЕРАЦИОННА СИСТЕМА",
+        "value": "Windows 10",
+        "hasArray": false
+      },
+      {
+        "hasArray": true,
+        "key": "ПРИЛОЖЕН СОФТУЕР",
+        "value": "Без софтуер: 0.00 лв.,+ Microsoft Office Home and Student 2019: 259.00 лв.,+ Microsoft Office Home and Business 2019: 479.00 лв."
+      },
+      {
+        "hasArray": true,
+        "key": "АНТИВИРУСНА",
+        "value": "Без антивирусна: 0.00 лв.,+ ESET NOD32 Antivirus (лиценз за една година): 33.00 лв.,+ ESET NOD32 Internet Security (лиценз за една година): 56.00 лв."
+      },
+      {
+        "hasArray": true,
+        "key": "ОПТИЧНО УСТРОЙСТВО",
+        "value": "Без оптично устройство: 0.00 лв.,+ Външно оптично устройство DVD+/-RW: 49.00 лв."
+      },
+      {
+        "key": "БЕЗЖИЧНА ВРЪЗКА WI-FI",
+        "value": "802.11ac",
+        "hasArray": false
+      },
+      {
+        "key": "МРЕЖОВА КАРТА LAN",
+        "value": "Gigabit Ethernet 10/100/1000",
+        "hasArray": false
+      },
+      {
+        "key": "3G/4G ИНТЕРНЕТ",
+        "value": "НЕ",
+        "hasArray": false
+      },
+      {
+        "key": "BLUETOOTH",
+        "value": "ДА",
+        "hasArray": false
+      },
+      {
+        "key": "КАМЕРА",
+        "value": "WebCam 720p",
+        "hasArray": false
+      },
+      {
+        "key": "МИКРОФОН",
+        "value": "ДА",
+        "hasArray": false
+      },
+      {
+        "key": "АУДИО",
+        "value": "Вграденo Stereo 2.0",
+        "hasArray": false
+      },
+      {
+        "key": "ЧЕТЕЦ ЗА КАРТИ ПАМЕТ",
+        "value": "НЕ",
+        "hasArray": false
+      },
+      {
+        "hasArray": true,
+        "key": "ПОРТОВЕ",
+        "value": "HDMI,2 x USB 2.0,3.5 mm комбиниран аудио жак (слушалки и микрофон),1 x USB 3.1 Type-C (Gen. 1)"
+      },
+      {
+        "key": "СИГУРНОСТ",
+        "value": "Kensington lock",
+        "hasArray": false
+      },
+      {
+        "key": "ЦВЯТ",
+        "value": "Черен",
+        "hasArray": false
+      },
+      {
+        "key": "ТЕГЛО",
+        "value": "1.90 кг.",
+        "hasArray": false
+      },
+      {
+        "hasArray": true,
+        "key": "БАТЕРИЯ",
+        "value": "2-клетъчна Li-Polymer,36WHrs"
+      },
+      {
+        "key": "LED СВЕТЕЩА КЛАВИАТУРА",
+        "value": "НЕ",
+        "hasArray": false
+      },
+      {
+        "key": "MULTI-TOUCH ДИСПЛЕЙ",
+        "value": "НЕ",
+        "hasArray": false
+      },
+      {
+        "key": "ДРУГИ",
+        "value": "Full-sized Keyboard. БДС кирилизация на клавиатурата.",
+        "hasArray": false
+      },
+      {
+        "key": "СЕРИЯ",
+        "value": "Aspire 3",
+        "hasArray": false
+      },
+      {
+        "key": "OЕM КОД",
+        "value": "NX.HEEEX.010_NP.ACC11.01V",
+        "hasArray": false
+      },
+      {
+        "key": "ГАРАНЦИЯ",
+        "value": "2 години",
+        "hasArray": false
+      },
+      {
+        "key": "Price",
+        "value": "878.00 лв.",
+        "hasArray": false
+      },
+      {
+        "key": "ArticleId",
+        "value": "Арт.№: 103525_103526",
+        "hasArray": false
+      },
+      {
+        "key": "Title",
+        "value": "UPGRADED Acer Aspire 3, A315-54K-36DF, 15.6\" FHD, i3-7020U, 4GB, 256GB SSD, Черен | NX.HEEEX.010_NP.ACC11.01V, Win10",
+        "hasArray": false
+      },
+      {
+        "key": "Pictures",
+        "value": "https://static.plasico.bg/thumbs/12/acer-aspire-3-a315-54k-36df.jpg,https://static.plasico.bg/thumbs/12/acer-aspire-3-a315-54k-36df-1.jpg,https://static.plasico.bg/thumbs/12/acer-aspire-3-a315-54k-36df-2.jpg,https://static.plasico.bg/thumbs/12/acer-aspire-3-a315-54k-36df-3.jpg,https://static.plasico.bg/thumbs/12/acer-aspire-3-a315-54k-36df-4.jpg,https://static.plasico.bg/thumbs/12/acer-aspire-3-a315-54k-36df-5.jpg,https://static.plasico.bg/thumbs/12/acer-aspire-3-a315-54k-36df-6.jpg,https://static.plasico.bg/thumbs/12/acer-aspire-3-a315-54k-36df-7.jpg",
+        "hasArray": false
+      }
+    ],
+
+    "basicChars": [
+      "Intel Core i3-7020U | Kaby Lake | Dual-Core (2.30 GHz, 3 MB Cache, 14 nm, 15 W)",
+      "4 GB DDR4 / Вградена (1 свободен слот)",
+      "256 GB SSD | М.2 PCIe NVMe (2280)",
+      "Intel HD Graphics 620",
+      "Windows 10",
+      "Производител: Acer"
+    ]
+
+  }
+]

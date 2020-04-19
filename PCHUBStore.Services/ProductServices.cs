@@ -243,7 +243,7 @@ namespace PCHUBStore.Services
             return result;
         }
 
-        private async Task<List<Product>> QueryLaptopsAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
+        public async Task<List<Product>> QueryLaptopsAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
         {
             var productCategory = await this.context.Categories
                .FirstAsync(x => x.Name.ToLower() == "laptops");
@@ -281,7 +281,7 @@ namespace PCHUBStore.Services
             return result;
         }
 
-        private async Task<List<Product>> QueryMonitorsAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
+        public async Task<List<Product>> QueryMonitorsAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
         {
             var productCategory = await this.context.Categories
               .FirstAsync(x => x.Name.ToLower() == "monitors");
@@ -320,7 +320,7 @@ namespace PCHUBStore.Services
             return result;
         }
 
-        private async Task<List<Product>> QueryKeyboardsAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
+        public async Task<List<Product>> QueryKeyboardsAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
         {
             var productCategory = await this.context.Categories
             .FirstAsync(x => x.Name.ToLower() == "keyboards");
@@ -352,7 +352,7 @@ namespace PCHUBStore.Services
             return result;
         }
 
-        private async Task<List<Product>> QueryMiceAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
+        public async Task<List<Product>> QueryMiceAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
         {
             var productCategory = await this.context.Categories
             .FirstAsync(x => x.Name.ToLower() == "mice");
@@ -383,7 +383,7 @@ namespace PCHUBStore.Services
             return result;
         }
 
-        private async Task<List<Product>> QueryComputersAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
+        public async Task<List<Product>> QueryComputersAsync(ProductFiltersUrlModel productFilters, decimal minPrice, decimal maxPrice)
         {
             var productCategory = await this.context.Categories
                .FirstAsync(x => x.Name.ToLower() == "computers");
@@ -414,6 +414,8 @@ namespace PCHUBStore.Services
 
             return result;
         }
+
+
         public async Task<Product> GetProductAsync(string id, string userId, bool isAuthenticated, string cat)
         {
             var category = await this.context.Categories.FirstAsync(x => x.Name == cat && x.IsDeleted == false);

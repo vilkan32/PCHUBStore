@@ -225,6 +225,7 @@ namespace PCHUBStore.Services
         {
 
             var result = new AnonymousCartViewModel();
+
             result.Products = new List<PurchaseProductsAnonymousViewModel>();
 
             var user = await this.context.Users.FirstOrDefaultAsync(x => x.UserName == username);

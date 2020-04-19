@@ -875,5 +875,102 @@ namespace PCHUBStore.Tests.ShopServicesTests
                 await shopService.GetLastCheckoutDetailsAsync(username);
             });
         }
+
+        [Theory]
+        [InlineData("Test", "Product1", "Product2", "Product3")]
+        [InlineData("Test1", "Product10", "Product20", "Product30")]
+        public async Task TestIfGetLastCheckoutDetailsAsyncReturnsCorrectModel(string username, string product1,
+            string product2, string product3)
+        {
+            var context = PCHUBDbContextInMemoryInitializer.InitializeContext();
+            var productService = new ProductServices(context);
+            var shopService = new ShopServices(context, productService);
+
+
+            var productsInsideUserCart = new List<Product>();
+
+            productsInsideUserCart.Add(new Product
+            {
+                Id = product1,
+                Price = 300,
+                Title = "Test Product",
+                IsDeleted = false,
+                CreatedOn = DateTime.Now,
+                MainPicture = new Picture
+                {
+                    Url = "dsadasdasdasdasd",
+                }
+
+            });
+
+
+            productsInsideUserCart.Add(new Product
+            {
+                Id = product2,
+                Price = 300,
+                Title = "Test Product1",
+                IsDeleted = false,
+                CreatedOn = DateTime.Now,
+                MainPicture = new Picture
+                {
+                    Url = "dsadasdasdasdasd",
+                }
+
+            });
+
+            productsInsideUserCart.Add(new Product
+            {
+                Id = product3,
+                Price = 300,
+                Title = "Test Product2",
+                IsDeleted = false,
+                CreatedOn = DateTime.Now,
+                MainPicture =new Picture
+                {
+                    Url = "dsadasdasdasdasd",
+                }
+
+            });
+
+            await context.Products.AddRangeAsync(productsInsideUserCart);
+
+            var user = new User
+            {
+
+                UserName = username,
+                Email = "email@email.bg",
+                LastLoginDate = DateTime.UtcNow,
+                FirstName = "Sdasdsd",
+                LastName = "Adsdfsdf",
+                PhoneNumber = "231233423",
+                Address = "dasdasdasdasdasd",
+                City = "Sofia",
+
+            };
+
+            await context.Users.AddAsync(user);
+
+            await context.SaveChangesAsync();
+
+            await shopService.BuyProductAsync(username, product1);
+            await shopService.BuyProductAsync(username, product2);
+            await shopService.BuyProductAsync(username, product3);
+
+            var shippingCompany = ShippingCompany.Econt;
+
+            await shopService.CheckoutSignedInUserAsync(username, shippingCompany);
+
+            //Assert
+            var result = await shopService.GetLastCheckoutDetailsAsync(username);
+
+            Assert.Equal(user.FirstName, result.FirstName);
+            Assert.Equal(user.LastName, result.LastName);
+            Assert.Equal(user.Address, result.Address);
+            Assert.Equal(user.City, result.City);
+
+            Assert.True(result.Products.Any(x => x.Title == "Test Product2"));
+            Assert.True(result.Products.Any(x => x.Title == "Test Product1"));
+            Assert.True(result.Products.Any(x => x.Title == "Test Product"));
+        }
     }
 }

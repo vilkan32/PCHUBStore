@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PCHUBStore.Data.Models;
+﻿using PCHUBStore.Data.Models;
 using PCHUBStore.Services;
 using PCHUBStore.Tests.Common;
 using System;

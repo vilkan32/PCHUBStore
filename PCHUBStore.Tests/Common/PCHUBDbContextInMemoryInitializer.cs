@@ -16,7 +16,6 @@ namespace PCHUBStore.Tests.Common
                     .UseInMemoryDatabase(Guid.NewGuid().ToString())                   
                     .Options;
 
-
             return new PCHUBDbContext(options);
         }
     }
