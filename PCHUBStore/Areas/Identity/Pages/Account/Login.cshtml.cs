@@ -6,6 +6,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 using Microsoft.AspNetCore.Mvc;
@@ -98,12 +99,19 @@ namespace PCHUBStore.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                
+
+                if (this.HttpContext.Session.Keys.Contains("Cart"))
+                {
+                    this.HttpContext.Session.SetString("Cart", "empty");
+                }
+
                 if (result.Succeeded)
                 {
                     var user = await this.context.Users.FirstOrDefaultAsync(x => x.UserName == Input.Username);
                     user.LastLoginDate = DateTime.UtcNow;
                     await context.SaveChangesAsync();
+
+
                     if (this.User.IsInRole("Admin"))
                     {
                         return RedirectToAction("BlacksmithIndex", "Administratior", new { area = "Administration" });

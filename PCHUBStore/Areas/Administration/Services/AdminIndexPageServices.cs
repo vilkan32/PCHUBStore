@@ -92,7 +92,6 @@ namespace PCHUBStore.Areas.Administration.Services
 
             var categ = page.Categories.Where(x => x.CategoryName == category);
 
-
             return categ.ToList();
         }
 
@@ -147,6 +146,7 @@ namespace PCHUBStore.Areas.Administration.Services
 
             return boxes;
         }
+
 
         public async Task EditBoxesAsync(EditBoxViewModel form)
         {

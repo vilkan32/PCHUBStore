@@ -50,6 +50,8 @@ namespace PCHUBStore.Areas.Administration.Services
             await this.context.AdminCharacteristicsCategories.AddAsync(new AdminCharacteristicsCategory
             {
                 CategoryName = form.CategoryName,
+                BasicCharacteristics = new List<AdminCharacteristic>(),
+                FullCharacteristics = new List<AdminCharacteristic>(),
 
             });
 
@@ -70,7 +72,6 @@ namespace PCHUBStore.Areas.Administration.Services
 
         public async Task<List<string>> GetAvailableCharacteristicsAsync()
         {
-
             return await this.context.AdminCharacteristicsCategories.Select(x => x.CategoryName).ToListAsync();
         }
     }
