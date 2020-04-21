@@ -106,7 +106,6 @@ namespace PCHUBStore.Areas.Administration.Services
                 var fc = productsCategory.Products.Where(x => x.IsDeleted == false).Where(x => x.Model != null).SelectMany(x => x.FullCharacteristics);
 
 
-
                 var models = productsCategory.Products.Select(x => x.Model).Where(x => x != null).Distinct().ToList();
 
                 models.ForEach(x =>

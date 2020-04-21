@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PCHUBStore.Areas.Administration.Models.CharacteristicsViewModels;
@@ -108,6 +106,85 @@ namespace PCHUBStore.Tests.AdminServicesTests.AdminCharacteristicsServices
 
             await characteristicsService.CreateCharacteristicsCategoryAsync(categoryForm);
             Assert.True(await characteristicsService.CategoryExistsAsync(categoryName));
+        }
+
+        [Fact]
+        public async Task TestIfCharacteristicsExistsWorksAccordingly()
+        {
+            var context = PCHUBDbContextInMemoryInitializer.InitializeContext();
+
+            var characteristicsService = new Areas.Administration.Services.AdminCharacteristicsServices(context);
+
+
+
+            var categoryForm = new InsertCharacteristicsCategoryViewModel();
+
+            categoryForm.CategoryName = "Laptops";
+
+            await characteristicsService.CreateCharacteristicsCategoryAsync(categoryForm);
+
+            var form = new InsertCharacteristicsViewModel();
+
+            form.BasicCharacteristics.AddRange(new List<string>
+            {
+                "Acer",
+                "Lenovo",
+                "Dell",
+                "Ombre",
+            });
+
+            form.Category = "Laptops";
+
+            form.FullCharacteristics.AddRange(new List<string>
+            {
+                "Acer",
+                "Lenovo",
+                "Dell",
+                "Ombre",
+            });
+
+            await characteristicsService.CreateCharacteristicsAsync(form);
+
+
+            Assert.True(await characteristicsService.CharacteristicsExistsAsync("Laptops"));
+
+        }
+
+        [Fact]
+        public async Task TestIfCharacteristicsExistsReturnsFalse()
+        {
+            var context = PCHUBDbContextInMemoryInitializer.InitializeContext();
+
+            var characteristicsService = new Areas.Administration.Services.AdminCharacteristicsServices(context);
+
+            Assert.False(await characteristicsService.CharacteristicsExistsAsync("Laptops"));
+        }
+
+        [Fact]
+        public async Task TestIfGetAvailableCharacteristicsReturnsEmptyCollection()
+        {
+            var context = PCHUBDbContextInMemoryInitializer.InitializeContext();
+
+            var characteristicsService = new Areas.Administration.Services.AdminCharacteristicsServices(context);
+
+            Assert.Empty(await characteristicsService.GetAvailableCharacteristicsAsync());
+        }
+
+        [Fact]
+        public async Task TestIfGetAvailableCharacteristicsReturnsCorrectResult()
+        {
+            var context = PCHUBDbContextInMemoryInitializer.InitializeContext();
+
+            var characteristicsService = new Areas.Administration.Services.AdminCharacteristicsServices(context);
+
+
+            var categoryForm = new InsertCharacteristicsCategoryViewModel();
+
+            categoryForm.CategoryName = "Laptops";
+
+            await characteristicsService.CreateCharacteristicsCategoryAsync(categoryForm);
+
+            Assert.NotEmpty(await characteristicsService.GetAvailableCharacteristicsAsync());
         }
     }
 }
