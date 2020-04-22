@@ -11,5 +11,7 @@ namespace PCHUBStore.Areas.Support.Services
         Task CreateForumPost(string title, string sanitizedContent, string picture);
 
         Task EditForumPostAsync(EditForumPostViewModel form);
+
+        Task DeleteForumPostAsync(string id);
     }
 }

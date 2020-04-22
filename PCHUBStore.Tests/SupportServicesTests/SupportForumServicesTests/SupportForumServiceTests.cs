@@ -83,5 +83,27 @@ namespace PCHUBStore.Tests.SupportServicesTests.SupportForumServicesTests
 
             Assert.Equal("new Content", result.Content);
         }
+
+        [Theory]
+        [InlineData("TestTitle", "TestContent", "TestUrlPicture")]
+        [InlineData("NewNameTitle", "new content asdasd <p> dasds hellp</p>", "PictureDemo")]
+        [InlineData("Acer Asipre 123", "video content from youtube for example", "Picture Url tested")]
+        public async Task TestIfDeleteForumPostWorksAccordingly(string title, string content, string url)
+        {
+            var context = PCHUBDbContextInMemoryInitializer.InitializeContext();
+
+            var forumService = new SupportForumServices(context);
+
+            await forumService.CreateForumPost(title, content, url);
+
+            var post = await context.ForumPosts.FirstOrDefaultAsync();
+
+
+            await forumService.DeleteForumPostAsync(post.Id);
+
+            var result = await context.ForumPosts.AnyAsync();
+
+            Assert.False(result);
+        }
     }
 }

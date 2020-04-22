@@ -93,5 +93,12 @@ namespace PCHUBStore.Areas.Support.Controllers
             return this.RedirectToAction("EditForumPosts");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> DeleteForumPost(string postId)
+        {
+            await this.service.DeleteForumPostAsync(postId);
+
+            return this.RedirectToAction("EditForumPosts");
+        }
     }
 }

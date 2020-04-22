@@ -41,5 +41,14 @@ namespace PCHUBStore.Areas.Support.Services
 
             await this.context.SaveChangesAsync();
         }
+
+        public async Task DeleteForumPostAsync(string id)
+        {
+            var post = await this.context.ForumPosts.FirstOrDefaultAsync(x => x.Id == id);
+
+             this.context.ForumPosts.Remove(post);
+
+             await context.SaveChangesAsync();
+        }
     }
 }
