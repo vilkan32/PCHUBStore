@@ -56,7 +56,7 @@ namespace PCHUBStore.Areas.Support.Services
         public async Task EditShipmentAsync(int shipmentId, ShipmentViewModel form)
         {
             var shipment = await this.context.Shipments.FirstOrDefaultAsync(x => x.Id == shipmentId);
-
+ 
             shipment.ReceivedOn = form.ReceivedOn;
             shipment.ShipmentCoveredBy = form.ShipmentCoveredBy;
             shipment.ShipmentDetails = form.ShipmentDetails;

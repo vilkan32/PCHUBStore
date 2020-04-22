@@ -19,6 +19,7 @@ namespace PCHUBStore.Areas.Support.Services
         {
             this.context = context;
         }
+
         public async Task AddToQueueAsync(ChatRequestModel request)
         {
             if (!await this.ConnectionIdExistsAsync(request.ConnectionId))
@@ -114,8 +115,6 @@ namespace PCHUBStore.Areas.Support.Services
 
         public async Task DisconnectFromChat(string technician, string user)
         {
-
-
             var chat = await this.context.Chats.FirstOrDefaultAsync(x => x.TechnicianName == technician && x.ConnectionId == user && x.ConnectionTerminated == false);
 
             chat.ConnectionTerminated = true;
