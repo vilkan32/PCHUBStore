@@ -6,7 +6,7 @@
         document.getElementById('mainSlidePic').src = pictures[index].url;
         document.getElementById('mainSlidePic').setAttribute("value", index);
 
-        setInterval(function () {
+       window.intervals = setInterval(function () {
             index = randomInteger(0, pictures.length - 1);
             if (Number(document.getElementById('mainSlidePic').getAttribute("value")) === index) {
                 index = randomInteger(0, pictures.length - 1);
@@ -16,10 +16,10 @@
                 document.getElementById('mainSlidePic').setAttribute("value", index);
                 document.getElementById('mainSlidePic').src = pictures[index].url;
             }
-        }, 4000);
-
+        }, 10000);
 
     });
+
 })();
 
 
@@ -60,20 +60,22 @@ function onMouseInMainSlider() {
         fetch("/api/GetMainSliderPictures").then(res => res.json()).then(x => {
 
             let pictures = x;
-            for (var i = 0; i < 4; i++) {
-                clearInterval(i);
-            }
+ 
+                clearInterval(window.intervals);
+         
             let index = Number(document.getElementById('mainSlidePic').getAttribute("value"));
             index -= 1;
             if (index === -1) {
                 index = pictures.length - 1;
                 document.getElementById('mainSlidePic').src = pictures[index].url;
                 document.getElementById('mainSlidePic').setAttribute("value", index);
-                return;
+
+            } else {
+                document.getElementById('mainSlidePic').src = pictures[index].url;
+                document.getElementById('mainSlidePic').setAttribute("value", index);
             }
 
-            document.getElementById('mainSlidePic').src = pictures[index].url;
-            document.getElementById('mainSlidePic').setAttribute("value", index);
+          
                
         });
     });
@@ -82,9 +84,8 @@ function onMouseInMainSlider() {
         fetch("/api/GetMainSliderPictures").then(res => res.json()).then(x => {
 
             let pictures = x;
-            for (var i = 0; i < 4; i++) {
-                clearInterval(i);
-            }
+
+            clearInterval(window.intervals);
 
             let index = Number(document.getElementById('mainSlidePic').getAttribute("value"));
             index += 1;
@@ -92,11 +93,13 @@ function onMouseInMainSlider() {
                 index = 0;
                 document.getElementById('mainSlidePic').src = pictures[index].url;
                 document.getElementById('mainSlidePic').setAttribute("value", index);
-                return;
+
+            } else {
+                document.getElementById('mainSlidePic').src = pictures[index].url;
+                document.getElementById('mainSlidePic').setAttribute("value", index);
             }
 
-            document.getElementById('mainSlidePic').src = pictures[index].url;
-            document.getElementById('mainSlidePic').setAttribute("value", index);
+          
 
         });
     });

@@ -44,7 +44,11 @@
 
                     @if (this.User.Identity.IsAuthenticated)
                     {
-                        <a class="btn btn-info" role="button" asp-controller="ShoppingCart" asp-action="BuyProduct" asp-route-id="@Model.Id">Add To Cart</a>
+                        if (this.User.IsInRole("StoreUser"))
+                        {
+                            <a class="btn btn-info" role="button" asp-controller="ShoppingCart" asp-action="BuyProduct" asp-route-id="@Model.Id">Add To Cart</a>
+                        }
+
                     }
                     else
                     {
