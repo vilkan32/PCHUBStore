@@ -28,7 +28,7 @@
                     <span>Article Number: @Model.ArticleNumber</span>
                 </div>
                 <div class="col-6">
-                    @if (this.User.Identity.IsAuthenticated)
+                    @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("StoreUser"))
                     {
                         <img src="~/img/favorite.png" id="favoriteImg" alt="Add To Favorite" />
                         <button class="btn btn-success" value="@Model.Id" id="addToFavorites">Add to Favorites</button>
